@@ -1,7 +1,13 @@
 from flask import Flask, request, render_template #import flask and needed modules
 from detector import classify_email #import from detector.py
+import os #work with folders in file systems
+from dotenv import load_dotenv #for loading environment variables
 
-app = Flask(__name__, template_folder='website') #create flask app and link to where my html file is
+#load environment variables from .env file
+load_dotenv()
+
+#initialize flask app
+app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
 
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():

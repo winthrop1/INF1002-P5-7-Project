@@ -1,11 +1,16 @@
 #libraies needed for web scarpping
-import requests #fetching webpage 
+import requests #fetching webpage
 from lxml import html # used to parse and extract data from html
 #import csv #write data to csv file
 import os #work with folders in file systems
+from dotenv import load_dotenv #for loading environment variables
+
+#load environment variables from .env file
+load_dotenv()
 
 #output location
-output_folder = r"C:\Users\Leticia\OneDrive\Desktop\Programming Fundamentals\Project\words"
+#construct absolute path from environment variable or default
+output_folder = os.path.join(os.path.dirname(__file__), os.getenv('OUTPUT_FOLDER', 'words'))
 
 #check that output is correct so can write files in
 if not os.path.exists(output_folder):
@@ -13,7 +18,7 @@ if not os.path.exists(output_folder):
     exit(1)
 
 #url of the website we using for spam words
-source_url = "https://www.activecampaign.com/blog/spam-words"
+source_url = os.getenv('SPAM_SOURCE_URL', 'https://www.activecampaign.com/blog/spam-words')
 
 #will scarp the words from the website into a list
 def get_spam_words():

@@ -1,6 +1,10 @@
 import re #for regular expressions, searching patterns
 import os #work with folders in file systems
 #import csv #write/read data to csv file
+from dotenv import load_dotenv #for loading environment variables
+
+#load environment variables from .env file
+load_dotenv()
 
 #load keywords from txt file
 def load_keywords(filepath):
@@ -31,8 +35,9 @@ def load_keywords(filepath):
 #     return keywords
 
 #file paths for retrieving
-txt_path = r"C:\Users\Leticia\OneDrive\Desktop\Programming Fundamentals\Project\Words\spam_words.txt"
-# csv_path = r"C:\Users\Leticia\OneDrive\Desktop\Programming Fundamentals\Project\Words\spam_words.csv"
+#construct absolute path from environment variable or default
+txt_path = os.path.join(os.path.dirname(__file__), os.getenv('SPAM_WORDS_PATH', 'words/spam_words.txt'))
+# csv_path = os.path.join(os.path.dirname(__file__), "words", "spam_words.csv")
 
 #load keywords from files
 sus_keywords = load_keywords(txt_path)

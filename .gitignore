@@ -1,1 +1,9 @@
 .DS_Store
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

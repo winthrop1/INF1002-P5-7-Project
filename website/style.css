@@ -1,0 +1,22 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+textarea {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f1f3f5;
+    border: 1px solid #ced4da;
+}
+
+.alert {
+    border-radius: 10px;
+}

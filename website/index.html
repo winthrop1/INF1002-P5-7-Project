@@ -29,6 +29,10 @@
                                 <input id="fileInput" type="file" name="emailfile" accept=".eml,.txt,text/plain" class="form-control" required onchange="previewFile()">
                             </div>
                             <div class="mb-3">
+                                <label for="userEmail" class="form-label">Input your email:</label>
+                                <input id="userEmail" type="text" name="userEmail" class="form-control">
+                            </div>
+                            <div class="mb-3">
                                 <label for="emailContent" class="form-label">Email contents</label> <!--display text in content-->
                                 <textarea id="emailContent" name="emailContent" class="form-control" rows="10" readonly>{{ email_content or '' }}</textarea>
                             </div>

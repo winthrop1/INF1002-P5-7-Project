@@ -13,6 +13,7 @@ app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #
 def upload_file():
     #variables to hold results 
     classification = None
+    EmailDomainMsg = None
     keywords = [] 
     total_score = 0 
     email_text = ''  
@@ -23,13 +24,14 @@ def upload_file():
             classification = ("Please upload a valid email file.")
         else:
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
-            classification, keywords, total_score = classify_email(email_text) #returns the 3
+            classification, keywords, total_score, EmailDomainMsg = classify_email(email_text) #returns the 3
 
     return render_template("index.html", 
                            classification=classification, #classification
                            keywords=keywords, #keywords found
                            total_score=total_score, #risk score
-                           email_content=email_text)  #email contents in containers
+                           email_content=email_text,
+                           EmailDomainMsg=EmailDomainMsg)  #email contents in containers
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

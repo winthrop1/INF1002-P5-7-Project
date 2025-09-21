@@ -41,6 +41,7 @@
                         {% if classification %}
                         <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}">
                             <h5 class="alert-heading">Classification: {{ classification }}</h5>
+                            <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
                             <p><strong>Risk Score:</strong> {{ total_score }}</p>
                             <ul>
                                 <!--show sus keyowrds detected-->

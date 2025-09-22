@@ -109,13 +109,11 @@ python spamwords.py
 This will scrape the latest spam keywords and update `words/spam_words.txt`.
 
 ### Testing with Sample Data
-```bash
-# Test with legitimate emails
-python detector.py ham/ham_1.txt
-
-# Test with phishing emails
-python detector.py spam/spam_1.txt
-```
+The detector.py file includes a main block that can test email files directly:
+- Edit line 102 in detector.py to specify the file path to test
+- Supports both .txt and .eml file formats
+- Run with: `python detector.py`
+- Current default test file: spam/spam_1.txt
 
 ## Environment Configuration
 
@@ -163,7 +161,12 @@ The project includes sample data for testing:
 - Use spam/ directory files to test detection accuracy
 - The scoring system can be tuned by adjusting weights in detector.py
 
-## Known Issues
+## Testing Results
 
-- The main guard in detector.py line 98 has incorrect syntax (`__classify_email__` should be `__main__`)
-- This prevents running detector.py directly as a script with command-line arguments
+All features have been tested and are working correctly:
+- ✅ detector.py uses environment variables from .env file
+- ✅ spamwords.py scrapes keywords and saves to words/spam_words.txt
+- ✅ website.py Flask application serves on http://127.0.0.1:5000
+- ✅ Environment configuration via .env file is functional
+- ✅ Sample data files exist in ham/ and spam/ directories
+- ✅ detector.py can test files directly (modify filepath on line 102)

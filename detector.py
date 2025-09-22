@@ -95,5 +95,55 @@ def classify_email(email_text):
     classification = "Safe" if total_score == 0 else "Phishing"
     return classification, keywords, total_score #output score with keywords
 
-if __name__ == "__classify_email__":
-        classify_email()
+if __name__ == "__main__":
+    from email import message_from_string
+
+    # Specify the file path to test
+    filepath = "spam/spam_1.txt"  # Change this to test different files
+
+    # Check if file exists
+    if not os.path.exists(filepath):
+        print(f"Error: File '{filepath}' not found")
+    else:
+        # Read the file
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                file_content = f.read()
+
+            # Handle .eml files
+            if filepath.lower().endswith('.eml'):
+                msg = message_from_string(file_content)
+                subject = msg.get('Subject', '')
+                body = ''
+
+                # Extract body from email message
+                if msg.is_multipart():
+                    for part in msg.walk():
+                        if part.get_content_type() == "text/plain":
+                            body = part.get_payload(decode=True).decode('utf-8', errors='ignore')
+                            break
+                else:
+                    body = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
+
+                email_text = f"Subject: {subject}\n{body}"
+            else:
+                # For .txt files, use content as-is
+                email_text = file_content
+
+            # Classify the email using the classify_email function
+            classification, keywords, total_score = classify_email(email_text)
+
+            # Display results
+            print(f"\nFile: {filepath}")
+            print(f"Classification: {classification}")
+            print(f"Risk Score: {total_score}")
+
+            if keywords:
+                print("\nSuspicious keywords detected:")
+                for keyword in keywords:
+                    print(f"  - {keyword}")
+            else:
+                print("\nNo suspicious keywords detected.")
+
+        except Exception as e:
+            print(f"Error reading file: {e}")

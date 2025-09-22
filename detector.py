@@ -2,6 +2,7 @@ import re #for regular expressions, searching patterns
 import os #work with folders in file systems
 #import csv #write/read data to csv file
 from dotenv import load_dotenv #for loading environment variables
+from datas import unique_from_emails
 
 #load environment variables from .env file
 load_dotenv()
@@ -94,7 +95,7 @@ def classify_email(email_text):
 
     classification = "Safe" if total_score == 0 else "Phishing"
     return classification, keywords, total_score #output score with keywords
-
+  
 if __name__ == "__main__":
     from email import message_from_string
 

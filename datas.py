@@ -2,9 +2,13 @@ import numpy as np
 import pandas as pd
 import string
 import os
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
-spam_dir = r'D:\Project\Project\dataset\spam_2\spam_2'
+# Get spam directory from environment variable or use default
+spam_dir = os.getenv('SPAM_DATASET_DIR', 'spam_2/')
 
 
 def load_data(directory, label):

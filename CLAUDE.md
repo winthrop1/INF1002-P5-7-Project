@@ -18,6 +18,8 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
    - Classification threshold: Score > 0 = Phishing, Score = 0 = Safe
    - Returns tuple: (classification, found_keywords, total_score)
    - Uses environment variables via python-dotenv for configuration
+   - Imports domain list from datas.py for domain checking
+   - `domaincheck()` function: Checks if sender domain is in known spam domains list
 
 2. **spamwords.py**: Web scraper for maintaining spam keyword database
    - Scrapes keywords from activecampaign.com's spam words list
@@ -28,10 +30,14 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
 3. **website.py**: Flask web application server
    - Provides file upload interface for email analysis
    - Supported file formats: .eml, .txt
+   - Email functionality:
+     - Sends analysis report to user's email address
+     - Uses SMTP with Gmail for email delivery
    - Displays classification results with:
      - Risk level (Safe/Phishing)
      - Total risk score
      - List of detected keywords
+     - Domain check results
    - Template folder: `website/`
    - Runs in debug mode for development
 
@@ -44,6 +50,13 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
 5. **website/style.css**: Custom CSS styling
    - Additional styling on top of Bootstrap
    - Custom color schemes and layouts
+
+6. **datas.py**: Domain extraction and analysis
+   - Loads spam emails from directory specified in SPAM_DATASET_DIR
+   - Extracts sender domains from spam emails
+   - Creates `unique_from_emails` set of known spam domains
+   - Uses pandas and numpy for data processing
+   - Configurable via environment variables
 
 ### Data Structure
 
@@ -63,6 +76,7 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
   - `OUTPUT_FOLDER`: Directory for saving scraped keywords
   - `SPAM_SOURCE_URL`: URL for keyword scraping
   - `TEMPLATE_FOLDER`: Flask template directory
+  - `SPAM_DATASET_DIR`: Directory containing spam emails for domain extraction
 
 ## Development Commands
 
@@ -124,6 +138,7 @@ SPAM_WORDS_PATH=words/spam_words.txt
 OUTPUT_FOLDER=words
 SPAM_SOURCE_URL=https://www.activecampaign.com/blog/spam-words
 TEMPLATE_FOLDER=website
+SPAM_DATASET_DIR=spam
 ```
 
 Note: The code now uses environment variables instead of hardcoded paths, making it portable across different systems.
@@ -140,6 +155,8 @@ Required packages:
 - **requests==2.32.5**: HTTP library for web scraping
 - **lxml==6.0.1**: XML/HTML processing for parsing scraped content
 - **python-dotenv==1.1.1**: Environment variable management
+- **pandas**: Data manipulation for domain analysis (required by datas.py)
+- **numpy**: Numerical operations (required by datas.py)
 
 Standard library modules used:
 - **re**: Regular expressions for text processing
@@ -161,12 +178,22 @@ The project includes sample data for testing:
 - Use spam/ directory files to test detection accuracy
 - The scoring system can be tuned by adjusting weights in detector.py
 
-## Testing Results
+## Current Features Status
 
-All features have been tested and are working correctly:
+Working features:
 - ✅ detector.py uses environment variables from .env file
 - ✅ spamwords.py scrapes keywords and saves to words/spam_words.txt
 - ✅ website.py Flask application serves on http://127.0.0.1:5000
 - ✅ Environment configuration via .env file is functional
 - ✅ Sample data files exist in ham/ and spam/ directories
-- ✅ detector.py can test files directly (modify filepath on line 102)
+- ✅ detector.py can test files directly (modify filepath on line 121)
+- ✅ Domain checking with domaincheck() function
+- ✅ Email report sending functionality in website.py
+- ✅ datas.py loads spam domains from SPAM_DATASET_DIR
+
+## Dependencies Note
+
+Make sure to install pandas and numpy if not already installed:
+```bash
+pip install pandas numpy
+```

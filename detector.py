@@ -44,6 +44,74 @@ txt_path = os.path.join(os.path.dirname(__file__), os.getenv('SPAM_WORDS_PATH', 
 sus_keywords = load_keywords(txt_path)
 # sus_keywords = load_keywords(csv_path)
 
+def parse_email_file(email_content):
+    """
+    Parse decoded email content and separate into different parts.
+    Takes the decoded message string from website and returns separated components.
+
+    Args:
+        email_content (str): Decoded email content from Flask file upload
+
+    Returns:
+        tuple: (title, subject, body) as strings
+    """
+    try:
+        from email import message_from_string
+
+        title = ""
+        subject = ""
+        body = ""
+
+        # Check if it's an .eml format (structured email with headers)
+        if "From:" in email_content and "To:" in email_content:
+            msg = message_from_string(email_content)
+
+            # Extract subject
+            subject = msg.get('Subject', '')
+
+            # Create title from sender info
+            from_field = msg.get('From', 'Unknown')
+            title = f"Email from {from_field}"
+
+            # Extract body content
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        body = part.get_payload(decode=True)
+                        if isinstance(body, bytes):
+                            body = body.decode('utf-8', errors='ignore')
+                        break
+            else:
+                payload = msg.get_payload(decode=True)
+                if isinstance(payload, bytes):
+                    body = payload.decode('utf-8', errors='ignore')
+                else:
+                    body = str(payload)
+        else:
+            # Handle plain text format (simple emails)
+            lines = email_content.splitlines()
+
+            # Look for subject line
+            for i, line in enumerate(lines):
+                if line.lower().startswith('subject:'):
+                    subject = line[8:].strip()  # Remove "Subject:" prefix
+                    title = f"Email - {subject[:50]}..." if len(subject) > 50 else f"Email - {subject}"
+                    # Rest of the content is body
+                    body = '\n'.join(lines[i+1:]).strip()
+                    break
+
+            # If no subject found, treat whole content as body
+            if not subject:
+                body = email_content.strip()
+                title = "Email Content"
+                subject = "No Subject"
+
+        return title, subject, body
+
+    except Exception as e:
+        print(f"Error parsing email content: {e}")
+        return "Error", "Error parsing email", "Could not parse email content"
+    
 #detect keywords from email text
 def detection_subject(subject):
     score = 0 #assign scores
@@ -95,56 +163,71 @@ def classify_email(email_text):
 
     classification = "Safe" if total_score == 0 else "Phishing"
     return classification, keywords, total_score #output score with keywords
-  
+
+def domaincheck(email_text, unsafe_domains=unique_from_emails):
+    text = email_text.lower() #convert email text to lowercase
+    for line in text.splitlines(): #split email text into lines and into a list
+        if "from:" in line: #look for the line that contains "From:"
+            start = line.find('<') + 1 #find the first character of the email address after <
+            end = line.find('>', start) #it looks for > and start means it start looking from the position of start which is the first character of the email address
+            email = line[start:end].strip()#extract the text between < and > and remove any leading or trailing whitespace
+            parts = email.split('@')
+            if len(parts) == 2:
+                domain = "@" + parts[1]
+                if domain in unsafe_domains: #check if domain is in safe list
+                    EmailDomainMsg = f"Warning: Email is from an unrecognized domain: {email}"
+                    return EmailDomainMsg
+                else:
+                    EmailDomainMsg = f"Email is from a safe domain: {email}"
+                    return EmailDomainMsg 
+
+
 if __name__ == "__main__":
-    from email import message_from_string
+    # Test file paths
+    test_files = ["spam/spam_1.txt", "ham/ham_1.txt"]
 
-    # Specify the file path to test
-    filepath = "spam/spam_1.txt"  # Change this to test different files
+    for filepath in test_files:
+        print(f"\n{'='*60}")
+        print(f"Testing file: {filepath}")
+        print('='*60)
 
-    # Check if file exists
-    if not os.path.exists(filepath):
-        print(f"Error: File '{filepath}' not found")
-    else:
-        # Read the file
+        # Check if file exists
+        if not os.path.exists(filepath):
+            print(f"Error: File '{filepath}' not found")
+            continue
+
         try:
+            # Read and decode file (simulating Flask upload)
             with open(filepath, 'r', encoding='utf-8') as f:
                 file_content = f.read()
 
-            # Handle .eml files
-            if filepath.lower().endswith('.eml'):
-                msg = message_from_string(file_content)
-                subject = msg.get('Subject', '')
-                body = ''
+            print(f"Original file content (first 200 chars):\n{file_content[:200]}...\n")
 
-                # Extract body from email message
-                if msg.is_multipart():
-                    for part in msg.walk():
-                        if part.get_content_type() == "text/plain":
-                            body = part.get_payload(decode=True).decode('utf-8', errors='ignore')
-                            break
-                else:
-                    body = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
+            # Test parse_email_file function
+            title, subject, body = parse_email_file(file_content)
 
-                email_text = f"Subject: {subject}\n{body}"
-            else:
-                # For .txt files, use content as-is
-                email_text = file_content
+            print("PARSED EMAIL COMPONENTS:")
+            print(f"Title: {title}")
+            print(f"Subject: {subject}")
+            print(f"Body (first 150 chars): {body[:150]}...")
 
-            # Classify the email using the classify_email function
-            classification, keywords, total_score = classify_email(email_text)
+            # Test classification with original content
+            classification, keywords, total_score = classify_email(file_content)
 
-            # Display results
-            print(f"\nFile: {filepath}")
+            print(f"\nCLASSIFICATION RESULTS:")
             print(f"Classification: {classification}")
             print(f"Risk Score: {total_score}")
 
             if keywords:
-                print("\nSuspicious keywords detected:")
+                print("Suspicious keywords detected:")
                 for keyword in keywords:
                     print(f"  - {keyword}")
             else:
-                print("\nNo suspicious keywords detected.")
+                print("No suspicious keywords detected.")
 
         except Exception as e:
-            print(f"Error reading file: {e}")
+            print(f"Error processing file: {e}")
+
+    print(f"\n{'='*60}")
+    print("Testing completed!")
+    print('='*60)

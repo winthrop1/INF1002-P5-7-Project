@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template #import flask and needed modules
-from detector import classify_email, domaincheck #import from detector.py
+from detector import classify_email, domaincheck, parse_email_file #import from detector.py
 import os #work with folders in file systems
 import smtplib
 from email.message import EmailMessage
@@ -13,25 +13,34 @@ app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #
 
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
-    #variables to hold results 
+    #variables to hold results
     classification = None
     EmailDomainMsg = None
-    keywords = [] 
-    total_score = 0 
-    email_text = ''  
-    
+    keywords = []
+    total_score = 0
+    email_text = ''
+    email_title = ''
+    email_subject = ''
+    email_body = ''
+
     if request.method == 'POST': #handle submissions
         file = request.files.get('emailfile')
         useremail = request.form.get('userEmail')
-        if not file: 
+        if not file:
             classification = ("Please upload a valid email file.")
         else:
+            # Read and decode the uploaded file
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
+
+            # Parse email into separate components
+            email_title, email_subject, email_body = parse_email_file(email_text)
+
+            # Classify the email and check domain
             classification, keywords, total_score = classify_email(email_text) #returns the 3
             EmailDomainMsg = domaincheck(email_text) #check email domain
 
             admin_email = "gachacentral1@gmail.com"
-            email_body = (
+            report_body = (
                 "----- Email Analysis Result -----\n\n"
                 f"Classification: {classification}\n\n"
                 f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
@@ -45,7 +54,7 @@ def upload_file():
             msg['From'] = admin_email
             msg['To'] = useremail
             msg['Subject'] = 'Your Email Phishing Analysis Report'
-            msg.set_content(email_body)
+            msg.set_content(report_body)
 
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
@@ -53,12 +62,15 @@ def upload_file():
             server.send_message(msg)
 
 
-    return render_template("index.html", 
+    return render_template("index.html",
                            classification=classification, #classification
                            keywords=keywords, #keywords found
                            total_score=total_score, #risk score
-                           email_content=email_text,
-                           EmailDomainMsg=EmailDomainMsg)  #email contents in containers
+                           email_content=email_text, #original email content
+                           email_title=email_title, #parsed email title
+                           email_subject=email_subject, #parsed email subject
+                           email_body=email_body, #parsed email body
+                           EmailDomainMsg=EmailDomainMsg)  #domain check message
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

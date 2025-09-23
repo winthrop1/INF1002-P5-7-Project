@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template #import flask and needed modules
-from detector import classify_email, domaincheck #import from detector.py
+from detectfunction import classify_email, domaincheck #import from detector.py
 import os #work with folders in file systems
 import smtplib
 from email.message import EmailMessage
@@ -25,10 +25,12 @@ def upload_file():
         useremail = request.form.get('userEmail')
         if not file: 
             classification = ("Please upload a valid email file.")
+        elif useremail.count('@') != 1 or not useremail: #empty check and basic format check
+            EmailDomainMsg = ("Please enter a valid email address.")
         else:
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
             classification, keywords, total_score = classify_email(email_text) #returns the 3
-            EmailDomainMsg = domaincheck(email_text) #check email domain
+            EmailDomainMsg = domaincheck(email_text, total_score) #check email domain
 
             admin_email = "gachacentral1@gmail.com"
             email_body = (

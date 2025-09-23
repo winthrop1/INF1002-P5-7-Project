@@ -3,7 +3,6 @@ import pandas as pd
 import string
 import os
 
-
 spam_dir = r'D:\Project\Project\dataset\spam_2\spam_2'
 
 

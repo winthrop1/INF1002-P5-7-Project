@@ -27,6 +27,7 @@ def upload_file():
     if request.method == 'POST': #handle submissions
         file = request.files.get('emailfile')
         useremail = request.form.get('userEmail')
+
         if not file:
             classification = ("Please upload a valid email file.")
         elif not useremail or "@" not in useremail:
@@ -35,20 +36,24 @@ def upload_file():
             # Read and decode the uploaded file
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
 
-            # Parse email into separate components
+            # Parse email using the parse_email_file function
             email_title, email_subject, email_body = parse_email_file(email_text)
 
-            # Classify the email and check domain
-            classification, keywords, total_score = classify_email(email_subject, email_body) #returns the 3
-            EmailDomainMsg = domaincheck(email_text, total_score) #check email domain
+            # Classify the email using the original detection system
+            classification, keywords, total_score = classify_email(email_subject, email_body)
 
+            # Domain check
+            EmailDomainMsg = domaincheck(email_title, total_score)
+
+            # Send email report to user
             admin_email = "gachacentral1@gmail.com"
+
             report_body = (
                 "----- Email Analysis Result -----\n\n"
                 f"Classification: {classification}\n\n"
                 f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
                 f"Total Risk Score: {total_score}\n\n"
-                f"Domain Check Message: {EmailDomainMsg}\n"
+                f"Domain Check Message: {EmailDomainMsg}\n\n"
                 "Email Content:\n"
                 f"{email_text}\n\n"
             )
@@ -70,7 +75,6 @@ def upload_file():
                 print(f"Email sending failed: {e}")
                 pass #continue without email, just show results on webpage
 
-
     return render_template("index.html",
                            classification=classification, #classification
                            keywords=keywords, #keywords found
@@ -79,7 +83,7 @@ def upload_file():
                            email_title=email_title, #parsed email title
                            email_subject=email_subject, #parsed email subject
                            email_body=email_body, #parsed email body
-                           EmailDomainMsg=EmailDomainMsg)  #domain check message
+                           EmailDomainMsg=EmailDomainMsg) #domain check message
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

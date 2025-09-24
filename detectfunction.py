@@ -155,7 +155,7 @@ def classify_email(email_subject, email_body):
     classification = "Safe" if total_score == 0 else "Phishing"
     return classification, keywords, total_score #output score with keywords
 
-def domaincheck(email_title, unsafe_domains=unique_from_emails, df=emailDataF):
+def domaincheck(email_title, total_score, unsafe_domains=unique_from_emails, df=emailDataF):
     text = email_title.lower() #convert email text to lowercase
     for line in text.splitlines(): #split email text into lines and into a list
         if "from:" in line: #look for the line that contains "From:"
@@ -171,7 +171,7 @@ def domaincheck(email_title, unsafe_domains=unique_from_emails, df=emailDataF):
                 elif total_score > 0:
                     EmailDomainMsg = f"Warning: Email is from an unrecognized domain: {email}"
                     df.loc[len(df)] = {  #append domain to dataframe if risk score is above 0 and not in safe list
-                        'text': email_text,
+                        'text': email_title,
                         'label': 1}
                     return EmailDomainMsg
                 else:

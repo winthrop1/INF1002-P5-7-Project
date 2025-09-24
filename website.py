@@ -2,6 +2,7 @@ from flask import Flask, request, render_template #import flask and needed modul
 from detectfunction import classify_email, domaincheck, parse_email_file #import from detector.py
 import os #work with folders in file systems
 import smtplib
+import socket
 from email.message import EmailMessage
 from dotenv import load_dotenv #for loading environment variables
 
@@ -15,7 +16,7 @@ app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #
 def upload_file():
     #variables to hold results
     classification = None
-    EmailDomainMsg = None
+    EmailDomainMsg = ''
     keywords = []
     total_score = 0
     email_text = ''
@@ -38,8 +39,8 @@ def upload_file():
             email_title, email_subject, email_body = parse_email_file(email_text)
 
             # Classify the email and check domain
-            classification, keywords, total_score = classify_email(email_text) #returns the 3
-            EmailDomainMsg = domaincheck(email_text , total_score) #check email domain
+            classification, keywords, total_score = classify_email(email_subject, email_body) #returns the 3
+            EmailDomainMsg = domaincheck(email_text, total_score) #check email domain
 
             admin_email = "gachacentral1@gmail.com"
             report_body = (
@@ -58,10 +59,16 @@ def upload_file():
             msg['Subject'] = 'Your Email Phishing Analysis Report'
             msg.set_content(report_body)
 
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(admin_email, 'dexksasuvacscfwv') #app password
-            server.send_message(msg)
+            try:
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+                server.login(admin_email, 'dexksasuvacscfwv') #app password
+                server.send_message(msg)
+                server.quit()
+                print("Email sent successfully")
+            except (socket.gaierror, smtplib.SMTPException, Exception) as e:
+                print(f"Email sending failed: {e}")
+                pass #continue without email, just show results on webpage
 
 
     return render_template("index.html",

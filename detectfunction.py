@@ -139,33 +139,24 @@ def detection_body(body):
     return score, keywords #ouput total scoore with keywords
 
 #classify email as safe/phishing
-def classify_email(email_text):
+def classify_email(email_subject, email_body):
     total_score = 0
     keywords = []
 
-    #extract subject from the email 
-    subject_match = re.search(r"Subject: (.*)", email_text, re.IGNORECASE)
-    #extract subject but if dont have set empty
-    if subject_match:
-        subject = subject_match.group(1)
-    else:
-        subject = "" 
-    body = email_text
-
     #s = score, k = keyword
-    s, k = detection_subject(subject) #detect suspicious keywords in subject
+    s, k = detection_subject(email_subject) #detect suspicious keywords in subject
     total_score += s #addscore to total
     keywords.extend(k) #append keywords
 
-    s, k = detection_body(body) #detect suspicious keywords in body
+    s, k = detection_body(email_body) #detect suspicious keywords in body
     total_score += s #add score to total
     keywords.extend(k) #append keywords
 
     classification = "Safe" if total_score == 0 else "Phishing"
     return classification, keywords, total_score #output score with keywords
 
-def domaincheck(email_text, total_score, unsafe_domains=unique_from_emails, df=emailDataF):
-    text = email_text.lower() #convert email text to lowercase
+def domaincheck(email_title, unsafe_domains=unique_from_emails, df=emailDataF):
+    text = email_title.lower() #convert email text to lowercase
     for line in text.splitlines(): #split email text into lines and into a list
         if "from:" in line: #look for the line that contains "From:"
             start = line.find('<') + 1 #find the first character of the email address after <

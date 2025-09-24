@@ -31,6 +31,21 @@
                             <div class="mb-3">
                                 <label for="userEmail" class="form-label">Input your email:</label>
                                 <input id="userEmail" type="email" name="userEmail" class="form-control" placeholder="example@domain.com" required>
+                                {% if emailnotify %}
+                                    {% if emailnotify == "Email sent successfully." %}
+                                        <!-- Green Success Alert -->
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ emailnotify }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% else %}
+                                        <!-- Red Danger Alert -->
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ emailnotify }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                             <div class="mb-3">
                                 <label for="emailContent" class="form-label">Email contents</label> <!--display text in content-->

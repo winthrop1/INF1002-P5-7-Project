@@ -17,6 +17,7 @@ def upload_file():
     #variables to hold results
     classification = None
     EmailDomainMsg = ''
+    emailnotify = ''
     keywords = []
     total_score = 0
     email_text = ''
@@ -30,8 +31,6 @@ def upload_file():
 
         if not file:
             classification = ("Please upload a valid email file.")
-        elif not useremail or "@" not in useremail:
-            EmailDomainMsg = ("Please enter a valid email address.")
         else:
             # Read and decode the uploaded file
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
@@ -70,9 +69,9 @@ def upload_file():
                 server.login(admin_email, 'dexksasuvacscfwv') #app password
                 server.send_message(msg)
                 server.quit()
-                print("Email sent successfully")
+                emailnotify = "Email sent successfully."
             except (socket.gaierror, smtplib.SMTPException, Exception) as e:
-                print(f"Email sending failed: {e}")
+                emailnotify = f"Failed to send email: {e}"
                 pass #continue without email, just show results on webpage
 
     return render_template("index.html",
@@ -83,7 +82,8 @@ def upload_file():
                            email_title=email_title, #parsed email title
                            email_subject=email_subject, #parsed email subject
                            email_body=email_body, #parsed email body
-                           EmailDomainMsg=EmailDomainMsg) #domain check message
+                           EmailDomainMsg=EmailDomainMsg,
+                           emailnotify=emailnotify) #domain check message
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

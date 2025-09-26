@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get spam directory from environment variable or use default
-spam_dir = os.getenv('SPAM_DATASET_DIR', 'spam_2/')
+ham_dir = os.getenv('SPAM_DATASET_DIR', 'hamEmails/')
 
 
 def load_data(directory, label):
@@ -19,12 +19,12 @@ def load_data(directory, label):
             labels.append(label)  # Assign the provided label (1 for spam, 0 for ham)
     return texts, labels
 
-spam_texts, spam_labels = load_data(spam_dir, 1)  # 1 for spam
+ham_texts, ham_labels = load_data(ham_dir, 1)  # 1 for spam
 
 
 # Combine all data and labels into one dataset
-texts = spam_texts 
-labels = spam_labels
+texts = ham_texts 
+labels = ham_labels
 
 # Create a DataFrame
 emailDataF = pd.DataFrame({'text': texts, 'label': labels})
@@ -49,3 +49,4 @@ def list_of_domains(text):
 emailDomains = emailDataF['text'].apply(list_of_domains).tolist() # Apply the function to the 'text' column to get a list of domains for each email
 all_from_emails = [email for sublist in emailDomains for email in sublist] # Flatten the list of lists (goes through each sublist and through each email in the sublist and adds it to the main list)
 unique_from_emails = set(all_from_emails) #Remove any duplicates
+print(unique_from_emails)

@@ -93,11 +93,11 @@ def check_domain_reputation(url, max_retries = 3, delay = 2): # check domain rep
             
         
             else:
-                print("Domain age is good")
+                print("Domain age is good") 
             
         
         print(f'age domain {suspicion_score}')
-              
+        
         expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
     
     

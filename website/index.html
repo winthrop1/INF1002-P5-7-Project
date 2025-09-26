@@ -93,6 +93,10 @@
                 document.getElementById('emailContent').value = e.target.result;
             };
 
+            window.onload = function() {
+                document.getElementById('emailContent').value = '';
+            };
+
             if (file) {
                 reader.readAsText(file);
             }

@@ -52,7 +52,7 @@ def upload_file():
                 f"Classification: {classification}\n\n"
                 f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
                 f"Total Risk Score: {total_score}\n\n"
-                f"Domain Check Message: {EmailDomainMsg}\n\n"
+                f"Domain Check Message: {EmailDomainMsg}\n"
                 "Email Content:\n"
                 f"{email_text}\n\n"
             )

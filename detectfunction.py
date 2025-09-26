@@ -201,7 +201,7 @@ if __name__ == "__main__":
             print(f"Body (first 150 chars): {body[:150]}...")
 
             # Test classification with original content
-            classification, keywords, total_score = classify_email(file_content)
+            classification, keywords, total_score = classify_email(subject, body)
 
             print(f"\nCLASSIFICATION RESULTS:")
             print(f"Classification: {classification}")

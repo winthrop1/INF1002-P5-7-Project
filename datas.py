@@ -49,4 +49,3 @@ def list_of_domains(text):
 emailDomains = emailDataF['text'].apply(list_of_domains).tolist() # Apply the function to the 'text' column to get a list of domains for each email
 all_from_emails = [email for sublist in emailDomains for email in sublist] # Flatten the list of lists (goes through each sublist and through each email in the sublist and adds it to the main list)
 unique_from_emails = set(all_from_emails) #Remove any duplicates
-print(unique_from_emails)

@@ -42,7 +42,7 @@ def upload_file():
             classification, keywords, total_score = classify_email(email_subject, email_body)
 
             # Domain check
-            EmailDomainMsg = domaincheck(email_title, total_score)
+            EmailDomainMsg = domaincheck(email_title)
 
             # Send email report to user
             admin_email = "gachacentral1@gmail.com"

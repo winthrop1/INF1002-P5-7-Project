@@ -4,6 +4,7 @@ import os #work with folders in file systems
 import smtplib
 import socket
 from email.message import EmailMessage
+from email.utils import parseaddr
 from dotenv import load_dotenv #for loading environment variables
 
 #load environment variables from .env file
@@ -45,34 +46,34 @@ def upload_file():
             EmailDomainMsg = domaincheck(email_title)
 
             # Send email report to user
-            admin_email = "gachacentral1@gmail.com"
+            if useremail:
+                admin_email = "gachacentral1@gmail.com"
 
-            report_body = (
-                "----- Email Analysis Result -----\n\n"
-                f"Classification: {classification}\n\n"
-                f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
-                f"Total Risk Score: {total_score}\n\n"
-                f"Domain Check Message: {EmailDomainMsg}\n"
-                "Email Content:\n"
-                f"{email_text}\n\n"
-            )
+                report_body = (
+                    "----- Email Analysis Result -----\n\n"
+                    f"Classification: {classification}\n\n"
+                    f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
+                    f"Total Risk Score: {total_score}\n\n"
+                    f"Domain Check Message: {EmailDomainMsg}\n"
+                    "Email Content:\n"
+                    f"{email_text}\n\n"
+                )
 
-            msg = EmailMessage()
-            msg['From'] = admin_email
-            msg['To'] = useremail
-            msg['Subject'] = 'Your Email Phishing Analysis Report'
-            msg.set_content(report_body)
+                msg = EmailMessage()
+                msg['From'] = admin_email
+                msg['To'] = useremail
+                msg['Subject'] = 'Your Email Phishing Analysis Report'
+                msg.set_content(report_body)
 
-            try:
-                server = smtplib.SMTP('smtp.gmail.com', 587)
-                server.starttls()
-                server.login(admin_email, 'dexksasuvacscfwv') #app password
-                server.send_message(msg)
-                server.quit()
-                emailnotify = "Email sent successfully."
-            except (socket.gaierror, smtplib.SMTPException, Exception) as e:
-                emailnotify = f"Failed to send email: {e}"
-                pass #continue without email, just show results on webpage
+                try:
+                    server = smtplib.SMTP('smtp.gmail.com', 587)
+                    server.starttls()
+                    server.login(admin_email, 'dexksasuvacscfwv') #app password
+                    server.send_message(msg)
+                    server.quit()
+                    emailnotify = "Email sent successfully."
+                except (socket.gaierror, smtplib.SMTPException, Exception) as e:
+                        emailnotify = f"Failed to send email: {e}"
 
     return render_template("index.html",
                            classification=classification, #classification

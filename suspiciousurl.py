@@ -5,10 +5,36 @@ import whois
 import time
 from datetime import datetime
 import re
+import os 
+from dotenv import load_dotenv
 
-url = input("Enter URL to be verified: ")
+#url = input("Enter URL to be verified: ")
 suspicion_score = 0
 reasons = []
+
+file_path = "C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
+
+
+
+def get_urls_from_email_file():
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            email_content = f.read()
+            url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+' 
+            url = re.findall(url_pattern, email_content)
+            print("File content read successfully.")
+        return url
+    
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
+
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
+
+
+extracted_urls = get_urls_from_email_file(file_path)
+print(extracted_urls)
+    
 
 
 def domain_resolved(url): # first level check
@@ -266,4 +292,4 @@ def assessing_risk_scores(url):
         'subdirectory_count': subdir_count,
         }
     
-assessing_risk_scores(url)
+#assessing_risk_scores(extracted_urls)

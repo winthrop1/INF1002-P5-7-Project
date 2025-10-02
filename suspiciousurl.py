@@ -12,28 +12,37 @@ from dotenv import load_dotenv
 suspicion_score = 0
 reasons = []
 
-file_path = "C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
+file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
 
 
-
-def get_urls_from_email_file():
+def get_urls_from_email_file(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             email_content = f.read()
-            url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+' 
-            url = re.findall(url_pattern, email_content)
-            print("File content read successfully.")
-        return url
+            
+            # More comprehensive URL pattern
+            url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+[/\w\.-]*\??[/\w\.-=&%]*'
+            urls = re.findall(url_pattern, email_content)
+            
+            print(f"Found {len(urls)} URLs in the file.")
+            return urls
     
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' was not found.")
-
+        return []
+    
     except Exception as e:
         print(f"An error occurred while reading the file: {e}")
-
+        return []
 
 extracted_urls = get_urls_from_email_file(file_path)
-print(extracted_urls)
+
+if extracted_urls:
+    print("Extracted URLs:")
+    for i, url in enumerate(extracted_urls, 1):
+        print(f"{i}. {url}")
+else:
+    print("No URLs found or file could not be read.")
     
 
 

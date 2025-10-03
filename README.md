@@ -1,8 +1,15 @@
 # INF1002-P5-7 Phishing Email Detection System
 
+## Group Members:
+- Ho Winthrop 2500940
+- Ho Shang Jay 2500526
+- Mohamed Raihan Bin Ismail 2503274
+- Matthew Dyason 2500503
+- Leticia Linus Jeraled 2501114
+
 ## 📧 Project Overview
 
-A Python-based phishing email detection system developed for the INF1002 Programming Fundamentals course. This application analyzes email content to detect potential phishing attempts using keyword-based scoring algorithms and domain verification.
+A Python-based phishing email detection system developed for the INF1002 Programming Fundamentals course. This application analyzes email content to detect potential phishing attempts using keyword-based scoring algorithms and domain verification.`
 
 ## 🎯 Features
 

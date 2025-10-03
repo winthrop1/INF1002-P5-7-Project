@@ -52,9 +52,35 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
    - Generates detailed comparison reports
    - Saves results to comparison_results.json
 
+7. **suspiciousurl.py**: URL analysis and verification system
+   - Extracts URLs from email content using regex patterns
+   - Analyzes domain reputation and registration information
+   - Detects URL shorteners and suspicious TLDs
+   - Checks for IP addresses in URLs instead of domains
+   - Uses WHOIS lookup for domain analysis
+   - Scores URLs based on multiple risk factors
+
+8. **csv_processor.py**: CSV keyword processing and integration
+   - Processes CSV keyword files (top_2_words_per_file.csv, top_2_words_spam.csv)
+   - Categorizes keywords into 7 detection categories automatically
+   - Integrates CSV data with existing JSON detection rules
+   - Generates comprehensive keyword mappings and statistics
+
+9. **word_frequency_analyzer.py**: Statistical text analysis
+   - Extracts email content from files and analyzes word frequency
+   - Focuses on subject and body content, skipping headers
+   - Generates frequency statistics for spam/ham classification
+   - Exports analysis results to CSV format for further processing
+
+10. **main.py**: Integration orchestrator
+    - Coordinates multiple detection components
+    - Integrates URL analysis with keyword detection
+    - Processes email files through the complete detection pipeline
+    - Combines scores from different analysis methods
+
 ### Core Components (Original)
 
-1. **detector.py**: Main detection logic that classifies emails as "Safe" or "Phishing"
+1. **detectfunction.py**: Main detection logic that classifies emails as "Safe" or "Phishing"
    - Loads spam keywords from `words/spam_words.txt`
    - Implements weighted scoring system:
      - Subject keywords: 3 points each (higher weight due to importance)
@@ -195,6 +221,32 @@ python detector_comparison.py
 ```
 This will test both detectors on all sample emails and generate a comparison report.
 
+### Additional Analysis Tools
+
+#### URL Analysis
+```bash
+python suspiciousurl.py
+```
+Analyzes URLs in emails for suspicious characteristics including domain reputation, URL shorteners, and phishing indicators.
+
+#### CSV Data Processing
+```bash
+python csv_processor.py
+```
+Processes CSV keyword files and integrates them into JSON detection rules.
+
+#### Word Frequency Analysis
+```bash
+python word_frequency_analyzer.py
+```
+Analyzes word frequency patterns in email datasets for keyword extraction.
+
+#### Main Integration Script
+```bash
+python main.py
+```
+Integrates multiple detection components including URL analysis and keyword detection.
+
 ### Updating Spam Keywords Database
 
 #### Scrape New Keywords
@@ -210,11 +262,24 @@ python keyword_categorizer.py
 This will categorize all keywords and generate `rules/detection_rules.json`.
 
 ### Testing with Sample Data
-The detector.py file includes a main block that can test email files directly:
-- Edit line 102 in detector.py to specify the file path to test
+
+#### Run Complete Test Suite
+```bash
+python test_hybrid_terminal.py
+```
+This runs comprehensive tests comparing both detection systems on all sample files.
+
+#### Quick Spam File Testing
+```bash
+python test_spam_files.py
+```
+Tests enhanced detector with files in the ham/ directory.
+
+#### Manual Testing
+The detectfunction.py file includes a main block that can test email files directly:
+- Edit the file path in detectfunction.py to specify test file
 - Supports both .txt and .eml file formats
-- Run with: `python detector.py`
-- Current default test file: spam/spam_1.txt
+- Run with: `python detectfunction.py`
 
 ## Environment Configuration
 
@@ -242,8 +307,9 @@ Required packages:
 - **requests==2.32.5**: HTTP library for web scraping
 - **lxml==6.0.1**: XML/HTML processing for parsing scraped content
 - **python-dotenv==1.1.1**: Environment variable management
-- **pandas**: Data manipulation for domain analysis (required by datas.py)
-- **numpy**: Numerical operations (required by datas.py)
+- **pandas>=1.5.0**: Data manipulation for domain analysis
+- **validators**: URL and domain validation
+- **whois**: Domain registration information lookup
 
 Standard library modules used:
 - **re**: Regular expressions for text processing
@@ -263,7 +329,7 @@ Standard library modules used:
 The project includes sample data for testing:
 - Use ham/ directory files to test for false positives
 - Use spam/ directory files to test detection accuracy
-- The scoring system can be tuned by adjusting weights in detector.py
+- The scoring system can be tuned by adjusting weights in detectfunction.py
 
 ## Current Features Status
 
@@ -278,12 +344,12 @@ The project includes sample data for testing:
 - ✅ Detector comparison tool for performance analysis
 
 ### Original System (Maintained for Compatibility)
-- ✅ detector.py uses environment variables from .env file
+- ✅ detectfunction.py uses environment variables from .env file
 - ✅ spamwords.py scrapes keywords and saves to words/spam_words.txt
 - ✅ website.py Flask application serves on http://127.0.0.1:5000
 - ✅ Environment configuration via .env file is functional
 - ✅ Sample data files exist in ham/ and spam/ directories
-- ✅ detector.py can test files directly (modify filepath on line 121)
+- ✅ detectfunction.py can test files directly (modify filepath in main block)
 - ✅ Domain checking with domaincheck() function
 - ✅ Email report sending functionality in website.py
 - ✅ datas.py loads spam domains from SPAM_DATASET_DIR

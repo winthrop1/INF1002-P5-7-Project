@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template #import flask and needed modules
-from detectfunction import classify_email, domaincheck, parse_email_file #import from detector.py
+from email_manage import classify_email, domaincheck, parse_email_file #import from detector.py
 import os #work with folders in file systems
 import smtplib
 import socket

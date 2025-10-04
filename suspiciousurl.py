@@ -8,14 +8,38 @@ import re
 import os 
 from dotenv import load_dotenv
 
+
+
+load_dotenv()
 #url = input("Enter URL to be verified: ")
 suspicion_score = 0
 reasons = []
 
-file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
+#file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
 
 
-def get_urls_from_email_file(file_path): # Extract URLs from the email file
+def get_urls_from_email_file(email_body): # Extract URLs from the email file
+    try:
+            
+        # More comprehensive URL pattern
+        url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
+        urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
+            
+        print(f"Found {len(urls)} URLs in the file.")
+       
+        if urls:
+            print("Extracted URLs:")
+            for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
+                print(f"{i}. {url}")
+        else:
+            print("No URLs found or file could not be read.") 
+    
+    
+    except Exception as e: # Handle other exceptions
+        print(f"An error occurred while reading the file: {e}")
+        return []
+    
+r'''def get_urls_from_email_file(file_path): # Extract URLs from the email file
     try:
         with open(file_path, "r", encoding="utf-8") as f: # Open the file with utf-8 encoding to handle special characters
             email_content = f.read()
@@ -35,14 +59,14 @@ def get_urls_from_email_file(file_path): # Extract URLs from the email file
         print(f"An error occurred while reading the file: {e}")
         return []
 
-extracted_urls = get_urls_from_email_file(file_path)
+extracted_urls = get_urls_from_email_file()
 
 if extracted_urls:
     print("Extracted URLs:")
     for i, url in enumerate(extracted_urls, 1): # Enumerate through the extracted URLs and print them
         print(f"{i}. {url}")
 else:
-    print("No URLs found or file could not be read.") 
+    print("No URLs found or file could not be read.")'''
     
 
 
@@ -266,8 +290,31 @@ def calling_all_functions(url):
     subdir_count(url)
     
 
-def assessing_risk_scores(url):
+def assessing_risk_scores(email_body):
     global suspicion_score
+
+    
+    try:
+            
+        # More comprehensive URL pattern
+        url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
+        urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
+            
+        print(f"Found {len(urls)} URLs in the file.")
+       
+        if urls:
+            print("Extracted URLs:")
+            for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
+                print(f"{i}. {url}")
+        else:
+            print("No URLs found or file could not be read.") 
+    
+    
+    except Exception as e: # Handle other exceptions
+        print(f"An error occurred while reading the file: {e}")
+        return []
+
+    
     
     if domain_resolved(url):
         calling_all_functions(url)
@@ -290,7 +337,7 @@ def assessing_risk_scores(url):
     else:
         risk_level = "VERY_LOW"
         
-    print("testing reasons")
+    '''print("testing reasons")
 
     print(f'Risk Level: {risk_level}')
     print(f'Suspicion Score: {suspicion_score}')
@@ -298,14 +345,8 @@ def assessing_risk_scores(url):
     for reason in reasons:
         print(f'- {reason}') 
     print(f'URL Length: {len(url)} characters')
-    print(f'Subdirectory Count: {subdir_count(url)}')
+    print(f'Subdirectory Count: {subdir_count(url)}')'''
     
-    return {
-        'risk_level': risk_level,
-        'suspicion_score': suspicion_score,
-        'reasons': reasons,
-        'url_length': len(url),
-        'subdirectory_count': subdir_count,
-        }
+    return risk_level, suspicion_score, reasons
     
-assessing_risk_scores(url)
+#assessing_risk_scores(url)

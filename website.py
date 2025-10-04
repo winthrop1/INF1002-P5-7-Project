@@ -1,5 +1,8 @@
 from flask import Flask, request, render_template #import flask and needed modules
-from email_manage import classify_email, domaincheck, parse_email_file #import from detector.py
+from email_manage import parse_email_file #import from detector.py
+from domainchecker import domaincheck
+from suspiciouswords import classify_email
+from suspiciousurl import assessing_risk_scores, get_urls_from_email_file
 import os #work with folders in file systems
 import smtplib
 import socket
@@ -16,6 +19,7 @@ app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
     #variables to hold results
+    reasons = []
     classification = None
     EmailDomainMsg = ''
     emailnotify = ''
@@ -44,6 +48,11 @@ def upload_file():
 
             # Domain check
             EmailDomainMsg = domaincheck(email_title)
+
+
+            risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
+
+            
 
             # Send email report to user
             if useremail:
@@ -84,6 +93,7 @@ def upload_file():
                            email_subject=email_subject, #parsed email subject
                            email_body=email_body, #parsed email body
                            EmailDomainMsg=EmailDomainMsg,
+                           reasons=reasons, #url analysis reasons
                            emailnotify=emailnotify) #domain check message
 
 if __name__ == "__main__": #run website

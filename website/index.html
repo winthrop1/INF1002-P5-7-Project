@@ -58,7 +58,7 @@
 
                         <!--show whats the classification-->
                         {% if classification %}
-                        <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}">
+                        <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}" id = "outputBox">
                             <h5 class="alert-heading">Classification: {{ classification }}</h5>
                             <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
                             <h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>
@@ -95,14 +95,16 @@
                 document.getElementById('emailContent').value = e.target.result;
             };
 
-            window.onload = function(e) {
-                document.getElementById('emailContent').value = e.target.result;
-            };
-
             if (file) {
                 reader.readAsText(file);
             }
         }
     </script>
+
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('outputBox').reset();
+        });
+  </script>
 </body>
 </html>

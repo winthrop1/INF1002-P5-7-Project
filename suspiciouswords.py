@@ -34,16 +34,16 @@ sus_keywords = load_keywords(txt_path)
 def detection_subject(subject):
     score = 0 #assign scores
     keywords = []
-    subject_lower = subject.lower() #convert subject to lowercase incase of case-sensitive match
+    subject_lower = subject.lower() #convert subject to lowercase in case of case-sensitive match
 
     for keyword in sus_keywords:
         pattern = r'\b' + re.escape(keyword) + r'\b' #regex pattern to match whole word
         if re.search(pattern, subject_lower):
             score += 3 #higher weight for sus words in subject
             keywords.append(f"Suspicious word in subject: '{keyword}'")
-    return score, keywords #ouput total scoore with keywords
+    return score, keywords #output total score with keywords
 
-#score the keywoprds based on their position subject or body
+#score the keywords based on their position subject or body
 def detection_body(body):
     score = 0
     keywords = []
@@ -54,21 +54,21 @@ def detection_body(body):
         if re.search(pattern, body_lower):
             score += 1 #lower weight for sus in body
             keywords.append(f"Suspicious word in body: '{keyword}'")
-    return score, keywords #ouput total scoore with keywords
+    return score, keywords #output total score with keywords
 
 #classify email as safe/phishing
 def classify_email(email_subject, email_body):
-    total_score = 0
+    keywords_suspicion_score = 0
     keywords = []
 
     #s = score, k = keyword
     s, k = detection_subject(email_subject) #detect suspicious keywords in subject
-    total_score += s #addscore to total
+    keywords_suspicion_score += s #add score to total
     keywords.extend(k) #append keywords
 
     s, k = detection_body(email_body) #detect suspicious keywords in body
-    total_score += s #add score to total
+    keywords_suspicion_score += s #add score to total
     keywords.extend(k) #append keywords
 
-    classification = "Safe" if total_score == 0 else "Phishing"
-    return classification, keywords, total_score #output score with keywords
+    classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
+    return classification, keywords, keywords_suspicion_score #output score with keywords

@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 #url = input("Enter URL to be verified: ")
-suspicion_score = 0
+url_suspicion_score = 0
 reasons = []
 
 #file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
@@ -99,7 +99,7 @@ def domain_resolved(url): # first level check
 
 def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain reputation using WHOIS data, with a max retry of 3, and a delay of 2 seconds between retries
     
-    global suspicion_score # Use global variable to track suspicion score
+    global url_suspicion_score # Use global variable to track suspicion score
     
     today = datetime.now() 
     parsed_url = urlparse(url) 
@@ -133,21 +133,19 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
     
         if creation_date:
             age_days = (datetime.now() - creation_date).days # Calculate domain age in days
-
-            print(f"Domain age: {age_days} days")
         
             if age_days < 30: 
-                suspicion_score += 3
+                url_suspicion_score += 3
                 reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
             
             
             elif age_days < 121:
-                suspicion_score += 2
+                url_suspicion_score += 2
                 reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
             
         
             elif age_days < 366:
-                suspicion_score += 1
+                url_suspicion_score += 1
                 reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
             
         
@@ -156,7 +154,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
                 print("Domain age is good") 
             
         
-        print(f'age domain {suspicion_score}')
+        print(f'age domain {url_suspicion_score}')
         
         expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
     
@@ -170,20 +168,20 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Domain expiration in: {number_of_days} days") 
         
             if number_of_days < 365: 
-                suspicion_score += 1 
+                url_suspicion_score += 1 
                 reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
 
-                print(f'expiration domain {suspicion_score}')
+                print(f'expiration domain {url_suspicion_score}')
 
             elif number_of_days < 180:
-                suspicion_score += 2
+                url_suspicion_score += 2
                 reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
 
-                print(f'expiration domain {suspicion_score}')
+                print(f'expiration domain {url_suspicion_score}')
             
             else:
                 print("Domain expiration date is good")
-                print(f'expiration domain {suspicion_score}')
+                print(f'expiration domain {url_suspicion_score}')
             
         
         else:
@@ -199,10 +197,10 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
         
             if days_since_update_to_expiry <= 365: 
-                suspicion_score += 1
+                url_suspicion_score += 1
                 reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
 
-                print(f'updated domain {suspicion_score}')
+                print(f'updated domain {url_suspicion_score}')
 
         else:
             print("No updated date found") 
@@ -214,8 +212,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
 
 
 def having_ip_address(url):
-    global suspicion_score
-    print("test having ip address")
+    global url_suspicion_score
     match = re.search( # search for digits and dots, with a slash at the end 
         '(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.'
         '([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\/)|'  # IPv4
@@ -223,7 +220,7 @@ def having_ip_address(url):
         '(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}', url)  # Ipv6
     
     if match:
-        suspicion_score += 2 
+        url_suspicion_score += 2 
         reasons.append("URL contains an IP address instead of a domain name, which is often used in malicious URLs to obscure the destination")
         
     else:
@@ -231,35 +228,33 @@ def having_ip_address(url):
 
 
 def https_check(url):
-    global suspicion_score
-    print("test https") 
+    global url_suspicion_score
     if not url.startswith("https://"): # Check if URL starts with https
-        suspicion_score += 2
+        url_suspicion_score += 2
+        reasons.append("URL does not use HTTPS, which is a strong indicator of insecurity")
+        return
         
-        if url.startswith("http://"):
-            reasons.append("URL uses HTTP, information sent between your browser and a website is not encrypted")
-            
-        else:
-            reasons.append("URL does not use HTTPS, which is a strong indicator of insecurity")
-        
+    elif url.startswith("http://"):
+        reasons.append("URL uses HTTP, information sent between your browser and a website is not encrypted")
+        url_suspicion_score += 1
         return 
+    
     else:
         reasons.append("URL uses HTTPS, which is good")
         return
     
 def url_check (url):
-    global suspicion_score
-    print("test url length")
+    global url_suspicion_score
     
     if len(url) > 75: # Check if URL length is greater than 75 characters
-        suspicion_score += 1
+        url_suspicion_score += 1
         reasons.append(f"URL length is unusually long, ({len(url)} characters)")
     else:
         print("URL length is normal")
         reasons.append(f"URL length is normal, ({len(url)} characters), but proceed with caution")   
         
     if '@' in url: # Check if URL contains '@' symbol
-        suspicion_score += 2
+        url_suspicion_score += 2
         reasons.append("URL contains '@' symbol, which can be used to obscure the real destination")
         
     else:
@@ -269,14 +264,13 @@ def url_check (url):
     
     
 def subdir_count(url):
-    global suspicion_score
+    global url_suspicion_score
     parsed_url = urlparse(url) 
     subdir_count = parsed_url.count('/')  # Count non-empty segments
     
-    print("test subdir count")
     
-    if subdir_count > 4: # Check if subdirectory count is greater than 4
-        suspicion_score += 1
+    if subdir_count > 3: # Check if subdirectory count is greater than 4
+        url_suspicion_score += 1
         reasons.append(f"URL has a suspiciously high number of subdirectories, ({subdir_count} subdirectories)")
     else:
         reasons.append(f"URL has a normal number of subdirectories, ({subdir_count} subdirectories), but proceed with caution")
@@ -291,7 +285,7 @@ def calling_all_functions(url):
     
 
 def assessing_risk_scores(email_body):
-    global suspicion_score
+    global url_suspicion_score
 
     
     try:
@@ -301,7 +295,7 @@ def assessing_risk_scores(email_body):
         urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
             
         print(f"Found {len(urls)} URLs in the file.")
-       
+        
         if urls:
             print("Extracted URLs:")
             for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
@@ -320,7 +314,7 @@ def assessing_risk_scores(email_body):
         calling_all_functions(url)
         
     else:
-        suspicion_score += 3
+        url_suspicion_score += 3
         reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
     
     #def normalize_date(date_value):
@@ -328,25 +322,24 @@ def assessing_risk_scores(email_body):
                 #return date_value[0]
             #return date_value
     
-    if suspicion_score >= 5:
+    if url_suspicion_score >= 5:
         risk_level = "HIGH"
-    elif suspicion_score >= 3:
+    elif url_suspicion_score >= 3:
         risk_level = "MEDIUM"
-    elif suspicion_score >= 1:
+    elif url_suspicion_score >= 1:
         risk_level = "LOW"
     else:
         risk_level = "VERY_LOW"
         
-    '''print("testing reasons")
+    print("testing reasons")
 
     print(f'Risk Level: {risk_level}')
-    print(f'Suspicion Score: {suspicion_score}')
+    print(f'Suspicion Score: {url_suspicion_score}')
     print("Reasons for suspicion:")
     for reason in reasons:
         print(f'- {reason}') 
     print(f'URL Length: {len(url)} characters')
-    print(f'Subdirectory Count: {subdir_count(url)}')'''
+    print(f'Subdirectory Count: {subdir_count(url)}')
     
-    return risk_level, suspicion_score, reasons
+    return reasons, url_suspicion_score
     
-#assessing_risk_scores(url)

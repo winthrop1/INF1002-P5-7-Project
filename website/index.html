@@ -62,9 +62,10 @@
                             <h5 class="alert-heading">Classification: {{ classification }}</h5>
                             <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
                             <h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>
-                            <p><strong>Risk Score:</strong> {{ total_score }}</p>
+                            <h5 class="alert-heading">Risk Scoring: {{ risk_level }}</h5>
+                            <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
                             <ul>
-                                <!--show sus keyowrds detected-->
+                                <!--show sus keywords detected-->
                                 {% for keyword in keywords %}
                                     <li>{{ keyword }}</li>
                                 {% endfor %}
@@ -94,8 +95,8 @@
                 document.getElementById('emailContent').value = e.target.result;
             };
 
-            window.onload = function() {
-                document.getElementById('emailContent').value = '';
+            window.onload = function(e) {
+                document.getElementById('emailContent').value = e.target.result;
             };
 
             if (file) {

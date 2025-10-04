@@ -16,6 +16,8 @@ load_dotenv()
 #initialize flask app
 app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
 
+
+
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
     #variables to hold results
@@ -29,6 +31,8 @@ def upload_file():
     email_title = ''
     email_subject = ''
     email_body = ''
+    risk_level = ''
+    total_risk_scoring = 0
 
     if request.method == 'POST': #handle submissions
         file = request.files.get('emailfile')
@@ -44,13 +48,34 @@ def upload_file():
             email_title, email_subject, email_body = parse_email_file(email_text)
 
             # Classify the email using the original detection system
-            classification, keywords, total_score = classify_email(email_subject, email_body)
+            classification, keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
 
             # Domain check
-            EmailDomainMsg = domaincheck(email_title)
+            EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
 
-            risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
+            reasons, url_suspicion_score = assessing_risk_scores(email_body)
+            
+            
+            total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
+                
+                
+            if total_risk_scoring >= 9:
+                risk_level = "VERY HIGH"
+                    
+            elif total_risk_scoring >= 7: 
+                risk_level = "HIGH"
+                    
+            elif total_risk_scoring >= 5:
+                risk_level = "MEDIUM"
+                    
+            elif total_risk_scoring >= 3:
+                risk_level = "LOW"
+                    
+            else:
+                risk_level = "VERY_LOW"
+                    
+                
 
             
 
@@ -85,16 +110,18 @@ def upload_file():
                         emailnotify = f"Failed to send email: {e}"
 
     return render_template("index.html",
-                           classification=classification, #classification
-                           keywords=keywords, #keywords found
-                           total_score=total_score, #risk score
-                           email_content=email_text, #original email content
-                           email_title=email_title, #parsed email title
-                           email_subject=email_subject, #parsed email subject
-                           email_body=email_body, #parsed email body
-                           EmailDomainMsg=EmailDomainMsg,
-                           reasons=reasons, #url analysis reasons
-                           emailnotify=emailnotify) #domain check message
+                        classification=classification, #classification
+                        keywords=keywords, #keywords found
+                        total_score=total_score, #risk score
+                        email_content=email_text, #original email content
+                        email_title=email_title, #parsed email title
+                        email_subject=email_subject, #parsed email subject
+                        email_body=email_body, #parsed email body
+                        EmailDomainMsg=EmailDomainMsg,
+                        reasons=reasons, #url analysis reasons
+                        risk_level=risk_level,#risk scoring of the whole email
+                        total_risk_scoring=total_risk_scoring,
+                        emailnotify=emailnotify) #domain check message
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

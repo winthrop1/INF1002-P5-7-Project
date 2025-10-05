@@ -53,17 +53,20 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <button type="submit" class="btn btn-primary">Analyze</button>
+                                <button type="button" class="btn btn-secondary" onclick="window.location.href = '/' ">Clear All</button>
                             </div>
                         </form>
 
                         <!--show whats the classification-->
                         {% if classification %}
-                        <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}">
+                        <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}" id = "outputBox">
                             <h5 class="alert-heading">Classification: {{ classification }}</h5>
                             <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
-                            <p><strong>Risk Score:</strong> {{ total_score }}</p>
+                            <h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>
+                            <h5 class="alert-heading">Risk Scoring: {{ risk_level }}</h5>
+                            <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
                             <ul>
-                                <!--show sus keyowrds detected-->
+                                <!--show sus keywords detected-->
                                 {% for keyword in keywords %}
                                     <li>{{ keyword }}</li>
                                 {% endfor %}
@@ -93,14 +96,11 @@
                 document.getElementById('emailContent').value = e.target.result;
             };
 
-            window.onload = function() {
-                document.getElementById('emailContent').value = '';
-            };
-
             if (file) {
                 reader.readAsText(file);
             }
         }
     </script>
+
 </body>
 </html>

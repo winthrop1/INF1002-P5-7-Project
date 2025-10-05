@@ -6,6 +6,7 @@ from email_manage import parse_email_file
 from suspiciouswords import classify_email
 from domainchecker import domaincheck
 from suspiciousurl import calling_all_functions, assessing_risk_scores, get_urls_from_email_file
+from domainchecker import domaincheck
 
 final_score = 0
 
@@ -24,6 +25,10 @@ def process_email_file(email_file):
 
     # Classify the email using the keyword detection system
     classification, keywords, total_score = classify_email(email_subject, email_body)
+file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt" 
+
+
+
 
 
 if __name__ == "__main__":

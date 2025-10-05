@@ -78,55 +78,88 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
     - Processes email files through the complete detection pipeline
     - Combines scores from different analysis methods
 
-### Core Components (Original)
+### Core Components (Current Implementation)
 
-1. **detectfunction.py**: Main detection logic that classifies emails as "Safe" or "Phishing"
-   - Loads spam keywords from `words/spam_words.txt`
+1. **suspiciouswords.py**: Enhanced keyword detection system
+   - Loads consolidated keywords from CSV files via `consolidate_csv_keywords()`
    - Implements weighted scoring system:
-     - Subject keywords: 3 points each (higher weight due to importance)
-     - Body keywords: 1 point each
-   - Classification threshold: Score > 0 = Phishing, Score = 0 = Safe
-   - Returns tuple: (classification, found_keywords, total_score)
-   - Uses environment variables via python-dotenv for configuration
-   - Imports domain list from datas.py for domain checking
-   - `domaincheck()` function: Checks if sender domain is in known spam domains list
+     - Subject keywords: 3 points each (configurable via SUBJECT_KEYWORD_SCORE)
+     - Early body keywords (first 100 words): 2 points each (EARLY_BODY_KEYWORD_SCORE)
+     - Remaining body keywords: 1 point each (BODY_KEYWORD_SCORE)
+   - Uses regex word boundary matching for accurate detection
+   - Returns tuple: (classification, keywords, keywords_suspicion_score)
+   - Environment-configurable thresholds and scoring weights
 
-2. **spamwords.py**: Web scraper for maintaining spam keyword database
-   - Scrapes keywords from activecampaign.com's spam words list
-   - Filters phrases to maximum 5 words for better matching
-   - Automatically saves to `words/spam_words.txt`
-   - Can be run independently to update keyword database
+2. **domainchecker.py**: Domain analysis and typosquatting detection
+   - Implements Levenshtein distance algorithm for similarity checking
+   - Checks sender domains against known safe domains list
+   - Detects typosquatting attempts with configurable threshold (default: 4)
+   - Environment-configurable scoring via SENDER_KEYWORD_SCORE
+   - Returns tuple: (EmailDomainMsg, domain_suspicion_score)
 
-3. **website.py**: Flask web application server
-   - Provides file upload interface for email analysis
-   - Supported file formats: .eml, .txt
-   - Email functionality:
-     - Sends analysis report to user's email address
-     - Uses SMTP with Gmail for email delivery
-   - Displays classification results with:
-     - Risk level (Safe/Phishing)
-     - Total risk score
-     - List of detected keywords
-     - Domain check results
+3. **suspiciousurl.py**: Comprehensive URL analysis system
+   - Extracts URLs from email content using regex patterns
+   - Multi-factor URL risk assessment:
+     - Domain age analysis (new domains <30 days flagged)
+     - WHOIS data analysis with retry mechanism
+     - IP address detection in URLs
+     - HTTPS/HTTP protocol checking
+     - URL length analysis (>75 characters flagged)
+     - Subdirectory count analysis (>3 flagged)
+     - '@' symbol detection for URL obfuscation
+   - Risk scoring with tiered levels: VERY_LOW, LOW, MEDIUM, HIGH
+   - Returns tuple: (reasons, url_suspicion_score)
+
+4. **website.py**: Integrated Flask web application
+   - Multi-component analysis integration
+   - Combines scores from keywords, domain, and URL analysis
+   - Comprehensive risk scoring:
+     - VERY HIGH: ≥9 points
+     - HIGH: 7-8 points
+     - MEDIUM: 5-6 points
+     - LOW: 3-4 points
+     - VERY_LOW: <3 points
+   - Email reporting functionality with detailed analysis results
    - Template folder: `website/`
-   - Runs in debug mode for development
+   - Debug mode for development
 
-4. **website/index.html**: Frontend user interface
-   - Bootstrap-based responsive design
-   - File upload form with validation
-   - Results display with color coding (green for safe, red for phishing)
-   - Clean, user-friendly interface
+5. **main.py**: Detection pipeline orchestrator
+   - Coordinates email parsing via `email_manage.parse_email_file()`
+   - Integrates keyword detection via `suspiciouswords.classify_email()`
+   - Performs domain checking via `domainchecker.domaincheck()`
+   - Executes URL analysis via `suspiciousurl.assessing_risk_scores()`
+   - Combines all detection components for comprehensive analysis
 
-5. **website/style.css**: Custom CSS styling
-   - Additional styling on top of Bootstrap
-   - Custom color schemes and layouts
+6. **email_manage.py**: Email parsing and content extraction
+   - Handles both .eml structured emails and plain text formats
+   - Extracts email components: title, subject, body
+   - Supports multipart MIME message parsing
+   - Error handling for malformed email content
+   - Returns tuple: (title, subject, body)
 
-6. **datas.py**: Domain extraction and analysis
+7. **datas.py**: Domain extraction and analysis
    - Loads spam emails from directory specified in SPAM_DATASET_DIR
    - Extracts sender domains from spam emails
    - Creates `unique_from_emails` set of known spam domains
    - Uses pandas and numpy for data processing
    - Configurable via environment variables
+
+### Legacy Components
+
+8. **keyword_scrape_web.py**: Web scraper for keyword database maintenance
+   - Scrapes keywords from external sources
+   - Updates keyword databases for detection system
+   - Can be run independently to refresh keyword lists
+
+9. **website/index.html**: Frontend user interface
+   - Bootstrap-based responsive design
+   - File upload form with validation
+   - Results display with color coding and risk levels
+   - Clean, user-friendly interface
+
+10. **website/style.css**: Custom CSS styling
+    - Additional styling on top of Bootstrap
+    - Custom color schemes and layouts
 
 ### Rules and Configuration Structure (NEW)
 
@@ -183,36 +216,46 @@ The application will run on http://127.0.0.1:5000 with debug mode enabled.
 
 ### Testing Email Classification
 
-#### Using Enhanced Detector (Recommended)
+#### Using Current Implementation (Recommended)
 ```python
-from enhanced_detector import EnhancedPhishingDetector
+from email_manage import parse_email_file
+from suspiciouswords import classify_email
+from domainchecker import domaincheck
+from suspiciousurl import assessing_risk_scores
 
-# Initialize detector
-detector = EnhancedPhishingDetector()
+# Test with sample email content
+email_content = """From: suspicious@new-domain.com
+Subject: Urgent: Win $1000 now!
+Click here for free money: http://suspicious-site.com/claim"""
 
-# Test with a sample email
-email_text = "Subject: Win $1000 now!\nClick here for free money..."
-assessment = detector.analyze_email(email_text)
+# Parse email components
+title, subject, body = parse_email_file(email_content)
 
-# Display results
-print(f"Classification: {assessment.classification}")
-print(f"Risk Level: {assessment.risk_level}")
-print(f"Score: {assessment.score}/10")
-print(f"Confidence: {assessment.confidence*100:.0f}%")
-print(f"Recommendations: {assessment.recommendations}")
+# Run individual detection components
+classification, keywords, keywords_score = classify_email(subject, body)
+domain_msg, domain_score = domaincheck(title)
+url_reasons, url_score = assessing_risk_scores(body)
+
+# Calculate total risk
+total_score = keywords_score + domain_score + url_score
+
+print(f"Classification: {classification}")
+print(f"Keyword Score: {keywords_score}")
+print(f"Domain Score: {domain_score}")
+print(f"URL Score: {url_score}")
+print(f"Total Risk Score: {total_score}")
+print(f"Keywords found: {keywords}")
+print(f"Domain analysis: {domain_msg}")
+print(f"URL analysis: {url_reasons}")
 ```
 
-#### Using Original Detector
+#### Using Main Pipeline
 ```python
-from detector import classify_email
+from main import process_email_file
 
-# Test with a sample email (requires subject and body separately)
-subject = "Win $1000 now!"
-body = "Click here for free money..."
-classification, keywords, score = classify_email(subject, body)
-print(f"Classification: {classification}")
-print(f"Score: {score}")
-print(f"Keywords found: {keywords}")
+# Test with email file
+email_file = "dataset/testing/spam_1.txt"
+process_email_file(email_file)
 ```
 
 ### Comparing Detectors
@@ -286,14 +329,48 @@ The detectfunction.py file includes a main block that can test email files direc
 The project uses environment variables for configuration. Copy `.env.example` to `.env` and update as needed:
 
 ```bash
+# Keyword Detection Configuration
+KEYWORDS_RAW_FOLDER=keywords/raw_data
+KEYWORDS_FOLDER=keywords
+KEYWORDS_CONSOLIDATE_PATH=keywords/consolidate_keywords.csv
+SUBJECT_KEYWORD_SCORE=3
+EARLY_BODY_KEYWORD_SCORE=2
+BODY_KEYWORD_SCORE=1
+EARLY_BODY_WORD_COUNT=100
+
+# Domain Analysis Configuration
+SENDER_KEYWORD_SCORE=2
+
+# URL Analysis Configuration
+HIGH_DOMAIN_SCORE=3
+MEDIUM_DOMAIN_SCORE=2
+LOW_DOMAIN_SCORE=1
+LOW_DOMAIN_EXPIRY_SCORE=1
+HIGH_DOMAIN_EXPIRY_SCORE=2
+DOMAIN_UPDATE_SCORE=1
+IP_ADDRESS_SCORE=2
+NO_HTTPS_SCORE=2
+LONG_URL_SCORE=1
+AT_SYMBOL_SCORE=2
+SUBDIR_COUNT_SCORE=1
+UNRESOLVED_DOMAIN_SCORE=3
+
+# Legacy Configuration
 SPAM_WORDS_PATH=words/spam_words.txt
 OUTPUT_FOLDER=words
 SPAM_SOURCE_URL=https://www.activecampaign.com/blog/spam-words
 TEMPLATE_FOLDER=website
 SPAM_DATASET_DIR=spam
+
+# Email Configuration
+EMAIL_ADDRESS=your-email@gmail.com
+EMAIL_KEY=your-app-password
+
+# Testing Configuration
+TEST_EMAIL_FILE=dataset/testing/spam_1.txt
 ```
 
-Note: The code now uses environment variables instead of hardcoded paths, making it portable across different systems.
+Note: The code now uses environment variables instead of hardcoded paths and scores, making it portable and configurable across different systems.
 
 ## Dependencies
 
@@ -333,26 +410,38 @@ The project includes sample data for testing:
 
 ## Current Features Status
 
-### Enhanced Detection System (NEW)
-- ✅ Enhanced detector with 187 categorized rules
-- ✅ Multi-tier risk assessment (CRITICAL/HIGH/MEDIUM/LOW/SAFE)
-- ✅ Pattern matching with regex, fuzzy matching, and context extraction
-- ✅ URL analysis for phishing indicators
-- ✅ Confidence scoring and actionable recommendations
-- ✅ Performance: <400ms analysis time
-- ✅ Automated keyword categorization from spam_words.txt
-- ✅ Detector comparison tool for performance analysis
+### Integrated Detection System (Current Implementation)
+- ✅ Multi-component phishing detection system
+- ✅ Keyword detection with position-based scoring (subject/early body/late body)
+- ✅ Domain analysis with Levenshtein distance typosquatting detection
+- ✅ Comprehensive URL analysis with WHOIS data, age, and reputation checking
+- ✅ Integrated risk scoring across all components
+- ✅ Multi-tier risk assessment (VERY HIGH/HIGH/MEDIUM/LOW/VERY_LOW)
+- ✅ Environment-configurable scoring weights and thresholds
+- ✅ Flask web application with integrated analysis pipeline
+- ✅ Email reporting functionality with detailed analysis results
+- ✅ Support for both .eml and plain text email formats
+- ✅ Regex-based pattern matching with word boundary detection
+- ✅ CSV keyword consolidation and processing
+- ✅ Error handling and graceful degradation
 
-### Original System (Maintained for Compatibility)
-- ✅ detectfunction.py uses environment variables from .env file
-- ✅ spamwords.py scrapes keywords and saves to words/spam_words.txt
-- ✅ website.py Flask application serves on http://127.0.0.1:5000
-- ✅ Environment configuration via .env file is functional
-- ✅ Sample data files exist in ham/ and spam/ directories
-- ✅ detectfunction.py can test files directly (modify filepath in main block)
-- ✅ Domain checking with domaincheck() function
-- ✅ Email report sending functionality in website.py
-- ✅ datas.py loads spam domains from SPAM_DATASET_DIR
+### Core Components Status
+- ✅ suspiciouswords.py: Enhanced keyword detection with CSV consolidation
+- ✅ domainchecker.py: Domain analysis with similarity checking
+- ✅ suspiciousurl.py: Multi-factor URL risk assessment
+- ✅ email_manage.py: Robust email parsing for multiple formats
+- ✅ main.py: Integration pipeline orchestrating all components
+- ✅ website.py: Web interface with comprehensive result display
+- ✅ datas.py: Domain extraction from spam dataset
+- ✅ Environment configuration via .env file
+- ✅ Sample data files in dataset/ directory structure
+
+### Testing and Validation
+- ✅ Individual component testing capabilities
+- ✅ Integrated pipeline testing via main.py
+- ✅ Web interface testing via website.py
+- ✅ Environment-based configuration testing
+- ✅ Multi-format email file support (.eml, .txt)
 
 ## Dependencies Note
 

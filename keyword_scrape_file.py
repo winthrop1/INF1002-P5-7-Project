@@ -44,7 +44,7 @@ def extract_email_content(file_path):
 
 def clean_text(text):
     """
-    Clean and normalize text for word frequency analysis.
+    Clean and normalize text for word extraction.
     """
     # Convert to lowercase
     text = text.lower()
@@ -107,10 +107,10 @@ def get_words(text):
 
 def analyze_spam_directory(directory_path):
     """
-    Analyze all email files in the specified directory and get top 3 words from each file.
-    Returns a list of dictionaries with filename and top words.
+    Analyze all email files in the specified directory and get top 2 words from each file.
+    Returns a list of unique words (top 2 from each file, no duplicates).
     """
-    results = []
+    unique_words = set()
     processed_files = 0
     total_files = 0
 
@@ -120,7 +120,7 @@ def analyze_spam_directory(directory_path):
         if os.path.isfile(file_path):
             total_files += 1
 
-    print(f"Processing {total_files} email files for individual analysis...")
+    print(f"Processing {total_files} email files for top 2 words analysis...")
 
     # Process each file
     for filename in os.listdir(directory_path):
@@ -139,52 +139,43 @@ def analyze_spam_directory(directory_path):
                     # Count words in this specific file
                     file_word_counter = Counter(words)
 
-                    # Get top 2 words for this file, excluding words with frequency of 1
-                    top_words = file_word_counter.most_common()
+                    # Get top 2 most frequent words from this file
+                    top_2_words = file_word_counter.most_common(2)
 
-                    # Filter out words with frequency of 1 and take top 2
-                    filtered_words = [(word, freq) for word, freq in top_words if freq > 1][:2]
-
-                    # Add results for each top word
-                    for word, frequency in filtered_words:
-                        results.append({
-                            'word': word,
-                            'frequency': frequency
-                        })
+                    # Add just the words to set (automatically handles duplicates)
+                    for word, _ in top_2_words:
+                        unique_words.add(word)
 
             processed_files += 1
             if processed_files % 100 == 0:
                 print(f"Processed {processed_files}/{total_files} files...")
 
     print(f"Completed processing {processed_files} files.")
-    return results
+    return list(unique_words)
 
-def save_per_file_results_to_csv(results, output_file):
+def save_words_to_csv(words, output_file):
     """
-    Save per-file top words results to a CSV file.
+    Save unique words to a CSV file.
     """
     # Write to CSV file
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Word', 'Frequency'])  # Header
 
-        for result in results:
-            writer.writerow([
-                result['word'],
-                result['frequency']
-            ])
+        for word in sorted(words):
+            writer.writerow([word])
 
-    print(f"\nTop 2 words per file analysis saved to {output_file}")
+    print(f"\nWords saved to {output_file}")
 
     # Print summary statistics
-    total_entries = len(results)
-    print(f"Summary: {total_entries} word entries")
+    total_words = len(words)
+    print(f"Summary: {total_words} unique words")
 
     # Show first few examples
-    if results:
-        print(f"\nFirst few entries:")
-        for i, result in enumerate(results[:6]):  # Show first 6 entries
-            print(f"'{result['word']}' - {result['frequency']} times")
+    if words:
+        sorted_words = sorted(words)
+        print(f"\nFirst few words:")
+        for i, word in enumerate(sorted_words[:6]):  # Show first 6 words
+            print(f"'{word}'")
             if i == 5:
                 break
 
@@ -205,66 +196,57 @@ def find_existing_csv(search_folder, pattern="top_2_words_spam_*.csv"):
 
 def load_existing_csv(file_path):
     """
-    Load existing CSV data and return as a dictionary {word: frequency}.
+    Load existing CSV data and return as a list of words.
     """
-    word_freq_dict = {}
+    words_list = []
     try:
         with open(file_path, 'r', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 word = row['Word'].strip().lower()
-                frequency = int(row['Frequency'])
-                word_freq_dict[word] = frequency
-        print(f"Loaded {len(word_freq_dict)} existing words from {file_path}")
+                words_list.append(word)
+        print(f"Loaded {len(words_list)} existing words from {file_path}")
     except Exception as e:
         print(f"Error loading existing CSV: {e}")
 
-    return word_freq_dict
+    return words_list
 
-def merge_word_data(existing_data, new_results):
+def merge_word_data(existing_words, new_words):
     """
-    Merge new results with existing data, summing frequencies for duplicate words.
-    Returns merged dictionary {word: frequency}.
+    Merge new words with existing words, ensuring no duplicates.
+    Returns merged list of unique words.
     """
-    merged_data = existing_data.copy()
+    # Convert to sets for uniqueness, then back to list
+    existing_set = set(existing_words)
+    new_set = set(new_words)
+    merged_set = existing_set.union(new_set)
+    return list(merged_set)
 
-    for result in new_results:
-        word = result['word'].lower()
-        frequency = result['frequency']
-
-        if word in merged_data:
-            merged_data[word] += frequency
-        else:
-            merged_data[word] = frequency
-
-    return merged_data
-
-def save_merged_results_to_csv(merged_data, output_file):
+def save_merged_results_to_csv(merged_words, output_file):
     """
-    Save merged word frequency data to CSV file.
+    Save merged words to CSV file.
     """
-    # Sort by frequency (descending) then by word (ascending)
-    sorted_items = sorted(merged_data.items(), key=lambda x: (-x[1], x[0]))
+    # Sort words alphabetically
+    sorted_words = sorted(merged_words)
 
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Word', 'Frequency'])  # Header
 
-        for word, frequency in sorted_items:
-            writer.writerow([word, frequency])
+        for word in sorted_words:
+            writer.writerow([word])
 
     print(f"\nMerged results saved to {output_file}")
-    print(f"Total unique words: {len(merged_data)}")
+    print(f"Total words: {len(merged_words)}")
 
 def main():
     """
-    Main function to run the per-file word frequency analysis.
+    Main function to run the word extraction analysis.
     """
     # Directory containing spam emails
     spam_directory = os.getenv('SPAM_SOURCE_PATH', 'dataset/spam_2')
 
     # Output folder (change this to save CSV to a different folder)
-    output_folder = os.getenv('OUTPUT_FOLDER', 'keywords')
+    output_folder = os.getenv('KEYWORDS_RAW_FOLDER', 'keywords')
 
     # Create output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
@@ -276,7 +258,7 @@ def main():
 
     # Look for existing CSV files in the output folder
     existing_csv = find_existing_csv(output_folder)
-    existing_data = {}
+    existing_data = []
 
     if existing_csv:
         print(f"Found existing CSV: {existing_csv}")
@@ -284,8 +266,8 @@ def main():
     else:
         print("No existing CSV files found. Creating new file.")
 
-    # Analyze the spam directory for per-file results
-    print("Starting per-file word frequency analysis for top 2 words...")
+    # Analyze the spam directory for word extraction
+    print("Starting top 2 words per file analysis...")
     new_results = analyze_spam_directory(spam_directory)
 
     if not new_results:
@@ -313,7 +295,7 @@ def main():
             print(f"Warning: Could not remove old file {existing_csv}: {e}")
 
     print(f"\nAnalysis complete! Results saved to {output_csv}")
-    print(f"Added {len(new_results)} new word entries to {len(existing_data)} existing entries")
+    print(f"Added {len(new_results)} new words to {len(existing_data)} existing words")
 
 if __name__ == "__main__":
     main()

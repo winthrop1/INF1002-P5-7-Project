@@ -113,17 +113,17 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Domain age: {age_days} days")
         
             if age_days < 30: 
-                suspicion_score += 3
+                suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))
                 reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
             
             
             elif age_days < 121:
-                suspicion_score += 2
+                suspicion_score += int(os.getenv("MEDIUM_DOMAIN_SCORE", "2"))
                 reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
             
         
             elif age_days < 366:
-                suspicion_score += 1
+                suspicion_score += int(os.getenv("LOW_DOMAIN_SCORE", "1"))
                 reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
             
         
@@ -146,13 +146,13 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Domain expiration in: {number_of_days} days") 
         
             if number_of_days < 365: 
-                suspicion_score += 1 
+                suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))
                 reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
 
                 print(f'expiration domain {suspicion_score}')
 
             elif number_of_days < 180:
-                suspicion_score += 2
+                suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))
                 reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
 
                 print(f'expiration domain {suspicion_score}')
@@ -175,7 +175,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
         
             if days_since_update_to_expiry <= 365: 
-                suspicion_score += 1
+                suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))
                 reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
 
                 print(f'updated domain {suspicion_score}')
@@ -199,7 +199,7 @@ def having_ip_address(url):
         '(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}', url)  # Ipv6
     
     if match:
-        suspicion_score += 2 
+        suspicion_score += int(os.getenv("IP_ADDRESS_SCORE", "2"))
         reasons.append("URL contains an IP address instead of a domain name, which is often used in malicious URLs to obscure the destination")
         
     else:
@@ -210,7 +210,7 @@ def https_check(url):
     global suspicion_score
     print("test https") 
     if not url.startswith("https://"): # Check if URL starts with https
-        suspicion_score += 2
+        suspicion_score += int(os.getenv("NO_HTTPS_SCORE", "2"))
         
         if url.startswith("http://"):
             reasons.append("URL uses HTTP, information sent between your browser and a website is not encrypted")
@@ -228,14 +228,14 @@ def url_check (url):
     print("test url length")
     
     if len(url) > 75: # Check if URL length is greater than 75 characters
-        suspicion_score += 1
+        suspicion_score += int(os.getenv("LONG_URL_SCORE", "1"))
         reasons.append(f"URL length is unusually long, ({len(url)} characters)")
     else:
         print("URL length is normal")
         reasons.append(f"URL length is normal, ({len(url)} characters), but proceed with caution")   
         
     if '@' in url: # Check if URL contains '@' symbol
-        suspicion_score += 2
+        suspicion_score += int(os.getenv("AT_SYMBOL_SCORE", "2"))
         reasons.append("URL contains '@' symbol, which can be used to obscure the real destination")
         
     else:
@@ -252,7 +252,7 @@ def subdir_count(url):
     print("test subdir count")
     
     if subdir_count > 4: # Check if subdirectory count is greater than 4
-        suspicion_score += 1
+        suspicion_score += int(os.getenv("SUBDIR_COUNT_SCORE", "1"))
         reasons.append(f"URL has a suspiciously high number of subdirectories, ({subdir_count} subdirectories)")
     else:
         reasons.append(f"URL has a normal number of subdirectories, ({subdir_count} subdirectories), but proceed with caution")
@@ -273,7 +273,7 @@ def assessing_risk_scores(url):
         calling_all_functions(url)
         
     else:
-        suspicion_score += 3
+        suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))
         reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
     
     #def normalize_date(date_value):

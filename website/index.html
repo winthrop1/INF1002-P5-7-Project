@@ -62,9 +62,19 @@
                         <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}" id = "outputBox">
                             <h5 class="alert-heading">Classification: {{ classification }}</h5>
                             <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
-                            <h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>
+                            <!--<h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>-->
                             <h5 class="alert-heading">Risk Scoring: {{ risk_level }}</h5>
                             <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
+
+                            <p><u>URL Properties</u></p>
+                            <ul>
+                                {% for reason in reasons %} 
+                                    <li>{{ reason }}</li>
+                                {% endfor %}
+
+                            </ul>
+
+                            <p><u>Suspicious Keywords Used</u></p>
                             <ul>
                                 <!--show sus keywords detected-->
                                 {% for keyword in keywords %}

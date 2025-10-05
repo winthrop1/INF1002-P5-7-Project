@@ -268,26 +268,29 @@ def assessing_risk_scores(email_body):
             
         print(f"Found {len(urls)} URLs in the file.")
         
-        if urls:
+        if urls: #if there are URLs in the email
             print("Extracted URLs:")
             for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
                 print(f"{i}. {url}")
-        else:
+            
+            if domain_resolved(url):
+                calling_all_functions(url)
+        
+            else:
+                url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
+                reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
+        else: #if no URLs
             print("No URLs found or file could not be read.") 
+            url_suspicion_score += int(os.getenv("NO_URLS_FOUND", "0"))
+            reasons.append("The email does not contain any URLs")
+            
+            return reasons, url_suspicion_score
     
     
     except Exception as e: # Handle other exceptions
         print(f"An error occurred while reading the file: {e}")
         return []
 
-    
-    
-    if domain_resolved(url):
-        calling_all_functions(url)
-        
-    else:
-        url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
-        reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
     
     #def normalize_date(date_value):
             #if date_value and isinstance(date_value, list):

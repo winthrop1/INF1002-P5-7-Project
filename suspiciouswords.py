@@ -136,6 +136,7 @@ def detection_body(body):
 
 #classify email as safe/phishing
 def classify_email(email_subject, email_body):
+    total_score = 0
     keywords_suspicion_score = 0
     keywords = []
 

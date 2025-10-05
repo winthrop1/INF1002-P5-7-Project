@@ -107,17 +107,17 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             age_days = (datetime.now() - creation_date).days # Calculate domain age in days
         
             if age_days < 30: 
-                url_suspicion_score += 3
+                url_suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))  # increase risk score for very new domains
                 reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
             
             
             elif age_days < 121:
-                url_suspicion_score += 2
+                url_suspicion_score += int(os.getenv("MEDIUM_DOMAIN_SCORE", "2"))  # increase risk score for moderately new domains
                 reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
             
         
             elif age_days < 366:
-                url_suspicion_score += 1
+                url_suspicion_score += int(os.getenv("LOW_DOMAIN_SCORE", "1"))  # slight increase in risk score for somewhat new domains
                 reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
             
         
@@ -140,13 +140,13 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Domain expiration in: {number_of_days} days") 
         
             if number_of_days < 365: 
-                url_suspicion_score += 1 
+                url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
                 reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
 
                 print(f'expiration domain {url_suspicion_score}')
 
             elif number_of_days < 180:
-                url_suspicion_score += 2
+                url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
                 reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
 
                 print(f'expiration domain {url_suspicion_score}')
@@ -169,7 +169,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
         
             if days_since_update_to_expiry <= 365: 
-                url_suspicion_score += 1
+                url_suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))  # increase risk score for recently updated domains with short time to expiry
                 reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
 
                 print(f'updated domain {url_suspicion_score}')
@@ -192,7 +192,7 @@ def having_ip_address(url):
         '(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}', url)  # Ipv6
     
     if match:
-        url_suspicion_score += 2 
+        url_suspicion_score += int(os.getenv("IP_ADDRESS_SCORE", "2"))  # increase risk score for URLs with IP addresses
         reasons.append("URL contains an IP address instead of a domain name, which is often used in malicious URLs to obscure the destination")
         
     else:
@@ -202,13 +202,13 @@ def having_ip_address(url):
 def https_check(url):
     global url_suspicion_score
     if not url.startswith("https://"): # Check if URL starts with https
-        url_suspicion_score += 2
+        url_suspicion_score += int(os.getenv("NO_HTTPS_SCORE", "2"))  # increase risk score for URLs not using HTTPS
         reasons.append("URL does not use HTTPS, which is a strong indicator of insecurity")
         return
         
     elif url.startswith("http://"):
         reasons.append("URL uses HTTP, information sent between your browser and a website is not encrypted")
-        url_suspicion_score += 1
+        url_suspicion_score += int(os.getenv("HTTP_SCORE", "1"))  # increase risk score for URLs using HTTP instead of HTTPS
         return 
     
     else:
@@ -219,14 +219,14 @@ def url_check (url):
     global url_suspicion_score
     
     if len(url) > 75: # Check if URL length is greater than 75 characters
-        url_suspicion_score += 1
+        url_suspicion_score += int(os.getenv("LONG_URL_SCORE", "1"))  # increase risk score for long URLs
         reasons.append(f"URL length is unusually long, ({len(url)} characters)")
     else:
         print("URL length is normal")
         reasons.append(f"URL length is normal, ({len(url)} characters), but proceed with caution")   
         
     if '@' in url: # Check if URL contains '@' symbol
-        url_suspicion_score += 2
+        url_suspicion_score += int(os.getenv("AT_SYMBOL_SCORE", "2"))  # increase risk score for URLs with '@' symbol
         reasons.append("URL contains '@' symbol, which can be used to obscure the real destination")
         
     else:
@@ -242,7 +242,7 @@ def subdir_count(url):
     
     
     if subdir_count > 3: # Check if subdirectory count is greater than 4
-        url_suspicion_score += 1
+        url_suspicion_score += int(os.getenv("SUBDIR_COUNT_SCORE", "1"))  # increase risk score for URLs with many subdirectories
         reasons.append(f"URL has a suspiciously high number of subdirectories, ({subdir_count} subdirectories)")
     else:
         reasons.append(f"URL has a normal number of subdirectories, ({subdir_count} subdirectories), but proceed with caution")
@@ -286,7 +286,7 @@ def assessing_risk_scores(email_body):
         calling_all_functions(url)
         
     else:
-        url_suspicion_score += 3
+        url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
         reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
     
     #def normalize_date(date_value):

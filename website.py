@@ -53,10 +53,8 @@ def upload_file():
             # Domain check
             EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
-
             reasons, url_suspicion_score = assessing_risk_scores(email_body)
-            
-            
+                        
             total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
                 
                 
@@ -75,12 +73,8 @@ def upload_file():
             else:
                 risk_level = "VERY_LOW"
                     
-                
 
-            
-
-
-            risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
+            # risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
 
             
 

@@ -136,21 +136,19 @@ def detection_body(body):
 
 #classify email as safe/phishing
 def classify_email(email_subject, email_body):
-    total_score = 0
     keywords_suspicion_score = 0
     keywords = []
 
-    #s = score, k = keyword
-    s, k = detection_subject(email_subject) #detect suspicious keywords in subject
-    keywords_suspicion_score += s #add score to total
-    keywords.extend(k) #append keywords
+    subject_score, subject_keywords = detection_subject(email_subject) #detect suspicious keywords in subject
+    keywords_suspicion_score += subject_score #add score to total
+    keywords.extend(subject_keywords) #append keywords
 
-    s, k = detection_body(email_body) #detect suspicious keywords in body
-    keywords_suspicion_score += s #add score to total
-    keywords.extend(k) #append keywords
+    body_score, body_keywords = detection_body(email_body) #detect suspicious keywords in body
+    keywords_suspicion_score += body_score #add score to total
+    keywords.extend(body_keywords) #append keywords
 
-    classification = "Safe" if total_score == 0 else "Phishing"
-    return classification, keywords, total_score #output score with keywords
+    classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
+    return classification, keywords, keywords_suspicion_score #output score with keywords
 
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ def get_urls_from_email_file(email_body): # Extract URLs from the email file
         urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
             
         print(f"Found {len(urls)} URLs in the file.")
-       
+
         if urls:
             print("Extracted URLs:")
             for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
@@ -38,35 +38,7 @@ def get_urls_from_email_file(email_body): # Extract URLs from the email file
     except Exception as e: # Handle other exceptions
         print(f"An error occurred while reading the file: {e}")
         return []
-    
-r'''def get_urls_from_email_file(file_path): # Extract URLs from the email file
-    try:
-        with open(file_path, "r", encoding="utf-8") as f: # Open the file with utf-8 encoding to handle special characters
-            email_content = f.read()
-            
-            # More comprehensive URL pattern
-            url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
-            urls = re.findall(url_pattern, email_content) # Find all URLs in the email content
-            
-            print(f"Found {len(urls)} URLs in the file.")
-            return urls
-    
-    except FileNotFoundError: # Handle file not found error
-        print(f"Error: The file '{file_path}' was not found.")
-        return []
-    
-    except Exception as e: # Handle other exceptions
-        print(f"An error occurred while reading the file: {e}")
-        return []
 
-extracted_urls = get_urls_from_email_file()
-
-if extracted_urls:
-    print("Extracted URLs:")
-    for i, url in enumerate(extracted_urls, 1): # Enumerate through the extracted URLs and print them
-        print(f"{i}. {url}")
-else:
-    print("No URLs found or file could not be read.")'''
     
 
 

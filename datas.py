@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Get spam directory from environment variable or use default
-ham_dir = os.getenv('SPAM_DATASET_DIR', 'hamEmails/')
+# Get ham directory from environment variable or use default
+ham_dir = os.getenv('HAM_DATASET_DIR', 'kaggle/ham/')
 
 
 def load_data(directory, label):
@@ -19,7 +19,7 @@ def load_data(directory, label):
             labels.append(label)  # Assign the provided label (1 for spam, 0 for ham)
     return texts, labels
 
-ham_texts, ham_labels = load_data(ham_dir, 1)  # 1 for spam
+ham_texts, ham_labels = load_data(ham_dir, 1)  # 1 for ham
 
 
 # Combine all data and labels into one dataset

@@ -7,23 +7,6 @@ from datas import unique_from_emails
 #load environment variables from .env file
 load_dotenv()
 
-
-#load keywords from csv file
-# def load_keywords(filepath):
-#     keywords = []
-#     if not os.path.exists(filepath):
-#         print(f"Keyword file not found: {filepath}")
-#         return keywords
-#     with open(filepath, "r", encoding="utf-8") as file:
-#         reader = csv.reader(file)
-#         header = next(reader, None)  # skip header
-#         for row in reader:
-#             if row:
-#                 keywords.append(row[0].lower())
-#     return keywords
-
-
-
 def parse_email_file(email_content):
     """
     Parse decoded email content and separate into different parts.
@@ -96,54 +79,41 @@ def parse_email_file(email_content):
 
 
 
+if __name__ == "__main__":
+    # Test file paths for email parsing functionality
+    test_file = os.getenv("TEST_EMAIL_FILE", "dataset/testing/spam_1.txt")
 
+    print("Testing parse_email_file function")
+    print("="*50)
 
-r'''if __name__ == "__main__":
-    # Test file paths
-    test_files = ["spam/spam_1.txt", "ham/ham_1.txt"]
+    print(f"\nTesting file: {test_file}")
+    print('-'*30)
 
-    for filepath in test_files:
-        print(f"\n{'='*60}")
-        print(f"Testing file: {filepath}")
-        print('='*60)
+    # Check if file exists
+    if not os.path.exists(test_file):
+        print(f"Error: File '{test_file}' not found")
 
-        # Check if file exists
-        if not os.path.exists(filepath):
-            print(f"Error: File '{filepath}' not found")
-            continue
+    try:
+        # Read and decode file (simulating Flask upload)
+        with open(test_file, 'r', encoding='utf-8') as f:
+            file_content = f.read()
 
-        try:
-            # Read and decode file (simulating Flask upload)
-            with open(filepath, 'r', encoding='utf-8') as f:
-                file_content = f.read()
+        print(f"Original content preview: {file_content[:100]}...")
 
-            print(f"Original file content (first 200 chars):\n{file_content[:200]}...\n")
+        # Test parse_email_file function
+        title, subject, body = parse_email_file(file_content)
 
-            # Test parse_email_file function
-            title, subject, body = parse_email_file(file_content)
+        print("\nParsed Email Components:")
+        print(f"  Title: {title}")
+        print(f"  Subject: {subject}")
+        print(f"  Body preview: {body[:100]}...")
 
-            print("PARSED EMAIL COMPONENTS:")
-            print(f"Title: {title}")
-            print(f"Subject: {subject}")
-            print(f"Body (first 150 chars): {body[:150]}...")
+        # Show parsing success
+        print("  ✓ Email parsing successful")
 
-            # Test classification with original content
-            classification, keywords, total_score = classify_email(subject, body)
+    except Exception as e:
+        print(f"  ✗ Error parsing email: {e}")
 
-            print(f"\nCLASSIFICATION RESULTS:")
-            print(f"Classification: {classification}")
-            print(f"Risk Score: {total_score}")
-
-            if keywords:
-                print("Suspicious keywords detected:")
-                for keyword in keywords:
-                    print(f"  - {keyword}")
-            else:
-                print("No suspicious keywords detected.")
-
-        except Exception as e:
-            print(f"Error processing file: {e}")
-
-    print(f"\n{'='*60}")
-    print("Testing completed!")
-    print('='*60)'''
+    print(f"\n{'='*50}")
+    print("Email parsing test completed!")
+    print('='*50)

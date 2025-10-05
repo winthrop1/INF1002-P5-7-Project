@@ -1,5 +1,8 @@
+import os
+from dotenv import load_dotenv
 from datas import unique_from_emails
 
+load_dotenv()  # Load environment variables from .env file
 def distance_check(domain1, domain2):
     if len(domain1) < len(domain2):
         return distance_check(domain2, domain1)  # Ensure domain1 is the longer one
@@ -37,10 +40,6 @@ def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
         return EmailDomainMsg, domain_suspicion_score
     else:
         EmailDomainMsg = f"Warning: Email is from an unrecognized domain: {email}"
-        domain_suspicion_score += 2 #increase risk score for unrecognized domain
-        for safe_domain in safe_domains:
-            dist = distance_check(domain, safe_domain)
-            if dist <= threshold:
-                EmailDomainMsg += f"Warning: Email domain '{domain}' is similar to safe domain '{safe_domain}' (with distance {dist})."
-                domain_suspicion_score += 1*dist  # increase risk score for similar domain
-        return EmailDomainMsg, domain_suspicion_score
+        risk_score += int(os.getenv("SENDER_KEYWORD_SCORE", "2")) #increase risk score for unrecognized domain
+        return EmailDomainMsg, risk_score
+    

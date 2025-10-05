@@ -79,9 +79,15 @@ def upload_file():
 
             
 
+
+            risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
+
+            
+
             # Send email report to user
             if useremail:
-                admin_email = "gachacentral1@gmail.com"
+                admin_email = os.getenv('EMAIL_ADDRESS')
+                admin_key = os.getenv('EMAIL_KEY')
 
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
@@ -102,7 +108,7 @@ def upload_file():
                 try:
                     server = smtplib.SMTP('smtp.gmail.com', 587)
                     server.starttls()
-                    server.login(admin_email, 'dexksasuvacscfwv') #app password
+                    server.login(admin_email, admin_key) #app password
                     server.send_message(msg)
                     server.quit()
                     emailnotify = "Email sent successfully."

@@ -26,15 +26,16 @@ def distance_check(domain1, domain2):
 def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
     domain_suspicion_score = 0
     text = email_title.lower() #convert email text to lowercase
-    start = text.find('<') + 1 #find the first character of the email address after <
-    end = text.find('>', start) #it looks for > and start means it start looking from the position of start which is the first character of the email address
-    email = text[start:end].strip()#extract the text between < and > and remove any leading or trailing whitespace
+    #start = text.find('<') + 1 #find the first character of the email address after <
+    #end = text.find('>', start) #it looks for > and start means it start looking from the position of start which is the first character of the email address
+    #email = text[start:end].strip()
+    email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()#extract the text between < and > and remove any leading or trailing whitespace
     domain = "@" + email.split('@', 1)[1]
     if domain in safe_domains: #check if domain is in predefined safe list
-        EmailDomainMsg = f"Email is from a safe domain: {email}"
+        EmailDomainMsg = f"{email} is a safe domain. "
         return EmailDomainMsg, domain_suspicion_score
     else:
-        EmailDomainMsg = f"Warning: Email is from an unrecognized domain: {email}"
+        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain."
         domain_suspicion_score += int(os.getenv("SENDER_KEYWORD_SCORE", "2")) #increase risk score for unrecognized domain
         for safe_domain in safe_domains:
             dist = distance_check(domain, safe_domains)

@@ -75,7 +75,10 @@ def upload_file():
                     
 
             # risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
-
+            
+            if "safe" in EmailDomainMsg.lower() and total_risk_scoring >2:
+                EmailDomainMsg += "However, potential phishing is detected!"
+                
             
 
             # Send email report to user

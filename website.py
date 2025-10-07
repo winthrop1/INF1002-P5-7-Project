@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, session, j
 from email_manage import parse_email_file #import from detector.py
 from domainchecker import domaincheck
 from suspiciouswords import classify_email
-from suspiciousurl import assessing_risk_scores, get_urls_from_email_file
+from suspiciousurl import assessing_risk_scores
 import os #work with folders in file systems
 import smtplib
 import socket

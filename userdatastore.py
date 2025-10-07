@@ -13,7 +13,13 @@ def storeDatainTxt(classification, keywords,total_score, EmailDomainMsg, email_t
         with open(file_path, "w", encoding="utf-8") as file:
             file.write("----- Email Analysis Result -----\n\n")
             file.write(f"Classification: {classification}\n")
-            file.write(f"Keywords: {keywords}\n")
+            if keywords:
+                file.write("Keywords Found:\n")
+                for kw in keywords:
+                    file.write(f"  - {kw}\n")
+                file.write("\n")
+            else:
+                file.write("Keywords Found: None\n\n")
             file.write(f"Total Score: {total_score}\n")
             file.write(f"Email Domain Message: {EmailDomainMsg}\n")
             file.write("="*40 + "\n")

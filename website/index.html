@@ -15,6 +15,13 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="adminLoginPrompt()">Admin</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -110,6 +117,31 @@
                 reader.readAsText(file);
             }
         }
+        async function adminLoginPrompt() {
+      const email = prompt("Enter admin email:");
+      if (!email) return alert("Login cancelled.");
+
+      const password = prompt("Enter password:");
+      if (!password) return alert("Login cancelled.");
+
+      try {
+        const response = await fetch('/admin-login-json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: email, password: password })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          window.location.href = "/admin";
+        } else {
+          alert("Login failed: " + result.error);
+        }
+      } catch (err) {
+        alert("An error occurred during login.");
+      }
+    }
     </script>
 
 </body>

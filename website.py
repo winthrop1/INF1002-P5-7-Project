@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template #import flask and needed modules
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify  #import flask and needed modules
 from email_manage import parse_email_file #import from detector.py
 from domainchecker import domaincheck
 from suspiciouswords import classify_email
@@ -15,7 +15,11 @@ load_dotenv()
 
 #initialize flask app
 app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
+app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .env file
 
+#admin credentials
+ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin1@gmail.com')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
 
 
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
@@ -56,7 +60,6 @@ def upload_file():
             reasons, url_suspicion_score = assessing_risk_scores(email_body)
                         
             total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
-                
                 
             if total_risk_scoring >= 9:
                 risk_level = "VERY HIGH"
@@ -125,6 +128,31 @@ def upload_file():
                         risk_level=risk_level,#risk scoring of the whole email
                         total_risk_scoring=total_risk_scoring,
                         emailnotify=emailnotify) #domain check message
+
+@app.route('/admin-login-json', methods=['POST'])
+def admin_login_json():
+    data = request.get_json()
+    username = data.get('username', '').strip()
+    password = data.get('password', '').strip()
+
+    if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        session['admin_logged_in'] = True
+        return jsonify({"success": True})
+
+    return jsonify({"success": False, "error": "Invalid email or password."})
+
+
+@app.route('/admin')
+def admin_page():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('upload_file'))
+    return render_template("adminPage.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('admin_logged_in', None)
+    return redirect(url_for('upload_file'))
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

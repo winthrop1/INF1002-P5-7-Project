@@ -3,6 +3,7 @@ from email_manage import parse_email_file #import from detector.py
 from domainchecker import domaincheck
 from suspiciouswords import classify_email
 from suspiciousurl import assessing_risk_scores, get_urls_from_email_file
+from userdatastore import storeDatainTxt
 import os #work with folders in file systems
 import smtplib
 import socket
@@ -29,6 +30,8 @@ def upload_file():
     classification = None
     EmailDomainMsg = ''
     emailnotify = ''
+    storing_notify = ''
+    success = bool
     keywords = []
     total_score = 0
     email_text = ''
@@ -81,8 +84,9 @@ def upload_file():
             
             if "safe" in EmailDomainMsg.lower() and total_risk_scoring >2:
                 EmailDomainMsg += "However, potential phishing is detected!"
-                
             
+
+            storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text)
 
             # Send email report to user
             if useremail:
@@ -123,11 +127,13 @@ def upload_file():
                         email_title=email_title, #parsed email title
                         email_subject=email_subject, #parsed email subject
                         email_body=email_body, #parsed email body
-                        EmailDomainMsg=EmailDomainMsg,
+                        EmailDomainMsg=EmailDomainMsg, #domain check message
                         reasons=reasons, #url analysis reasons
                         risk_level=risk_level,#risk scoring of the whole email
                         total_risk_scoring=total_risk_scoring,
-                        emailnotify=emailnotify) #domain check message
+                        emailnotify=emailnotify, #email sending notification
+                        storing_notify = storing_notify,#data storage notification
+                        success = success) 
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():

@@ -94,20 +94,25 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
    - Implements Levenshtein distance algorithm for similarity checking
    - Checks sender domains against known safe domains list
    - Detects typosquatting attempts with configurable threshold (default: 4)
+   - Extracts email domain from title using simplified parsing logic
    - Environment-configurable scoring via SENDER_KEYWORD_SCORE
+   - Improved messaging: distinguishes between safe domains and unrecognized domains
    - Returns tuple: (EmailDomainMsg, domain_suspicion_score)
 
 3. **suspiciousurl.py**: Comprehensive URL analysis system
    - Extracts URLs from email content using regex patterns
+   - Handles emails with no URLs gracefully (returns appropriate message)
    - Multi-factor URL risk assessment:
+     - Domain resolution check before analysis
      - Domain age analysis (new domains <30 days flagged)
-     - WHOIS data analysis with retry mechanism
+     - WHOIS data analysis with retry mechanism (max 3 retries)
      - IP address detection in URLs
      - HTTPS/HTTP protocol checking
      - URL length analysis (>75 characters flagged)
      - Subdirectory count analysis (>3 flagged)
      - '@' symbol detection for URL obfuscation
    - Risk scoring with tiered levels: VERY_LOW, LOW, MEDIUM, HIGH
+   - Improved error handling for unresolved domains
    - Returns tuple: (reasons, url_suspicion_score)
 
 4. **website.py**: Integrated Flask web application
@@ -119,7 +124,9 @@ INF1002-P5-7-Project: A phishing email detection system built with Python and Fl
      - MEDIUM: 5-6 points
      - LOW: 3-4 points
      - VERY_LOW: <3 points
+   - Enhanced risk messaging: Alerts users when safe domains have suspicious content
    - Email reporting functionality with detailed analysis results
+   - Optional user email input for receiving analysis reports
    - Template folder: `website/`
    - Debug mode for development
 
@@ -329,17 +336,27 @@ The detectfunction.py file includes a main block that can test email files direc
 The project uses environment variables for configuration. Copy `.env.example` to `.env` and update as needed:
 
 ```bash
-# Keyword Detection Configuration
-KEYWORDS_RAW_FOLDER=keywords/raw_data
+# Flask Configuration
+TEMPLATE_FOLDER=website
+
+# Dataset Configuration
+HAM_DATASET_DIR=dataset/kaggle/ham
+SPAM_DATASET_DIR=dataset/kaggle/spam_2
+
+# Email Configuration (for sending reports)
+EMAIL_ADDRESS=your-email@gmail.com
+EMAIL_PASSWORD=your-email-password
+EMAIL_KEY=your-app-password
+
+# Keywords Configuration
 KEYWORDS_FOLDER=keywords
-KEYWORDS_CONSOLIDATE_PATH=keywords/consolidate_keywords.csv
-SUBJECT_KEYWORD_SCORE=3
-EARLY_BODY_KEYWORD_SCORE=2
-BODY_KEYWORD_SCORE=1
-EARLY_BODY_WORD_COUNT=100
+KEYWORDS_CONSOLIDATE_FILE=keywords/consolidate_keywords.csv
+KEYWORDS_RAW_FOLDER=keywords/raw_data
 
 # Domain Analysis Configuration
 SENDER_KEYWORD_SCORE=2
+DISTANCE_THRESHOLD=0.8
+DISTANCE_SCORE=2
 
 # URL Analysis Configuration
 HIGH_DOMAIN_SCORE=3
@@ -350,24 +367,35 @@ HIGH_DOMAIN_EXPIRY_SCORE=2
 DOMAIN_UPDATE_SCORE=1
 IP_ADDRESS_SCORE=2
 NO_HTTPS_SCORE=2
+HTTP_SCORE=1
 LONG_URL_SCORE=1
 AT_SYMBOL_SCORE=2
 SUBDIR_COUNT_SCORE=1
 UNRESOLVED_DOMAIN_SCORE=3
 
-# Legacy Configuration
-SPAM_WORDS_PATH=words/spam_words.txt
-OUTPUT_FOLDER=words
-SPAM_SOURCE_URL=https://www.activecampaign.com/blog/spam-words
-TEMPLATE_FOLDER=website
-SPAM_DATASET_DIR=spam
+# Keyword Detection Configuration
+SUBJECT_KEYWORD_SCORE=3
+EARLY_BODY_WORD_COUNT=100
+EARLY_BODY_KEYWORD_SCORE=2
+BODY_KEYWORD_SCORE=1
 
-# Email Configuration
-EMAIL_ADDRESS=your-email@gmail.com
-EMAIL_KEY=your-app-password
+# Maximum Score Limits
+MAX_DOMAIN_SCORE=15
+MAX_SENDER_SCORE=6
+MAX_KEYWORD_SCORE=15
+
+# Weight Configuration
+SENDER_WEIGHT=1
+DOMAIN_WEIGHT=2
+KEYWORD_WEIGHT=2
+
+# Spam Words Scraping Configuration
+SPAM_SOURCE_URL=https://www.activecampaign.com/blog/spam-words
+SPAM_WORDS_PATH=keywords/spam_words.txt
+SPAM_SOURCE_PATH=dataset/kaggle/spam_2
 
 # Testing Configuration
-TEST_EMAIL_FILE=dataset/testing/spam_1.txt
+TEST_EMAIL_FILE=dataset/testing/spam/spam_1.txt
 ```
 
 Note: The code now uses environment variables instead of hardcoded paths and scores, making it portable and configurable across different systems.
@@ -420,10 +448,13 @@ The project includes sample data for testing:
 - ✅ Environment-configurable scoring weights and thresholds
 - ✅ Flask web application with integrated analysis pipeline
 - ✅ Email reporting functionality with detailed analysis results
+- ✅ Optional user email input for receiving reports
 - ✅ Support for both .eml and plain text email formats
 - ✅ Regex-based pattern matching with word boundary detection
 - ✅ CSV keyword consolidation and processing
-- ✅ Error handling and graceful degradation
+- ✅ Enhanced risk messaging for safe domains with suspicious content
+- ✅ Improved error handling and graceful degradation
+- ✅ No-URL email handling with appropriate messaging
 
 ### Core Components Status
 - ✅ suspiciouswords.py: Enhanced keyword detection with CSV consolidation

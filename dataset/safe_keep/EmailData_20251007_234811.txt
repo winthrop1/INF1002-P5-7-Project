@@ -1,0 +1,2403 @@
+----- Email Analysis Result -----
+
+Classification: Phishing
+Keywords Found:
+  - Suspicious word in remaining body: 'access'
+  - Suspicious word in remaining body: 'agents'
+  - Suspicious word in remaining body: 'anyone'
+  - Suspicious word in remaining body: 'app'
+  - Suspicious word in remaining body: 'application'
+  - Suspicious word in remaining body: 'article'
+  - Suspicious word in remaining body: 'back'
+  - Suspicious word in remaining body: 'based'
+  - Suspicious word in remaining body: 'best'
+  - Suspicious word in remaining body: 'business'
+  - Suspicious word in remaining body: 'call'
+  - Suspicious word in remaining body: 'check'
+  - Suspicious word in remaining body: 'clear'
+  - Suspicious word in remaining body: 'control'
+  - Suspicious word in remaining body: 'cost'
+  - Suspicious word in remaining body: 'course'
+  - Suspicious word in remaining body: 'data'
+  - Suspicious word in remaining body: 'day'
+  - Suspicious word in remaining body: 'days'
+  - Suspicious word in remaining body: 'different'
+  - Suspicious word in remaining body: 'don'
+  - Suspicious word in remaining body: 'down'
+  - Suspicious word in remaining body: 'each'
+  - Suspicious word in remaining body: 'enter'
+  - Suspicious word in remaining body: 'even'
+  - Suspicious word in remaining body: 'executive'
+  - Suspicious word in remaining body: 'experience'
+  - Suspicious word in remaining body: 'face'
+  - Suspicious word in remaining body: 'fast'
+  - Suspicious word in remaining body: 'features'
+  - Suspicious word in remaining body: 'focus'
+  - Suspicious word in remaining body: 'free'
+  - Suspicious word in remaining body: 'full'
+  - Suspicious word in remaining body: 'hello'
+  - Suspicious word in remaining body: 'here'
+  - Suspicious word in remaining body: 'high'
+  - Suspicious word in remaining body: 'important'
+  - Suspicious word in early body: 'learn'
+  - Suspicious word in remaining body: 'level'
+  - Suspicious word in remaining body: 'like'
+  - Suspicious word in remaining body: 'list'
+  - Suspicious word in remaining body: 'make'
+  - Suspicious word in remaining body: 'market'
+  - Suspicious word in remaining body: 'mini'
+  - Suspicious word in remaining body: 'more'
+  - Suspicious word in remaining body: 'most'
+  - Suspicious word in remaining body: 'names'
+  - Suspicious word in remaining body: 'need'
+  - Suspicious word in early body: 'new'
+  - Suspicious word in remaining body: 'next'
+  - Suspicious word in remaining body: 'offers'
+  - Suspicious word in remaining body: 'one'
+  - Suspicious word in remaining body: 'opportunity'
+  - Suspicious word in remaining body: 'order'
+  - Suspicious word in remaining body: 'over'
+  - Suspicious word in remaining body: 'page'
+  - Suspicious word in remaining body: 'per'
+  - Suspicious word in remaining body: 'power'
+  - Suspicious word in remaining body: 'rate'
+  - Suspicious word in remaining body: 'rates'
+  - Suspicious word in remaining body: 'real'
+  - Suspicious word in remaining body: 'right'
+  - Suspicious word in remaining body: 'say'
+  - Suspicious word in remaining body: 'see'
+  - Suspicious word in remaining body: 'send'
+  - Suspicious word in remaining body: 'services'
+  - Suspicious word in remaining body: 'something'
+  - Suspicious word in remaining body: 'step'
+  - Suspicious word in remaining body: 'take'
+  - Suspicious word in remaining body: 'time'
+  - Suspicious word in early body: 'two'
+  - Suspicious word in remaining body: 'use'
+  - Suspicious word in remaining body: 'want'
+  - Suspicious word in early body: 'week'
+  - Suspicious word in remaining body: 'winner'
+  - Suspicious word in remaining body: 'work'
+  - Suspicious word in remaining body: 'write'
+  - Suspicious word in remaining body: 'year'
+  - Suspicious word in remaining body: 'years'
+
+Total Score: 88
+Email Domain Message: Warning: zach.m@educative.io is from an unrecognized domain.
+========================================
+
+--- Email Text ---
+Delivered-To: matthewpdyason@gmail.com
+Received: by 2002:a17:907:1798:b0:b07:60ae:b043 with SMTP id lk24csp708807ejc;
+        Fri, 19 Sep 2025 23:11:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxfhJNIpLZOVDP/AH53f6fh8Y4u5vHncGKCRW7f6F7dkI5VRIAJE+jM+nzKnpSBWVKhuku
+X-Received: by 2002:ac8:578b:0:b0:4b4:9666:f1d0 with SMTP id d75a77b69052e-4c0718f6306mr74322511cf.49.1758348711851;
+        Fri, 19 Sep 2025 23:11:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1758348711; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cJlBh01j7Mkg8FoGSJ+ap17fWJe6tPHm2ZLrkW09JmBwfpdw1Wf7pEkS7G9pSFzegp
+         9eKFS66jXgV5RQcQqqrUMXY4osfx9SXnBYZzyuyBZi+N/pQnSrUP3UjXfMXfLom0SydJ
+         5zEHrzFQWh5lhiy1PSkJsehh4HJV1ZcLPlt02d6fDaNvg9RnLMkE5AXk9vDAohPa2zbi
+         7Ug9UZLBSvIqtWgnD4+gXKiAhmXEHWyllLbcPfzHcVY/JxVgaxsyUp3Qz2A0C+3V/DvC
+         pP1rmGN9gMu49TlhUYHeGqy6rsRvSiwrLinrQT5IDokab7IJM3GkhpGZX50i89gKSR1t
+         li5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:list-unsubscribe-post:precedence:form-sub:mime-version
+         :subject:message-id:to:reply-to:from:date:list-unsubscribe
+         :dkim-signature:dkim-signature;
+        bh=49Nfq7iuO2ZpF26PLHbndLVtQugLy91hyVJFfwKW5mo=;
+        fh=AXl+G6/BcXpHeSledrEKJ03CYXZ4wHlgQHQzpdltamM=;
+        b=jqzUBcWlQiWhLIioasrJi8vPagb8W3MLxmij5kAadMBp4+A9fFmaR/GdpdngVkW5+I
+         FlP53FOLH+b7gHT8SVZMk6wxJSk+SddPM6UA3SROWNsxnzrW4cBQ9UHFcV52dc5rPrCI
+         6ArxKmGIIKG8YWjF/mWOvaWgLfxhJ+RUv2vlgLWl3ff9ghY5hxigYX7RUkzoH5ZUk8Z+
+         mA+QGYCD1mdYo2S56tZ+jcTcrx+xVRdRlu8BwS7Ap8q+P1d8sb6leJj2YRP+KzvokpSm
+         O7kAe8w1TrQ57UfQVRtWFVW/16PGdXPBPqmukraSD+u7xEKdPY1hf7PCrX9bWB8Jl/Iz
+         7XBQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@4740448m.educative.io header.s=hs2 header.b=WbYaxSpZ;
+       dkim=pass header.i=@educative.io header.s=hs1-4740448 header.b=JJO+V5g0;
+       spf=pass (google.com: domain of 1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io designates 108.179.152.40 as permitted sender) smtp.mailfrom="1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=educative.io
+Return-Path: <1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io>
+Received: from 4f2pbu.4740448m.educative.io (4f2pbu.4740448m.educative.io. [108.179.152.40])
+        by mx.google.com with ESMTPS id d75a77b69052e-4bf95623940si20230221cf.619.2025.09.19.23.11.51
+        for <matthewpdyason@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Sep 2025 23:11:51 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io designates 108.179.152.40 as permitted sender) client-ip=108.179.152.40;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@4740448m.educative.io header.s=hs2 header.b=WbYaxSpZ;
+       dkim=pass header.i=@educative.io header.s=hs1-4740448 header.b=JJO+V5g0;
+       spf=pass (google.com: domain of 1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io designates 108.179.152.40 as permitted sender) smtp.mailfrom="1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=educative.io
+Received: by 172.16.125.39 with SMTP id a0b2377bl4ybyduta19icy9fi47qt2l6uy8lu4xtadg;
+        Sat, 20 Sep 2025 06:11:51 GMT
+DKIM-Signature: v=1; s=hs2; d=4740448m.educative.io; 
+        i=@4740448m.educative.io; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=49Nfq7iuO2ZpF26PLHbndLVtQugLy91hyVJFfwKW5mo=; 
+        b=WbYaxSpZiRsnA8ACXf8aPyKf9rw3PgfvAPvtQegJfO1YHu932kb+Bkl/tm7ZQK
+         8btUeIgDGGkc2GbjIVS2KsX5nFnGeZMbLBCcthE5XMJys+9eAdt5k1L4Cm8obUY
+         wBSQ1CNM8uoSjUuKgKQ3oNAJ/mkZ5bU5dsjugfvGuB4DSauNQia8PA59RwDlDgz
+         ODktfzIDJPKq6dGdElIecnqsVLghX2ZZ1QvVXA6itRFnv9pL38ms0c8D6EvJkev
+         Sb0njBsPk8kVx45pzeq9n5psjFH2C0esGUhHmRLcI6n6MM0gec9WluT7xW6y4T8
+         xJ0bBiE5N+xl1lEIPa2YMp+wp15Q==; q=dns/txt; t=1758348711; 
+        x=1758611511;
+DKIM-Signature: v=1; s=hs1-4740448; d=educative.io; 
+        i=@educative.io; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=49Nfq7iuO2ZpF26PLHbndLVtQugLy91hyVJFfwKW5mo=; 
+        b=JJO+V5g0Q0obs8yB915ZpB88oV291ZlQlLfkaSU7of18admJJrnZ3U8KY2NKOn
+         JBoCtqqIy7+ZyGUlZX0pxOQEdcRRkQTMWfknbM3DP0LcrfZXoaK6NneqaZnVAYb
+         swrlxI35lmt0WQ6lhjY8PDArk/lYovV4zcTxtaQtZ7XHfthF/ljjlwC89Fqhbxq
+         BtvgcRvudJx4nZq1sBsRw6PI2aZ4sfRzTNruFYh7y02IfIQ7tWaUZNAlghRu2Tb
+         j3/1dunacWY8wtanntfaVBh5Lzczee1DiIx7oC4+ShJqEcxSxllaVTaT+02pFUl
+         IITU8PIx0c2Xxc+N/8WDsk311zgw==; q=dns/txt; t=1758348711; 
+        x=1758611511;
+Return-Path: <1axbmpwejdispcg1z27sedige8dla3goh5fmw0-matthewpdyason=gmail.com@4740448m.educative.io>
+X-HS-Cid: 1axfef2udeny7fc3npjrird29l759pc2zlsipw
+List-Unsubscribe: <mailto:1axcqvjj9ybhp5grnvqotp1uo6qt03kvnd6sas-matthewpdyason=gmail.com@4740448m.educative.io?subject=unsubscribe>, <https://learn.educative.io/hs/subscription-preferences/v2/unsubscribe-all?data=W2nXS-N30h-GbW3SZ7TN36jc4WW2WhKWc24W6RcW2TtB6m3R3C8pW4kHptj3NLvHQW3BM1F23Y29FFW3bvGth30khktW2TtBRs4crFdDW3g7t8Q3gxgz2W3VSvVb1NfyYSW3zkTl84r45mlW1Ngm3N3_W8QBW4mp7J61ZkS70W2WtNxS3BXchsW3P0Wfd4hwVlLW3ZXfhK3GZM3lW32qTDx49ghWvW3SSJ3n2FY46kW4rrM772sMMCqW22W0Zm3LQ1RyW3zdyZG2zP9cnW2-bmDj2CKhhhW3R7NNL3BNJfMW4kr2CR2r407KW327wCs3LHQzLW1Sr2yY49mklXW2nSKbJ3CcqczW2Fsl5B3XyxMyW3GSxkP49wFtSW4mjbWB1BNzvgW2w0d0m3QMstVW1BPsHc25kv7GW2PDppL3GJxBkW1BHwKP2szK_BW4knxDk1V2rg4W4cSjX_4ftC-YW1Z7S2c49mlGDW3VZnYF45Ff6mW1_36rT4r6c2DW3DNzN12xJpbJW2RR74245wBJ6W3g0Nt91Qv9ztW2qSth13SC0RdW3H3wrN3j9PgsW2xKgTR1L69GSW36vDBc4hq0C3W3LPZrg2Pzv9nW2PRHpZ2FZLScW4kb8dg3SDdMcW4twG4S4kr1sTW3dpmPt3H09_Q0>
+Date: Fri, 19 Sep 2025 23:11:51 -0700
+From: Zach at Educative <zach.m@educative.io>
+Reply-To: zach.m@educative.io
+To: matthewpdyason@gmail.com
+Message-ID: <1758348710976.f2f60a4c-ec2a-46fc-8d65-78022a56397e@4740448m.educative.io>
+Subject: =?utf-8?Q?What_I=E2=80=99ve_Learned_About_Maki?=
+ =?utf-8?Q?ng_Model_Choice_Work_for_You?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_963284_275500385.1758348711133"
+Form-Sub: v=1; ip=none
+Precedence: bulk
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: aec3v1e:aiglcvbl:aib1s:HubSpot
+
+------=_Part_963284_275500385.1758348711133
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Salman Paracha (ex-AWS, Oracle; now CEO at Katanemo) explains how developer=
+s can turn the flood of new models into leverage by pairing lightweight tes=
+ting with a smart proxy.
+
+View in browser (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2Q=
+NQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R5m_5PW7Y9pgv6lZ3lzW4kYV6Q59-jVGW67Tq-x8=
+pXqsLV9Vn7R85bMKNN4NL47knQxj3N91jqlNsx1x-W3YTfGc6F4q8GW1pNjsf6FVMrSW6l8X9H1=
+XtRQQW35V0DN52_kBGV-r22t2q2GrDW5cD0191j3GV-W8rQfkw5MT12RVBLj163WvZL-MQcRzj2=
+XQ85W5S7cz621pf0DW4P9RHs5VGcgGW6vydy08rzGq5W1yV0hd8mYGTXW7Y29137XcRkqW1Z1qr=
+j57Ll_sW6mCSsF632XrlVrxFGB3k860mW7zhffj1-t8P8VkqHdW46n_XGW95SGrh5BL58NN8zK0=
+PxZknjkW6mjWfV4jhNXyW4S5hY92hRn7pW8Cb_st3V4pgJW1Pm2_05_ZSxRW5knf3q7LT887W4B=
+r-z02dVQrXW3TYm8_6mrHS1N62-y0PJfJH8W6BQl1M3Zr-l8VD2LNz5XSv9-W6ljmSy8Z5z0-W6=
+h2P442N94V6W8TYdm66lsGn4W3xV1Sf4ncd92W9j-Gwg6YXflQW5rSNrm17nMRMf6KP94n04 )
+
+Educative (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9=
+djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3prCCW7Y8-PT6lZ3lCW5S_9ks7yfWmcW7R2z-B8Dqyj4W=
+72XSMP3TLpHmW58skty6xNb2KW6QmVq61z1cgXW4dk6Ky1T6LL_W4R-83943_WlfW88nB5X840K=
+kSW5fyHLj40cT85W6QR8nQ5XJDDmW2plr0Q7vycctW2BPrQm4QHZsZN5bNnDYKxyvPVlGv9R3CB=
+JBfW3J9zHc3kG0RNW5SQR-_2rC58GW4w4KNS2M_YL6W3Kb5sG8J7R-SW1hyw2k825zgKW4zwqYm=
+8GkB5DW76XNfZ2W5jLbN1T3g_JZnwbKW6WXxkB2KfM6nW3TqpGJ6wBSR7W74WXwg3gQ3cdV3_gF=
+x4kTsDLf5nJYCC04 )
+
+Dyson,
+
+This week, we are welcoming Salman Paracha (https://learn.educative.io/e3t/=
+Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3prCCW7Y8-PT=
+6lZ3mhMm9n_JBYy5TW6Zc-y46W2L_0W5tFXvf5Qm01bW6Y-0fW7SWmk-W932BH34QwTrLW1z__N=
+72PjVbvW46Lj8R7mgl-NW2GHFNp4GRRqxW97t7-w1JXnGfW4156df639vwBW8sXzBq28N6D1W80=
+g7yr1b91CSW2VN9Hd5Mf-N4MSDyhMWF_lqW3PgxYX8jGdjlW65BxSy8qCXY0W5wZ4xC8SFLJWW2=
+-Qp4T6j9nJYTV2sg2gwqyBV3Tjps1xH8cJW506b2B3F74TFW6KW33V8n0RV8W77WdQ-8cV5SDW5=
+wgFTf1vXBfJW3c7C-J2R017ZVQTWPW1Yk5yRf43k2x804 ) , Co-Founder & CEO of Katan=
+emo. He is building the modern infrastructure stack for AI. Before that, Sa=
+lman built cloud infrastructure at AWS and Oracle, where he was at the fore=
+front of two major technology waves: cloud computing and serverless. He is =
+now at the forefront of the agentic AI wave.
+
+He still considers himself a developer and focuses on building technologies=
+ that empower other developers to do more, move faster and create the next =
+great application.
+
+Now over to Salman!
+
+=F0=9F=91=89 Quick note before we start: Did you enter our 30-day Daily Cod=
+ing Challenge (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ=
+_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263prCCW8wLKSR6lZ3nNW7P5DVQ29HFvgW4NXYTq8P1=
+bTBW1Lly708mnMbzV6r1LW3JDcnVVwDP478yf2ylW60Mm6K1Jd_GyW4dqT-659K8y6W788r0G1j=
+YhKQW9c1sb892lWmZVslMw75GVpN2W4Qq70G5V5yp7W90jBvy82H4_hW8Q4rBk4JScQtW2RgnlM=
+7Bpv9vW8JKy2t71xjp6W3r59qC8FFYQKW2Gb-X23BPqnWW1kW4Kb73scFSW29_KC-9727ZsW1Zl=
+37N6xFFSsW7SSGvC2bwbX2W4yjm-Y3yQHlnW8PM9ZK7TwTcvW5QSspq47ZGTmW5QjRWV4Jtq9BW=
+7Z6jz95Yltw2W3vKqWM28QYJ4W6nvdMC5Mg4bnf6Hm1hP04 ) ? The winner will be anno=
+unced on October 1, 2025. The prizes include MacBook Pro =F0=9F=92=BB, 1-ye=
+ar OpenAI subscription, and more! Also, GitHub just joined our campaign: mo=
+re details here. (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2=
+QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0F5m_5PW5BWr2F6lZ3mhW9d7_1Z939pHDW7FSyjm=
+6fQ2S6N1xWp18msRQlW3q94gv5SZp9gW3N7Z1Y1ykz20W5k8BRV2_rlFxW590dfX5vSJkqW7wHj=
+1R7pKb-DW16vjJf6MxYpMN5chhDtCLZbCVKHpLG54rcF0N2h-6hqFFRTcW8kWfkj7rdRK1N7tH-=
+7jWqZZZW5swkPs2kR2SrN8DS2-rs2gr6W28TKTb4hDJlYW7jFfW27_klwQW4nGX9n1bPQ80W5pq=
+RWG4mV1K8W8QW1J_7Vz_lzW5mGp1G7_d0cVW9fgBBL40XHZKW4b35QP6-gT1dW6K-Yfr5NqxHFW=
+98Sdj17M9H_QW35xXt21Zs_gPW8jc6jt3tw0PbW1WLzx35QXnqpW2j9SF82RgLwqW30RDX53hyt=
+PtW6-5CrH5_TspLMw9c7lhmp_LW82rnBZ6ngVDqf5Yy_vs04 )
+
+Hello everyone, it's Salman =F0=9F=91=8B
+
+Hugging Face, an open-source community for AI projects, now hosts over 1.7M=
+ models (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9dj=
+xJv4gKwBW4CCSrm5CGYRxN2lhp0Y2-71lW69sMD-6lZ3pMW6rY2TY73GBJHW7DCQjK8RT7vLW8k=
+j0DG1Rr_-XVJK0z66fZTKWW8w32x_5hmZtdN5B5ZwZZYbr9W3Rypp564q02cVGH5352RwlrvW7S=
+ttZT7xhTKyW5YP-RK5z68DbW7JDtVn7RN5NFN4plRTfz37ywMHzDmQM2Hy_N6JhyCHMJ6cTW1bG=
+HMn46z_b5W7xS9zp1LkhskW7yCyy97Nyd26W5Hthwb4bJ7l2W53h_HL6KXtW_V__0sK4MCLPQf1=
+59PP-04 ) (up from 1M in late 2024), and the pace of model releases is acce=
+lerating.
+
+On the proprietary side, OpenAI alone has shipped more than a dozen model f=
+amilies and versions since GPT-4, from the o-series (o1/o3/o4-mini) to GPT-=
+5. Google continues to roll out Gemini versions behind stable aliases, xAI =
+keeps iterating on Grok, and Amazon=E2=80=99s Bedrock (https://learn.educat=
+ive.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1x3=
+prCCW7lCdLW6lZ3lhN8qfprWx3X4wW2wlBhh5y4GvMW3phBNJ80ZXDdW2cQLfp7xSbyCW2zq8-m=
+85vS1xW3GKP-14qBmFlW4wnjw02DY6_GW1g-NnF59JxL0W5tR-YP7LbdSFVDkm414hBf_HW63d8=
+0z962GZxW5mYv4Q3fkDbbW7ntLWS5f4pZyW8r79h87RWB1SW57rS4T7npw4wW8NWBbT32P3dgW8=
+ZG_Lb2Z4S4YMkywG-WjrKrN4XRS5S42kmLW7YDmH11r0GnvW1RcrPC7-vhz-W1Cw92S2qV36wW5=
+WhpXb3Vphr3W2Qgg4t8x1G7vdC-qSb04 ) aggregates multiple leading LLMs under o=
+ne platform.
+
+The takeaway is simple: model choice is exploding. And there=E2=80=99s no s=
+ign of this trend slowing down, especially with the rise of smaller (https:=
+//learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm=
+5CGYRxN2lhp1x3prCCW7lCdLW6lZ3kXW5DdVsg4d6cBjW7jZVQH1R12NWW7q3Lf272jWB9W39nK=
+pW4PpBGbW5Psd2Q33hFKFW88MBjd49gpBvW6fG6py8GDL6VW1423nw6j0SGBW45QbWT8YhHkGW2=
+_V6rv5LfKrZW4m1Ksc7XmPzpW78D5FR1LKSM6W73kMCK6RkKdDW6c6Yft1JjQn3W1Cjlwr412Tk=
+VN8_pwspyPNN7W1kvR2H1svry_W7TJ_D44QTpB-W2kmhhx914lxJW4Ym82w5YwZ1SW3-bCV65SM=
+VDxW6nHWDY6Z0swYW2vpb7V48-sN4W5VWgfz1Mc-w3f6fd70n04 ) but increasingly capa=
+ble models.
+
+The image below shows a torrent of models hitting the market over the cours=
+e of the past few years, a chaotic wall of names and versions that makes cl=
+ear: keeping up with model choice isn=E2=80=99t optional, it=E2=80=99s surv=
+ival.
+
+Screenshot 2025-09-18 at 3.59.41 PM (https://learn.educative.io/e3t/Ctc/RG+=
+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3l-W=
+7tgVHp1DgzJyN1tQN4KRGVtgW19-QmN7mF5JTVmYqtK3_mlY3W5ySWVL3cMd5gW1z583T8pr0K6=
+V7krw5952hdKW8Hc7PJ623k3KW7j4qb57x6NMHW2klwGd70SSR4W7glJBJ5R5Z2FW65Kfd98gZJ=
+qQW9bJ5RC3Hjq_MW55y8S960QMRdW1Pq31Z4PjLc4VSL5533ZB8TnN8nGP09DxYChV85gmJ4Lsq=
+lXW4v1mFd4wH7NRN5bc3xJ-9-8yW7Ms75D7R9HncN1ngnjcZLQxVW7zfh327RtvLcVW2Z_w1NPw=
+vsW7p_5Zm7Xwy-TW8Rp0Vw5Z1LFHW4qKn8F27mfYXW5wQJBf1mrkhDW3sLC7J8xT7myW1LnST87=
+xM74-W8d-8Lb2JWXjFN7dR5tmNx4Jlf6XH8sC04 )
+
+For developers, the real question is: how do I harness this abundance witho=
+ut drowning in complexity? In this post, I=E2=80=99ll walk through (with co=
+de examples) why it=E2=80=99s getting easier to harness this abundance. All=
+ the examples are in Python, so if you have even a bit of programming exper=
+ience, you=E2=80=99ll be able to follow along and run them yourself.
+
+=F0=9F=92=A1 While this article is primarily developer-focused, the followi=
+ng are key takeaways for non-developers and executive leaders: your teams c=
+an experiment faster, adopt the right model for the right scenario to deliv=
+er better user experiences, and easily keep up with the latest innovations=
+=E2=80=94all without rewrites or vendor lock-in.
+
+Just as important, you can centrally govern AI usage across teams, gain vis=
+ibility into which models are being used and how they perform, and establis=
+h guardrails for compliance and accountability. This ensures that AI adopti=
+on is not only fast, but also reliable, auditable, and enterprise-ready.
+
+Why does model choice feel like free lunch?
+
+For anyone observing the AI landscape (https://learn.educative.io/e3t/Ctc/R=
+G+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263prCCW8wLKSR6lZ3p=
+VW5J2FFT6lP6nmW34cHnF91gxYFW8JYwK87sRCgpW2rNvdz5zkfDxW6SbVDW54Z3fxW4S1-k56n=
+c9-jW4xpK6p8-Z_wdW6vRBTw3-jFMpV28cGF6xdfKWW1SLMws4ZyGQ7N2cSvgbHmSDgVhS7xx8H=
+qs-vW8QgvG72mYpXgW4mhmp41x8qhhW7szN0p1DZl4mW70bfK62nS0zsW3XRks82Zgd9xN7Gj8N=
+3nXM1zW6J6KK28MyXvlVzD9Qf5fpMt_VCz8X64rHscvW5wzkMz8bmWLVW1nDGXx5l4JZXW2vMVz=
+p5ypV6MW76KXZf3y25RBW6m0BVY7Y1kbLW9jTXYJ81MwY3W58JlYC3s77_Tf7XFCBq04 ) or b=
+uilding agents, the flurry of options can either feel overwhelming or empow=
+ering. For builders, I=E2=80=99d argue it=E2=80=99s the latter. Choice mean=
+s you=E2=80=99re no longer stuck waiting on one provider for breakthroughs =
+to trickle down. Instead, new intelligence is arriving at your doorstep at =
+a pace that lets you experiment, swap in better fits, and move faster than =
+ever before.
+
+In this post, I=E2=80=99ll share why model choice is the closest thing to a=
+ =E2=80=9Cfree lunch=E2=80=9D in AI, and how you can take full advantage of=
+ it.
+
+In most areas of tech, more choice usually means more complexity: different=
+ APIs, new standards to learn, and usually a steeper learning curve. With A=
+I, the dynamic looks a bit different. The surge in model choice is mostly r=
+educing friction for developers. Here=E2=80=99s why:
+
+-
+
+(near) Drop-in compatibility: While the way you prompt GPT-4 vs. Claude vs.=
+ LLaMA results in different levels of performance, the atomic unit common a=
+mong them is a prompt, which has more interoperability than before. Sure, e=
+ach API provider offers some unique features that you might want to leverag=
+e, but the foundational block is the same. And with the right tools and inf=
+rastructure around models, you can harness the full potential of these LLMs=
+. We=E2=80=99ll talk more about the right tools and infrastructure later.
+
+-
+
+Rapid iteration: New models arrive with better reasoning, faster throughput=
+, or lower cost. You can test and adopt them quickly without waiting for a =
+=E2=80=9Cnext generation=E2=80=9D cycle.
+
+-
+
+Fit to purpose: Instead of stretching one model to handle everything, you c=
+an select the right model for reasoning, summarization, coding, or creative=
+ tasks.
+
+The upshot: more choice doesn=E2=80=99t mean more lock-in=E2=80=94it means =
+more leverage. Developers get access to state-of-the-art intelligence at th=
+e pace it=E2=80=99s invented, with less overhead than ever before.
+
+If =E2=80=9Cmore model choice=E2=80=9D is the opportunity, the way you turn=
+ it into day-to-day leverage is surprisingly simple: pair lightweight testi=
+ng with an intelligent proxy server. No new SDKs, no rewrites, just two thi=
+n layers that make swapping and scaling safer and faster.
+
+Step-by-step walkthrough of how to adopt new models
+
+In order to take advantage of the near-constant stream of new models, it is=
+ important to have an adoption infrastructure. That adoption infrastructure=
+ consists of two parts:
+
+-
+
+Part 1=E2=80=94Testing infrastructure: Keep a tiny, templatized prompt set =
+per task and run it against a few candidate models. Validate with determini=
+stic checks (factual anchors, schema) and sprinkle in an LLM-as-judge or qu=
+ick human review where needed. The goal is a fast, repeatable signal to pic=
+k the right model.
+
+-
+
+Part 2=E2=80=94Network Infrastructure: Put a lightweight, high-performance =
+proxy server (e.g., archgw (https://learn.educative.io/e3t/Ctc/RG+113/cz5H4=
+04/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1x3prCCW7lCdLW6lZ3n-VV9QLf17bl=
+m7W7tNxQ57PxsctW1Y8gvK11whg_N2P68L9WT70HVh0kMD599L6yW39KzLP2y3gStW29Hpw47vL=
+1BzW64SH3M1JWlpCW4qk4LV3WzrbwW6CZ6vL62sh69W66fTdF7xh7dPW54tdQB7XcjCRW3Tw2p7=
+7D_6WvW5rzLbS655sX-W8K7Sl_9gZr_BW5Bdg7j892qPmW4pmB-18Wgdw-W71bxGM4VtZKcW7Qt=
+0Rs311hMLW9j-JBT19Wg3cW8zRvtQ2c8BL0W8RwBhf3TXYk5F10Wl2VQwfhW3RprwD5Q4LNRf7_=
+RH4804 ) ) between your agents and LLM providers. Your app still owns promp=
+ts, but the proxy server gives you consistent APIs, metrics, guardrails (JS=
+ON/schema checks), and a single control point for model choice. Instead of =
+hardcoding vendor names, this allows you to call intent-based aliases like =
+arch.summarize.v1. Behind the scenes, the proxy can route that alias to the=
+ right model, shift traffic during canary tests, or fall back automatically=
+ on errors.
+
+=F0=9F=93=9D How do aliases and routing work?
+
+Think of an alias as a handle your code always calls. Routing is the set of=
+ rules that decide what actually happens when that handle is invoked=E2=80=
+=94which model to send the request to, how to split traffic across candidat=
+es, and what to do if something fails. Together, aliases and routing make m=
+odel selection programmable, safe, and observable.
+
+Part 1=E2=80=94Testing infrastructure (The tiniest useful test bench)
+
+Let=E2=80=99s walk through the setup. It=E2=80=99s just two steps.
+
+-
+
+Write test fixtures (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXdd=
+yd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263prCCW8wLKSR6lZ3n7W4SGLd55pSvwhW88g=
+PgB4_pv5XW8gzkmq63XGwQW7snb268QTwRrW4cs_jr4sDcPZW2Gj3vF1xjL0mW5nYPCX6xMhNtW=
+5RNFXW2Q463ZW68TSDy3rYCfwMdjB8MfPJhDW4Cx3dv9lmYt7N91N6vF7KxBqW81k5gP8LC0VfW=
+3WZBLP1Gg5psW3fgbDQ2Xq9_CW1KQYSt3zPqf5W45r4ct4LdFNCW87R_SN1CH77GW6z2WM01fSX=
+pmW4QpV25733Z65W2Gv59B5k1RlTW7z_1cv9gH-t3W4DVQvj8pnS0WW7TH4093grql9W26fRR97=
+wvF5rW44XsW57-zCflW4vXKgY2TzMN9W1Rs0my5YPsy-f65NF6d04 ) per task: Keep 10=
+=E2=80=9320 real examples for a single task (say summarization). Each fixtu=
+re has an input and a couple of must_include anchors. Optionally specify a =
+JSON schema.
+
+Screenshot 2025-09-18 at 4.07.04 PM (https://learn.educative.io/e3t/Ctc/RG+=
+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3l-W=
+7tgVHp1DgzJyN1tQN4KRGVtgW19-QmN7mF5JTVmYqtK3_mlY3W5ySWVL3cMd5gW1z583T8pr0K6=
+V7krw5952hdKW8Hc7PJ623k3KW7j4qb57x6NMHW2klwGd70SSR4W7glJBJ5R5Z2FW65Kfd98gZJ=
+qQW9bJ5RC3Hjq_MW55y8S960QMRdW1Pq31Z4PjLc4VSL5533ZB8TnN8nGP09DxYChV85gmJ4Lsq=
+lXW4v1mFd4wH7NRN5bc3xJ-9-8yW7Ms75D7R9HncN1ngnjcZLQxVW7zfh327RtvLcVW2Z_w1NPw=
+vsW7p_5Zm7Xwy-TW8Rp0Vw5Z1LFHW4qKn8F27mfYXW5wQJBf1mrkhDW3sLC7J8xT7myW1LnST87=
+xM74-W8d-8Lb2JWXjFN7dR5tmNx4Jlf6XH8sC04 )
+
+-
+
+Pick a few candidate models: As you=E2=80=99re routing through archgw (http=
+s://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCS=
+rm5CGYRxN2lhp1x3prCCW7lCdLW6lZ3n-VV9QLf17blm7W7tNxQ57PxsctW1Y8gvK11whg_N2P6=
+8L9WT70HVh0kMD599L6yW39KzLP2y3gStW29Hpw47vL1BzW64SH3M1JWlpCW4qk4LV3WzrbwW6C=
+Z6vL62sh69W66fTdF7xh7dPW54tdQB7XcjCRW3Tw2p77D_6WvW5rzLbS655sX-W8K7Sl_9gZr_B=
+W5Bdg7j892qPmW4pmB-18Wgdw-W71bxGM4VtZKcW7Qt0Rs311hMLW9j-JBT19Wg3cW8zRvtQ2c8=
+BL0W8RwBhf3TXYk5F10Wl2VQwfhW3RprwD5Q4LNRf7_RH4804 ) , you don=E2=80=99t nee=
+d provider API keys in your code harness. Just point your client at the pro=
+xy server and list the models (or aliases like arch.summarize.v1) you would=
+ want to evaluate your tasks against.
+
+Now, let's build a minimal python harness that we can use to test out diffe=
+rent models.
+
+Screenshot 2025-09-18 at 4.08.08 PM (https://learn.educative.io/e3t/Ctc/RG+=
+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3l-W=
+7tgVHp1DgzJyN1tQN4KRGVtgW19-QmN7mF5JTVmYqtK3_mlY3W5ySWVL3cMd5gW1z583T8pr0K6=
+V7krw5952hdKW8Hc7PJ623k3KW7j4qb57x6NMHW2klwGd70SSR4W7glJBJ5R5Z2FW65Kfd98gZJ=
+qQW9bJ5RC3Hjq_MW55y8S960QMRdW1Pq31Z4PjLc4VSL5533ZB8TnN8nGP09DxYChV85gmJ4Lsq=
+lXW4v1mFd4wH7NRN5bc3xJ-9-8yW7Ms75D7R9HncN1ngnjcZLQxVW7zfh327RtvLcVW2Z_w1NPw=
+vsW7p_5Zm7Xwy-TW8Rp0Vw5Z1LFHW4qKn8F27mfYXW5wQJBf1mrkhDW3sLC7J8xT7myW1LnST87=
+xM74-W8d-8Lb2JWXjFN7dR5tmNx4Jlf6XH8sC04 )
+
+View the full code here
+(https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwB=
+W4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3l-W7tgVHp1DgzJyN1tQN4KRGVtgW19-QmN7mF5J=
+TVmYqtK3_mlY3W5ySWVL3cMd5gW1z583T8pr0K6V7krw5952hdKW8Hc7PJ623k3KW7j4qb57x6N=
+MHW2klwGd70SSR4W7glJBJ5R5Z2FW65Kfd98gZJqQW9bJ5RC3Hjq_MW55y8S960QMRdW1Pq31Z4=
+PjLc4VSL5533ZB8TnN8nGP09DxYChV85gmJ4LsqlXW4v1mFd4wH7NRN5bc3xJ-9-8yW7Ms75D7R=
+9HncN1ngnjcZLQxVW7zfh327RtvLcVW2Z_w1NPwvsW7p_5Zm7Xwy-TW8Rp0Vw5Z1LFHW4qKn8F2=
+7mfYXW5wQJBf1mrkhDW3sLC7J8xT7myW1LnST87xM74-W8d-8Lb2JWXjFN7dR5tmNx4Jlf6XH8s=
+C04 )
+
+What =E2=80=9Cgood enough=E2=80=9D could look like for your test cases:
+
+-
+
+=E2=89=A590% schema-valid
+
+-
+
+=E2=89=A580% anchors present
+
+-
+
+Latency within your SLO
+
+-
+
+Cost within budget
+
+Part 2 =E2=80=94 Network Infrastructure (A lightweight proxy that makes swi=
+tching safe)
+
+Before we can run the harness, we need to set up archgw (https://learn.educ=
+ative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1=
+x3prCCW7lCdLW6lZ3n-VV9QLf17blm7W7tNxQ57PxsctW1Y8gvK11whg_N2P68L9WT70HVh0kMD=
+599L6yW39KzLP2y3gStW29Hpw47vL1BzW64SH3M1JWlpCW4qk4LV3WzrbwW6CZ6vL62sh69W66f=
+TdF7xh7dPW54tdQB7XcjCRW3Tw2p77D_6WvW5rzLbS655sX-W8K7Sl_9gZr_BW5Bdg7j892qPmW=
+4pmB-18Wgdw-W71bxGM4VtZKcW7Qt0Rs311hMLW9j-JBT19Wg3cW8zRvtQ2c8BL0W8RwBhf3TXY=
+k5F10Wl2VQwfhW3RprwD5Q4LNRf7_RH4804 ) (the smart edge and LLM proxy for age=
+nts). Why bother with a proxy at all? It=E2=80=99s about giving you a consi=
+stent API surface across providers, a unified view of logs and traces for e=
+very model call, centralized key management, and a single abstraction layer=
+ for model choice.
+
+The key abstraction in the proxy is the model alias. Instead of wiring your=
+ app to vendor-specific names like gpt-4o-mini or claude-3-sonnet, you wire=
+ it to intent with aliases such as arch.summarize.v1 or arch.reason.v1. You=
+r code always calls the alias; the proxy decides what model runs underneath=
+, how traffic is shaped, and what fallback rules apply. Aliases may look li=
+ke simple labels, but they encode intent rather than vendor details=E2=80=
+=94and that shift unlocks several practical advantages:
+
+-
+
+Decoupled application code: Instead of hardcoding gpt-4o-mini or claude-3-s=
+onnet throughout your codebase, you reference a single alias. Swap the unde=
+rlying model once in config, and your entire app updates=E2=80=94no redeplo=
+ys, no hunt-and-replace.
+
+-
+
+Safe promotions: Want to test a new model? Point the alias at a candidate b=
+ehind the scenes. If your canary tests or metrics hold, flip the pointer to=
+ 100% traffic. If not, roll back instantly without touching application cod=
+e.
+
+-
+
+Central governance: Apply SLOs, guardrails, and policies at the alias level=
+. For example, enforce JSON schema validation, timeout rules, or max token =
+caps once, instead of scattering that logic across services.
+
+-
+
+Observability by task: Dashboards and traces group naturally by alias (arch=
+.summarize.v1) rather than shifting provider names. That makes it easier to=
+ track latency, cost, and error rates by intent, not by vendor string.
+
+-
+
+Quota & cost control: Throttle or cap usage per alias. For instance, you ca=
+n enforce a daily budget on summarization tasks, regardless of which model =
+powers them underneath.
+
+Here=E2=80=99s the simple archgw config that you will need to run the test =
+harness:
+
+Screenshot 2025-09-18 at 4.14.36 PM (https://learn.educative.io/e3t/Ctc/RG+=
+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3l-W=
+7tgVHp1DgzJyN1tQN4KRGVtgW19-QmN7mF5JTVmYqtK3_mlY3W5ySWVL3cMd5gW1z583T8pr0K6=
+V7krw5952hdKW8Hc7PJ623k3KW7j4qb57x6NMHW2klwGd70SSR4W7glJBJ5R5Z2FW65Kfd98gZJ=
+qQW9bJ5RC3Hjq_MW55y8S960QMRdW1Pq31Z4PjLc4VSL5533ZB8TnN8nGP09DxYChV85gmJ4Lsq=
+lXW4v1mFd4wH7NRN5bc3xJ-9-8yW7Ms75D7R9HncN1ngnjcZLQxVW7zfh327RtvLcVW2Z_w1NPw=
+vsW7p_5Zm7Xwy-TW8Rp0Vw5Z1LFHW4qKn8F27mfYXW5wQJBf1mrkhDW3sLC7J8xT7myW1LnST87=
+xM74-W8d-8Lb2JWXjFN7dR5tmNx4Jlf6XH8sC04 )
+
+Putting it all together
+
+For your convenience, we have packaged all the code shown in this newslette=
+r here (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djx=
+Jv4gKwBW4CCSrm5CGYRxN2lhp0l5m_5PW50kH_H6lZ3npV3dxsq1sXpzhW8QDRmg8DZvsNW73Fz=
+GM8B-q73N5TmwWTlQnR9W42Mh6Y6FRVvKW5ZFB4D1ShSlDW6pZn164X42YJW2Bd-8k5n8-7PW88=
+dHSN2LLK-CW4m8rBX6ZkmH5W9kNp_z3sk4fvW5-Lj7f5ZkbHRN7yv_t_jk6j6W6HLV7L7jhP8DW=
+3BgbYB8fNw_xW3_N7NY4RLrTkW2pHXH698Sg2gW13rxDS6gLtlMW2Scq-d1tH8v5W1KrRQW8YSR=
+knW3bDY2M4SRGlYVD4SDn81FmP2W2l7sKd8pGyNNW6m_QSL7C70W-W6Ym5N28DQ1_YW1zlnyy7q=
+gLzHW27gjz943x3NvV7B3c51_HCNrW8606dQ2QwHdQW37wdj24FZn9XW12f1LL5G4KPWW7ksW7v=
+5FvFFnf243nCM04 ) . All you need to do is:
+
+-
+
+Install the prerequisites: Follow the README to install all the necessary p=
+rerequisites.
+
+-
+
+Run the test: Execute the Python benchmark script as follows:
+
+After running the command above, you should see an output like this, giving=
+ you a clear signal on which model alias performs best for your task:
+
+From the results shown above, you can quickly see that arch.summarize.v1 (G=
+PT-4o Mini) is faster but less reliable, while arch.reason.v1 (o3) is slowe=
+r but more reliable.
+
+This is simple, actionable data that you can use to make decisions on what =
+models to use in your agentic application. And, with the proxy in place, yo=
+u can flip the switch to a different model tomorrow without a single line o=
+f code change in your application.
+
+Wrapping up
+
+With the rate at which models are being launched, there is no time to be ov=
+erwhelmed. With a handful of fixtures (inputs + anchors + optional schema),=
+ a tiny Python harness, and a lightweight proxy like archgw (https://learn.=
+educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2=
+lhp1x3prCCW7lCdLW6lZ3n-VV9QLf17blm7W7tNxQ57PxsctW1Y8gvK11whg_N2P68L9WT70HVh=
+0kMD599L6yW39KzLP2y3gStW29Hpw47vL1BzW64SH3M1JWlpCW4qk4LV3WzrbwW6CZ6vL62sh69=
+W66fTdF7xh7dPW54tdQB7XcjCRW3Tw2p77D_6WvW5rzLbS655sX-W8K7Sl_9gZr_BW5Bdg7j892=
+qPmW4pmB-18Wgdw-W71bxGM4VtZKcW7Qt0Rs311hMLW9j-JBT19Wg3cW8zRvtQ2c8BL0W8RwBhf=
+3TXYk5F10Wl2VQwfhW3RprwD5Q4LNRf7_RH4804 ) , you can turn the buffet of mode=
+l choices into a super power.
+
+Here is a recap of how to quickly consider, test, and adopt new models with=
+out being overwhelmed:
+
+-
+
+Evaluate quickly: Run fixtures across a few candidates, get a clear pass/fa=
+il signal, and decide what=E2=80=99s =E2=80=9Cgood enough=E2=80=9D for your=
+ use case.
+
+-
+
+Swap safely: Point your app at an alias (arch.summarize.v1) and update the =
+underlying model in config =E2=80=94 no redeploys, no code changes.
+
+-
+
+Stay consistent: Centralize guardrails, metrics, and governance at the prox=
+y layer so your application code stays clean.
+
+This is about as close to a free lunch as you can get with AI. The ecosyste=
+m keeps producing better, faster, cheaper models=E2=80=94and you can actual=
+ly take advantage of them without rewrites or lock-in. Drop a proxy in the =
+middle, and the payoff compounds as the model landscape keeps shifting.
+
+=E2=9A=A0=EF=B8=8F If this playbook resonates, check out archgw (https://le=
+arn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGY=
+RxN2lhp1x3prCCW7lCdLW6lZ3n-VV9QLf17blm7W7tNxQ57PxsctW1Y8gvK11whg_N2P68L9WT7=
+0HVh0kMD599L6yW39KzLP2y3gStW29Hpw47vL1BzW64SH3M1JWlpCW4qk4LV3WzrbwW6CZ6vL62=
+sh69W66fTdF7xh7dPW54tdQB7XcjCRW3Tw2p77D_6WvW5rzLbS655sX-W8K7Sl_9gZr_BW5Bdg7=
+j892qPmW4pmB-18Wgdw-W71bxGM4VtZKcW7Qt0Rs311hMLW9j-JBT19Wg3cW8zRvtQ2c8BL0W8R=
+wBhf3TXYk5F10Wl2VQwfhW3RprwD5Q4LNRf7_RH4804 ) on GitHub, give it a star, an=
+d hop into our Discord (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/V=
+Xddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp2q3prCCW95jsWP6lZ3pmW5jcr8G60JvPMN=
+9cP91fDRMLFW93mFf44T8P1JW6TQLmx3R4nn6W7lP5fX6rtrrlW7nkB7J6TYG1MVr2k_247QS96=
+W6cjd1T9lhDhgN1ML08jQdWW3W9543Wd1twkMGW7vxk4B1K4cPvW4MwD2h4vddQlW8-w-LH6q_l=
+KQN4trzSYx_PGwW4WBfCH1kzGDnW80HJ-98PzVCqW5gr5Kv6xSNr1W8P51Gf2c5jGsW8FdJCb72=
+srM6W8kfqvF6lmcBJW8bFZGr6SsMJhW2psMZ42fG5h7W6YFrPw8_nD6GN3wmTP-H732mW8nmYcf=
+9jn_22W95VF524qPrrCW1BJzqz9hQFjDW6Py6M51jXm2ZW98tGrZ38K7wKW8rfc655vs0nQf6Pc=
+gds04 ) to be part of our community. It=E2=80=99s early days, but we=E2=80=
+=99re rethinking the network stack for agents=E2=80=94building an open-sour=
+ce edge and AI gateway, purpose-built for agentic apps. With routing, guard=
+rails, and observability built in, you can focus on your agents=E2=80=99 bu=
+siness logic while we ensure they run reliably in production.
+
+Salman Paracha (https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QN=
+Q_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3prCCW7Y8-PT6lZ3mhMm9n_JBYy5TW6Zc-y46W2L=
+_0W5tFXvf5Qm01bW6Y-0fW7SWmk-W932BH34QwTrLW1z__N72PjVbvW46Lj8R7mgl-NW2GHFNp4=
+GRRqxW97t7-w1JXnGfW4156df639vwBW8sXzBq28N6D1W80g7yr1b91CSW2VN9Hd5Mf-N4MSDyh=
+MWF_lqW3PgxYX8jGdjlW65BxSy8qCXY0W5wZ4xC8SFLJWW2-Qp4T6j9nJYTV2sg2gwqyBV3Tjps=
+1xH8cJW506b2B3F74TFW6KW33V8n0RV8W77WdQ-8cV5SDW5wgFTf1vXBfJW3c7C-J2R017ZVQTW=
+PW1Yk5yRf43k2x804 )
+
+Co-Founder & CEO of Katanemo
+
+Educative, 12280 NE District Way, Bellevue, WA 98005, United States
+
+Manage preferences (https://learn.educative.io/hs/preferences-center/en/pag=
+e?data=3DW2nXS-N30h-MXW3jmhBz3LQs6dW4hgWqN2HVRNwW3dgMvq3VSvNDW2xQGsC4p8wyxW=
+2PhC5m1Sz6Q9W2CHyZj3BVzyJW3dpq4g3GY6-sW3NV0yl2KFgjwW2WnKYZ2CwlDdW36y6lc3R3c=
+r8W2y4zkG2-Fsf3W2zVDQ_3VM2l3W3VSvqG36hmQ6W4cPW1W2sVNw7W2HKgb_2TJg4dW366Ht22=
+TJfbHW3QTpsb3brLsxW4cLxRJ4tgLYcW3JYjNJ3XT_PBW1Xyj9z3H40RMW2MQhsD2Cw26KW3D-l=
+by4kMBD5W3_KKjN3yXq9TW45M3pM1Qk0HnW2YDs8T4tn-VfW38vrFf2PBn5TW1VktdY3yN5NhW4=
+kfWNF1LvyCBW41D1t22CWcqKW45qBWr2xZxKbW4fwF0p45mJm_W2sMlyX38rvcmW2RHBLt1BGQD=
+jW4hJVgY3VzWdFW3gpF5J1Z96BgW2vS6j21S8ym7W4rpCmj2Hs6JhW3M6VNK3d1XnsW2Pl51m41=
+TRXmW2FTLCL1_vs8mW3z8PFw1Qg_trW4tgPpD2PKsKyW2t7srj2xZC7rW47y4br3JRWr1W3XZxt=
+C3bqWJbW2PBlZC47wSgYW49yGNs45qbMdW4kx3Kr2-qT5GW2y3PDx3V_TnSW4fyLb94cN8sQf4m=
+j97h04&_hsenc=3Dp2ANqtz-8x9uGklpUNe_fOmBWaiqqmRlHO5F_uRmzOeEeLfTIrtrFR2qIg8=
+_wUhEjIAZNjqdLBklnSnpsYCOKROlDlY9LqXbNH0w&_hsmi=3D381393407 )
+------=_Part_963284_275500385.1758348711133
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head>
+    <title>What I=E2=80=99ve Learned About Making Model Choice Work for You=
+</title>
+    <meta property=3D"og:title" content=3D"What I=E2=80=99ve Learned About =
+Making Model Choice Work for You">
+    <meta name=3D"twitter:title" content=3D"What I=E2=80=99ve Learned About=
+ Making Model Choice Work for You">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    <w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #DFE8F2;}
+</style>
+<![endif]-->
+<!--[if mso | IE]>
+  <style type=3D"text/css">
+    .hse-column-container { border: none !important; padding: 0 !important;=
+ }
+  </style>
+<![endif]-->
+   =20
+     =20
+ =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"https://learn.educative.io/what-ive-learned-about-making-model-cho=
+ice-work-for-you"><meta name=3D"robots" content=3D"noindex,follow"><!--[if =
+!((mso)|(IE))]><!-- --><style type=3D"text/css">@media only screen and (max=
+-width:639px){img.stretch-on-mobile,.hs_rss_email_entries_table img,.hs-str=
+etch-cta .hs-cta-img{height:auto !important;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}@media only screen and (max-width:639px){.hse-border-m{border-left:1px sol=
+id #ccc !important;border-right:1px solid #ccc !important;box-sizing:border=
+-box}
+.hse-border-bottom-m{border-bottom:1px solid #ccc !important}.hse-border-to=
+p-m{border-top:1px solid #ccc !important}
+.hse-border-top-hm{border-top:none !important}.hse-border-bottom-hm{border-=
+bottom:none !important}
+}.moz-text-html .hse-column-container{max-width:600px !important;width:600p=
+x !important}
+.moz-text-html .hse-column{display:table-cell;vertical-align:top}.moz-text-=
+html .hse-section .hse-size-3{max-width:150px !important;width:150px !impor=
+tant}
+.moz-text-html .hse-section .hse-size-9{max-width:450px !important;width:45=
+0px !important}
+.moz-text-html .hse-section .hse-size-12{max-width:600px !important;width:6=
+00px !important}
+@media only screen and (min-width:640px){.hse-column-container{max-width:60=
+0px !important;width:600px !important}
+.hse-column{display:table-cell;vertical-align:top}.hse-section .hse-size-3{=
+max-width:150px !important;width:150px !important}
+.hse-section .hse-size-9{max-width:450px !important;width:450px !important}=
+.hse-section .hse-size-12{max-width:600px !important;width:600px !important=
+}
+}@media only screen and (max-width:639px){.hse-body-wrapper-td{padding-top:=
+20px !important}
+#section_1739926362603 .hse-column-container{background-color:transparent !=
+important}
+#section_1739926362603 .hse-column-container{background-color:transparent !=
+important}
+}@media only screen and (max-width:639px){ #section_17407834096393 .hse-col=
+umn-container{padding-top:0px !important;padding-bottom:0px !important}
+#section_17407834096393 .hse-column-container{background-color:#1d2b8d !imp=
+ortant}
+}@media only screen and (max-width:639px){.hse-body-wrapper-td{padding-bott=
+om:20px !important}
+#section_1728495237855 .hse-column-container{background-color:#dfe8f2 !impo=
+rtant}
+}</style><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wrapper_=
+main a[x-apple-data-detectors]{color:inherit !important;text-decoration:non=
+e !important;font-size:inherit !important;font-family:inherit !important;fo=
+nt-weight:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}
+.ShadowHTML p,.sh-modified-inline p{margin:0}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#DFE8F2" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Arial, sans-serif; font-size:15px; color:#0=
+00000; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#DFE=
+8F2;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Salman Paracha (ex-AWS, Oracle; now CEO at Katanemo) explains=
+ how developers can turn the flood of new models into leverage by pairing l=
+ightweight testing with a smart proxy.</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#dfe8f2" bgcolor=3D"#dfe8f2">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table" cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"margin:0; padding:0; width:100% !impo=
+rtant; min-width:320px !important; height:100% !important" width=3D"100%" h=
+eight=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Arial, sans-serif; font-size:15px; color:#000000; word-break:break-wor=
+d; padding-top:20px; padding-bottom:20px">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_dnd_area" style=3D"color: inherit; font-=
+size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" d=
+ata-hs-cos-type=3D"dnd_area">  <div id=3D"section_1739926362603" class=3D"h=
+se-section hse-section-first" style=3D"padding-left:10px; padding-right:10p=
+x">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1739926362603_0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17399263626002" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><div style=3D"overflow:hidden">
+  <table role=3D"presentation" class=3D"hse-pre-header hse-secondary" width=
+=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"text-align:right; fo=
+nt-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#23496=
+d; margin-bottom:0; padding:0" align=3D"right">
+    <tbody>
+      <tr>
+        <td align=3D"right" valign=3D"top" style=3D"color:#000000; word-bre=
+ak:break-word; text-align:right; font-family:Arial, sans-serif; font-size:1=
+2px; padding:10px 0; margin-bottom:0; line-height:135%">
+          <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXdd=
+yd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R5nR3bW7Y9pgv6lZ3kYW6tjny72tsBL6W5tJ=
+FB01JS4VlW8h_d3C18c77FVSq39N5ZG8DYW22j89m3qBNsVW8Pt5Yd9kmRzJW7nXt_46J9G4lW8=
+CV0-g87-5YfW8G56cY329rQDW58vh598lSvBDW6MkgHk781mnGV_dtH82mJkX_W2c_wyJ92jqT1=
+N6rPk8WD_t0BW7MTcBr7Kgz-fW5q6YDl6bbrBHW2K719v1kB0vFW812g-F1lGc-LW3N4yMn8SWk=
+DCW73ZGz76jDHXGW4HS9Y98RX5CPW8zglTy9jqhgsW7tM86H5gZnJqV1sV3Q5WcQ6kW7jZcxt1B=
+cVyzW3r7DMB5KXS8rW5NC0n24z2j6MW9dx9nf4P4B5WW4G0qfx21QXLPN31xZHnGBpQ5W6jBG-M=
+8-N6kDW375glX3XZ_HmW7ZW_Hz3ln6vLW4VNKfZ7NZq5KW9hS3g36f4L3dW4b2y5g3xT85vW79N=
+sbb1z5MZCW1ZHkF99fZSvrW4P8wj13vTDFhW2NNXH_6_Mt2JW8tznxB5s9_s4N6SZNKJ-wqcsf4=
+Z8V5K04" style=3D"color:#4951F5; font-weight:normal; text-decoration:underl=
+ine; font-style:normal" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"rwdvQEY=
+x" target=3D"_blank">View in browser</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_17407834096393" class=3D"hse-section" style=3D"padding=
+-left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#1d2b8d" bgcolor=3D"#1d2b8d">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#1d2b8d">
+      <tr style=3D"background-color:#1d2b8d;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-1740783409639-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17407834096392" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263qgz0W8wLKSR6lZ3p_W7LkppQ3Z2FC6VrWvyF=
+3yT5NxW6SlTyV7WTvMHW8jTCfb24MNP2W4WrDG17cWTx3W5yt33X9jmL-VW6ZcXLj3Pt1HwW52t=
+ZnF8y13PjW5b7R9B83345xW7sY8PP7fGfQRW956WnK181S0KN22lG5JJM_9GW7FP6yV5ZWnlYW8=
+NgXzm1P47mNW1k2XS-27Y7jGVhkkKH7bhPlhW3r_M3h4Qr1N_W2PpD3c5VflYTW7m6J-c958m1Z=
+MyND06LnjwmW3THC5g5FbK4vW23XP7h16QJ_gW34p0Xt5cryf7W2hWnTV62B73lW8VY2bn35ZVj=
+XV49QmR3jZ41BW16JrX24SHCtrMJ5L-h341Hzf7sRK9204" target=3D"_blank" style=3D"=
+color:#00a4bd" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"TpcMh3pY">
+        <img alt=3D"Educative" src=3D"https://learn.educative.io/hs-fs/hubf=
+s/Educative_Horizontal%20Logo_White-1.png?width=3D500&amp;upscale=3Dtrue&am=
+p;name=3DEducative_Horizontal%20Logo_White-1.png" style=3D"outline:none; te=
+xt-decoration:none; border:none; max-width:100%; font-size:16px" width=3D"2=
+50" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1724865534090" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:15px; pad=
+ding-top:15px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:15px; padding-top:=
+15px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1724865534090_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px 0px"><div id=3D"hs_cos_wrapper_module-0-0-0" c=
+lass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" st=
+yle=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-c=
+os-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wr=
+apper_module-0-0-0_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_w=
+rapper_type_rich_text" style=3D"color: inherit; font-size: inherit; line-he=
+ight: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"ric=
+h_text"><p style=3D"line-height:175%; font-size:16px"><span style=3D"color:=
+ #0a165b;">Dyson,</span></p>
+<p style=3D"line-height:175%; font-size:16px">&nbsp;</p>
+<p style=3D"font-size:16px; line-height:175%" data-start=3D"0" data-end=3D"=
+370"><span style=3D"color: #0a165b;"><span style=3D"caret-color: #0a165b;">=
+This week, we are welcoming <a href=3D"https://learn.educative.io/e3t/Ctc/R=
+G+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3k=
+CW90CLkp4P1CbvW3c8m941YsM7QW6s934q3mYnXqW8jrNWd41sPLBW1fVVcN8pNsRSW8bB3fC86=
+dzlYW2r7dFS615d-xW6q8tTw7bq7dVW47Cmzs4gyG43W1QJjTM5gNMJbW8dyHLv42P40BW8fh21=
+m1ts14JW47Zfy92C5MxbVyc1bl5w89RQW2NP5mG4B_Q9CW2QQ7T25msyT6W31l8GB8HjLGDW1KM=
+k2k9f7YxNW6cspfX5dX8T7W4rkKwx6PkQ3cW6qX4XY85pPytW3q8sLx6h9RppW1v8flw11V6r2W=
+8VLg7Y91Dvs7W2C78Gd36K9PJW3QbLTS33ZnRpf3Zmwz804" rel=3D"noopener" style=3D"=
+color:#4951f5" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"ss3K6Ml2" target=
+=3D"_blank">Salman Paracha</a></span></span><span style=3D"font-size: 16px;=
+ color: #0a165b;">, Co-Founder &amp; CEO of <span style=3D"font-weight: bol=
+d;">Katanemo. </span><span style=3D"font-weight: normal;">He is </span>buil=
+ding the modern infrastructure stack for AI. Before that, Salman built clou=
+d infrastructure at AWS and Oracle, where he was at the forefront of two ma=
+jor technology waves: cloud computing and serverless. He is now at the fore=
+front of the agentic AI wave.</span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">He still considers himself a developer and focuses on building technolo=
+gies that empower other developers to do more, move faster and create the n=
+ext great application.</span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"font-size:16px; line-height:175%" data-start=3D"0" data-end=3D"=
+370"><span style=3D"color: #0a165b;"><span style=3D"caret-color: #0a165b;">=
+Now over to <span style=3D"font-size: 16px; color: #0a165b;">Salman</span>!=
+</span></span></p>
+<p style=3D"font-size:16px; line-height:175%" data-start=3D"0" data-end=3D"=
+370">&nbsp;</p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758238425580" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#f4f4f4; padding-bottom:20px; pad=
+ding-top:10px" bgcolor=3D"#f4f4f4">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#f4f4f4">
+      <tr style=3D"background-color:#f4f4f4;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+10px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758238425580_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px 0px"><div id=3D"hs_cos_wrapper_module_17582384=
+1088617" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_=
+module" style=3D"color: inherit; font-size: inherit; line-height: inherit;"=
+ data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D=
+"hs_cos_wrapper_module_175823841088617_" class=3D"hs_cos_wrapper hs_cos_wra=
+pper_widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-si=
+ze: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" dat=
+a-hs-cos-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"fo=
+nt-style: italic;"><span style=3D"font-size: 16px; color: #0a165b;">=F0=9F=
+=91=89 <span style=3D"font-weight: bold;">Quick note before we start:</span=
+> Did you enter our 30-day <a href=3D"https://learn.educative.io/e3t/Ctc/RG=
++113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263qgz0W8wLKSR6lZ3nV=
+W7zCwBs3Nq59nVCX3f999YX1pW8Hy69X7jlK3MW8f4sth4SGGLsW218x581hC_v0W5B6HfM52_C=
+l8W5F9vKR2m0yMXW2t0nfZ3_HmWSW20DFsh8PY3F2W1N_1xr1Sc_vXN4py8qTckDLZN1FpxDx9s=
+dgzV6hxd85hLdJTW8hV8jS4czwRhW54YlF08W-fqwW6gggSM4d-TmfW7nzq6p1WrnyBW80wywX7=
+QmyMNW7dylH14d54h_VSHHYj34NRcCW1Q3WDt2RkZMGW6MgbBV2gtYTKW3CgwQ08f3XQ3W22K4h=
+P3lDq6SW4JMv0-3X2l-PW8YJNsQ1qNm2lW2t87cQ6tlS9HW4fDdC_2DQpgkf9k3Qpg04" rel=
+=3D"noopener" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-hs-link-id=
+-v2=3D"SrRBPrj3" target=3D"_blank">Daily Coding Challenge</a>? The winner w=
+ill be announced on October 1, 2025. The prizes include MacBook Pro =F0=9F=
+=92=BB, 1-year OpenAI subscription, and more! </span></span><span style=3D"=
+font-size: 16px;"><span style=3D"font-style: italic;"><span style=3D"color:=
+ #0a165b;">Also, <span style=3D"font-weight: bold;">GitHub</span> just join=
+ed our campaign:</span> </span><a href=3D"https://learn.educative.io/e3t/Ct=
+c/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0Y5nR3bW69t95C6l=
+Z3n5W1fWr4p3Qgz5DW7V7S8r8TYkxHN7ytrrnQtGpFW2VNYcG7Jd3JzN6pYpYNR6CklVMj9kQ15=
+c6MPW7gXthD9fgLzGW73f2FX25---1W3tv0q57tYYx7W4q7F2s78JyhnW7l6tfp50Xk0cW4Rc0y=
+11dFCddW6XjgKq3rqyybW7zDMHf1wgkKGN3P7P0bkxm_CW2zDSXw3lRLbdW160TG92YldxXW3dq=
+DQK73bxKWN1MZYGVjWtD7W6tK3yF2Q2VFDW7QSP615CD6cnN12bHzwDf7T0N9g8xqFFPNG8W4C6=
+3N54w01pyW2btdgM4dmBTtVSRNDt1-ZwRPW1fbdvP335h34W7bJg9c3ymnScW7Q7wHx8539dMVk=
+D52v7M_JqzW8t50Rk87hd75W8hMM5G649Tm6W1Zd6SM4N2s95W1Yg4br72yF1bN8ZhH4_VNHhcV=
+-BpCJ6dzJbtf5RYqDF04" style=3D"color:#4951f5; font-weight:bold; font-style:=
+italic" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"4V4YnP=
+ve" target=3D"_blank">more details here.</a></span></p></div></div></td></t=
+r></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1740586313542" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1740586313542_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_172676722333=
+21" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17267672233321_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"font-siz=
+e: 16px; color: #0a165b;">Hello&nbsp;everyone, it's Salman&nbsp;=F0=9F=91=
+=8B</span></p>
+<p style=3D"line-height:175%"><span style=3D"color: #0a165b;">&nbsp;</span>=
+</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">Hugging Face, an open-source community for AI projects=
+, now hosts</span> <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5=
+H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0Y2-Z-MW69sMD-6lZ3mpW60MHkC8=
+3cRZkW458yjr120jtrW1r00tH3x-n4LVxhdqh2PJq3GW5J6W5w58Tr8FW2jSj-B8nJNfbW3DQw9=
+W9m5cKwW7DbrV67gLdy6W6TdH_v9jCNf2W3VT7v81FdCHxW7rg7-c3mhM_sW5VNYkk7fx686N20=
+1d9MPVHvtW1mCSFR2wFg40W289XhV3crFNMW7dPPWz1dkWpMW4GZszx3RqGWjW564PN_8Ktp0sW=
+2MMKth3V1M_WW6KPsZQ8r6h8Vf69G9LP04" target=3D"_blank" rel=3D"noopener noref=
+errer" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"=
+jAdvY+vZ"><em>over 1.7M models</em></a><span style=3D"color: #0a165b;"> (up=
+ from 1M in late 2024), and the pace of model releases is accelerating. </s=
+pan></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">On the proprietary side, OpenAI alone has shipped more=
+ than a dozen model families and versions since GPT-4, from the o-series (o=
+1/o3/o4-mini) to GPT-5. Google continues to roll out Gemini versions behind=
+ stable aliases, xAI keeps iterating on Grok, and Amazon=E2=80=99s</span> <=
+a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9d=
+jxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3mcW5tH3sw3L0GZsN37yKBX2SYdMW68=
+PkLW5nR__3N7w9KWDJ4-y6W5PHPGg8QPj8_W2RPtmv14KHXsW7lJSWM19jMk8W5fPtKm2Wp12BW=
+7pP_Jr86t7GRW4MpMqX3ftwZSW24gnwR3xTGTfW7dxNVS4xvYh-W5h5r391qQfwqW8D3jsh6BdP=
+85W1h77qL3DYRT_W6nxQRZ68WqyXW1x_3zl8TDq5xW1NBDrq9213SqW2YHYNC5c062kN97GhPvP=
+nb9gW17mGG_7HRmSnW54s72n7llL0TV53n3l1WScD6W60yTHq1Qpf5WW7fQqRR87yGS3W5grYv7=
+82KnKnf2QbfB204" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"col=
+or:#4951f5" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"2MOdZWxG">Bedrock</=
+a> <span style=3D"color: #0a165b;">aggregates multiple leading LLMs under o=
+ne platform. </span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">The takeaway is simple: <em>model choice is exploding<=
+/em>. And there=E2=80=99s no sign of this trend slowing down, especially wi=
+th the rise of</span> <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/=
+cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3l2W8Kyc=
+dN31Q0_qW5djymW9dYdyNW7bh1tz7RvyMLW3DVJgx6bbNWmW4SqdDd8bPtVVW3863x45GRGY1N7=
+ckShdH9d8WW15grJn8f5BTFW41RVxf7DyySfW4VyGl45Mp7KwVfcMdD85rDxPN6wVmlqVLTtYN5=
+B8t74WYJ2FW6L-_fG3QlKFTW1hxbYj5lGFjNW3PWBQk2bhWCvW3Jpz2y92N_QMW61VYJY83x43M=
+W5LJVY27k-jg9W8VkKhC1KbR6zW418-X-4htzV2W2dRg0X89ZbC1W3HMpl13ghWxfW9l8Hxc12R=
+Zl_W3LmgSS7lS_gVW34BMJz6cP2Ygf94zhT004" target=3D"_blank" rel=3D"noopener n=
+oreferrer" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-hs-link-id-v2=
+=3D"t5M2ueiH">smaller</a> <span style=3D"color: #0a165b;">but increasingly =
+capable models.&nbsp;</span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">The image below shows a torrent of models hitting the market over the c=
+ourse of the past few years, a chaotic wall of names and versions that make=
+s clear: keeping up with model choice isn=E2=80=99t optional, it=E2=80=99s =
+survival.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236388270" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236388271_0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17582363882201" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5nR3bW50kH_H6lZ3m8W24DPMs4k809nN58bwv=
+VVZ9l6W4k7KBn3Pn3XhN32Mw1ZjR7yTW5p27m494s9wsW6wPsNt2mKQJ_W2Xn6wk6B2Xn_W585N=
+VW8yRr1fW2sZdKH25l2HNW3fZsjs4jPhN0W24jJQz4MsnXjW49M-V58V9-9xW89n_SZ2J1XTbW3=
+7Nd6S6h1gstW2FxllN6KrHkVW4LQHtC6c2YqgW66fqpZ93brcqW56bmr07hKzkSV1nzSR6cgjDm=
+W8hQvk33C562BW6qsD9m3pd3P3W33qlSZ7ghVrHW8G99864_3SQ_W4l6lPv8HNg9tW5xTRhD5Hy=
+XmLW2vJs8f8WysY_W2rc9-t6ZXd96N8z1C6NQ9fqPW2lLM1q3f4XpLW3pVnlY1GK0KjW6LLfY85=
+l8t4gW1LbH2529jbfPf5QHmSK04" target=3D"_blank" style=3D"color:#00a4bd" data=
+-hs-link-id=3D"0" data-hs-link-id-v2=3D"yGK2PGd+">
+        <img alt=3D"Screenshot 2025-09-18 at 3.59.41 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%203.59.41%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+3.59.41%20PM.png" style=3D"outline:none; text-decoration:none; border:none;=
+ max-width:100%; font-size:16px" width=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236425318" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236425318_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823641592=
+22" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17582364159222_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"font-siz=
+e: 16px; color: #0a165b;">For developers, the real question is: how do I ha=
+rness this abundance without drowning in complexity? In this post, I=E2=80=
+=99ll walk through (with code examples) why it=E2=80=99s getting easier to =
+harness this abundance. All the examples are in Python, so if you have even=
+ a bit of programming experience, you=E2=80=99ll be able to follow along an=
+d run them yourself. </span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">=F0=9F=92=A1&nbsp;While this article is primarily developer-focused, th=
+e following are key takeaways for non-developers and executive leaders: you=
+r teams can <em>experiment faster</em>, adopt the <em>right model for the r=
+ight scenario</em> to deliver better user experiences, and easily <em>keep =
+up with the latest innovations</em>=E2=80=94all without rewrites or vendor =
+lock-in. </span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Just as important, you can centrally govern AI usage across teams, gain=
+ visibility into which models are being used and how they perform, and esta=
+blish guardrails for compliance and accountability. This ensures that AI ad=
+option is not only fast, but also reliable, auditable, and enterprise-ready=
+.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-0" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-0-0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_174058630390=
+84" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"=
+none" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-al=
+ign:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #0A165B;width:50%;marg=
+in:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #0A165B;wid=
+th:280px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17399244000402"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17399244000402_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; font-size:22px; line-height:175%"=
+><span style=3D"color: #0a165b;"><strong><span style=3D"font-size: 16px;"><=
+span style=3D"font-size: 22px;">Why does model choice feel like free lunch?=
+</span></span></strong></span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">For anyone </span><a href=3D"https://learn.educative.i=
+o/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp263qgz0W=
+8wLKSR6lZ3pGN42NtkWBJk3RVMK1wb6X5GZXW3d2fNB6g3_CqW2rZhsQ5Vt_1kW5ZYq4P4HBTpg=
+W2VgX9P2134lNW7JlY7H66nwFwW6mMMGr2-9tfTW6YHFZN4z4Nk1VDV3Pg4pS4ylW859y084Qpt=
+YSW4Sy8-b26mCM2W8gGL4375cQgxW5LYXS_7yl2xpW3TNVgC5pwMW8W6KsKVW3VCWv4W21VwpH3=
+0fL-6W27xTzm6TjQkzW3sQYyn77qjbSW6G7Yt_8m9hm1W36VDJq8z-YvTW5T7WML4xZwy0W4mPy=
+453dTJg9W4rmC8K8wZ6RyMY_5DQK33cdW3XrcHN6V6zMCW8TbDtg8qP3k_W64ZpYd855lvvf7xY=
+BZl04" rel=3D"noopener" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-=
+hs-link-id-v2=3D"013kReyg" target=3D"_blank">observing the AI landscape</a>=
+ <span style=3D"color: #0a165b;">or building agents, the flurry of options =
+can either feel overwhelming or empowering. For builders, I=E2=80=99d argue=
+ it=E2=80=99s the latter. Choice means you=E2=80=99re no longer stuck waiti=
+ng on one provider for breakthroughs to trickle down. Instead, new intellig=
+ence is arriving at your doorstep at a pace that lets you experiment, swap =
+in better fits, and move faster than ever before. </span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">In this post, I=E2=80=99ll share why model choice is t=
+he closest thing to a =E2=80=9Cfree lunch=E2=80=9D in AI, and how you can t=
+ake full advantage of it.</span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">In most areas of tech, more choice usually means more =
+complexity: different APIs, new standards to learn, and usually a steeper l=
+earning curve. With AI, the dynamic looks a bit different. The surge in mod=
+el choice is <em>mostly </em>reducing friction for developers. Here=E2=80=
+=99s why:</span></span></p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>(near) Drop-in compatibility:</strong> While the way you prompt=
+ GPT-4 vs. Claude vs. LLaMA results in different levels of performance, the=
+ atomic unit common among them is a prompt, which has more interoperability=
+ than before. Sure, each API provider offers some unique features that you =
+might want to leverage, but the foundational block is the same. And with th=
+e right tools and infrastructure around models, you can harness the full po=
+tential of these LLMs. We=E2=80=99ll talk more about the right tools and in=
+frastructure later.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Rapid iteration:</strong> New models arrive with better reasoni=
+ng, faster throughput, or lower cost. You can test and adopt them quickly w=
+ithout waiting for a =E2=80=9Cnext generation=E2=80=9D cycle.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Fit to purpose:</strong> Instead of stretching one model to han=
+dle everything, you can select the right model for reasoning, summarization=
+, coding, or creative tasks.</span></p>
+</li>
+</ul>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">The upshot: more choice doesn=E2=80=99t mean more lock-in=E2=80=94it me=
+ans more leverage. Developers get access to state-of-the-art intelligence a=
+t the pace it=E2=80=99s invented, with less overhead than ever before. </sp=
+an></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">If =E2=80=9Cmore model choice=E2=80=9D is the opportunity, the way you =
+turn it into day-to-day leverage is surprisingly simple: pair <em>lightweig=
+ht testing </em>with an intelligent<em> proxy server</em>. No new SDKs, no =
+rewrites, just two thin layers that make swapping and scaling safer and fas=
+ter.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236702458" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#f4f4f4; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#f4f4f4">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#f4f4f4">
+      <tr style=3D"background-color:#f4f4f4;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236702459_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_173992592325=
+05" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17399259232505_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><h2 style=3D"margin:0; line-height:150%; font-size:22=
+px"><span style=3D"color: #0a165b;"><strong>Step-by-step walkthrough of how=
+ to adopt new models</strong></span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">In order to take advantage of the near-constant stream of new models, i=
+t is important to have an adoption infrastructure. That adoption infrastruc=
+ture consists of two parts:&nbsp;</span></p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Part 1=E2=80=94Testing infrastructure:</strong> Keep a tiny, te=
+mplatized prompt set per task and run it against a few candidate models. Va=
+lidate with deterministic checks (factual anchors, schema) and sprinkle in =
+an LLM-as-judge or quick human review where needed. The goal is a fast, rep=
+eatable signal to pick the right model.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;"><strong>Part 2=E2=80=94Network Infrastructure:</strong=
+> Put a lightweight, high-performance proxy server (e.g.,</span> <a href=3D=
+"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwB=
+W4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3nPW3byY_q27JddxMsw5_QVZj0FV2L7dH7m9jHyW=
+5WtMm-7jCkGWW5WLy_24H3cqkN42_sZv4YtvxW5brKkC3qcpqqW7LlR_f5HwCwNW8SL4WV4q6Rg=
+_W7JN0kc8swN-RW7VQ2H592jtZtW86mBGc41ZMTvW6Wb2g77bs0zVW6DkDGK2J72KFN8v0Wtwg1=
+S0DW1d0nfC2qLk31W19DwCP4bBFGZW49XPnj2ftbF4W5TV2Tp1xx4QtW31ycVz50ZBb1W7Wfjr1=
+8wHTLLW5lhGx164tVZtVTBvqc3QMcpyW4pv5jQ5p6JCCW3fdx6k5S_4hrVc3j-P5GkPQBf3WL_z=
+W04" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#4951f5" =
+data-hs-link-id=3D"0" data-hs-link-id-v2=3D"DsB2+0gY"><em>archgw</em></a><s=
+pan style=3D"color: #0a165b;">) between your agents and LLM providers. Your=
+ app still owns prompts, but the proxy server gives you consistent APIs, me=
+trics, guardrails (JSON/schema checks), and a single control point for mode=
+l choice. Instead of hardcoding vendor names, this allows you to call inten=
+t-based aliases like <span style=3D"color: #ff0201;">arch.summarize.v1</spa=
+n>. Behind the scenes, the proxy can route that alias to the right model, s=
+hift traffic during canary tests, or fall back automatically on errors.</sp=
+an></span></p>
+</li>
+</ul>
+<h2 style=3D"margin:0; line-height:275%; font-size:16px"><span style=3D"fon=
+t-size: 16px; color: #0a165b;"><strong>=F0=9F=93=9D How do aliases and rout=
+ing work?</strong></span></h2>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Think of an alias as a handle your code always calls. Routing is the se=
+t of rules that decide what actually happens when that handle is invoked=E2=
+=80=94which model to send the request to, how to split traffic across candi=
+dates, and what to do if something fails. Together, aliases and routing mak=
+e model selection programmable, safe, and observable.</span></p></div></div=
+></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236708971" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:10px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:10px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236708971_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_174078369528=
+73" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17407836952873_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><h2 style=3D"margin:0; font-size:22px; line-height:15=
+0%"><span style=3D"color: #0a165b;">Part 1=E2=80=94Testing infrastructure (=
+The tiniest useful test bench)</span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Let=E2=80=99s walk through the setup. It=E2=80=99s just two steps.</spa=
+n></p>
+<ol start=3D"undefined" style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><strong><spa=
+n style=3D"color: #0a165b;">Write test</span> </strong><a href=3D"https://l=
+earn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CG=
+YRxN2lhp2q3qgz0W95jsWP6lZ3mcW4B2Wh785kyg6W8MQC_d9g7RMXW5JKFqP6-rzGSW5xtx4w5=
+VGSpTW8vjR662fNz2VW4gjKFp7TDFrWN5Rrx0D1Dq9vW8HCM0S6x4QBYW8Gsggn3MDWdCW5XCJB=
+p8c4RD8W380cxB7mG446W6wf7--71SZltVRHXHb2czKzzW3_S1_87m0L6tN1q6H_JJHsc7W844j=
+q87w6Q-dW52N7G028y_QvW3my_r096crrbW7Jx4Js6Z2dPMW6wHL_P6gm8fDW8twxJ34cjB_8W3=
+Nx4M95ftZL-W6hXb4P6ntCQQW11Kqp48G6pfbW4NNsYW58Q0yxW4q0QGn3Q67lFW4gPfRv5gv8q=
+jW6JdFRj3_L6nFW6kgM0S64Tj7YW7J12GJ26z-wpf8by74n04" target=3D"_blank" rel=3D=
+"noopener noreferrer" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-hs=
+-link-id-v2=3D"csAckKvi"><strong>fixtures</strong></a><strong> <span style=
+=3D"color: #0a165b;">per task:</span></strong><span style=3D"color: #0a165b=
+;"> Keep 10=E2=80=9320 real examples for a single task (say summarization).=
+ Each fixture has an input and a couple of must_include anchors. Optionally=
+ specify a JSON schema.</span></span></p>
+</li>
+</ol></div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17582368117974" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5nR3bW50kH_H6lZ3lZW5sDCrf8XMKDVW92BQz=
+p62mlcpVn8qnb6J9lKNW2G75F32rqp8NW7384Nc3LRM09W8ZGdPx6SJYm1TSSLs3wNJfWW7fPT6=
+613KjhnW94mpq13J6knjMZ66wB3rlClW6HqRB816xMtWW2wlFCx3yK6K2N8rSjZvFcPPmV4swJb=
+8-qYN9W88yZ557DgTbkW3r_mPF4-07TLW3NKtYv1dXrW-N5p-snzGk8lzW4Mld6M3gxVMPW5gCP=
+xM5kPYr-W4NX-xV1CD3NvW57KymX7WKVyxW8vs86j1d8Fl3W1bfXM248Q0WVW6p19ys69QJBcVd=
+QFKJ2__YlxW7xQkMq8q0YhCW5p3PYq8zCG2lW7bWdtx8d8gqvMD8ylk9wKdVW8r_6Rj7K1Wx-W1=
+bf3nm4tsF2Ff5Grlqx04" target=3D"_blank" style=3D"color:#00a4bd" data-hs-lin=
+k-id=3D"1" data-hs-link-id-v2=3D"pVPKIf23">
+        <img alt=3D"Screenshot 2025-09-18 at 4.07.04 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.07.04%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.07.04%20PM.png" style=3D"outline:none; text-decoration:none; border:none;=
+ max-width:100%; font-size:16px" width=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236753789" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236753789_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823675378=
+53" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17582367537853_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><ol start=3D"2" style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;"><strong>Pick a few candidate models:</strong> As you=
+=E2=80=99re routing through </span><a href=3D"https://learn.educative.io/e3=
+t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-=
+PT6lZ3n5W3SQb4W5WxJwBVY9_0W5Qvh6qW9dr7Qz39HhHSVcz-0t3nPgM3W4NBScl6cknzSW45Q=
+QLm9dS3_7N3kScnh6xLJ8VMpzZ55D-Dl-W8KYn_L2snf9sW3VdX0d7df7xSN2WZwQwLKzrJW29h=
+GPQ30FVclW93drPx5gqYMcN7B6w0rvWqb8N6_xbFY39g38W6bhXJr79g6_hW6k08sh2J_n6sW2b=
+DP5l2BBhr7W9fXm_g4J6JZjN4gTkGMRLNLgW82wZnd4GN4lXW1McQxg1L4W86W4hg2Nc4-9l1YV=
+PLq316FHcxmW1ssRpl6ZWmFMW2Q7d6x4cQZYQf6JQBnn04" target=3D"_blank" rel=3D"no=
+opener noreferrer" style=3D"color:#4951f5" data-hs-link-id=3D"1" data-hs-li=
+nk-id-v2=3D"VLROKZmw"><em>archgw</em></a><span style=3D"color: #0a165b;">, =
+you don=E2=80=99t need provider API keys in your code harness. Just point y=
+our client at the proxy server and list the models (or aliases like <span s=
+tyle=3D"color: #ff0201;">arch.summarize.v1</span>) you would want to evalua=
+te your tasks against.</span></span></p>
+<span style=3D"font-size: 16px; color: #0a165b;"> </span></li>
+</ol>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Now, let's build a minimal python harness that we can use to test out d=
+ifferent models.</span></p>
+<ol start=3D"undefined" style=3D"line-height:175%"></ol></div></div></td></=
+tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17582368575145" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5nR3bW50kH_H6lZ3n5W6_D4Cf5Xl1CNW6DR8-=
+T7zL7GyW6vrCXH8nVsWtW56_7s74KKpCgW5F789w62myQKW28L5xF1bzrljN8h_b5sfJ3wSW57h=
+MLS4sv31fW2gQ3bX4M4j-bW5Hgps41XSVWfW1ZMtY98nDkmVW4nhbgM7PkLjqVzfxMS4kP85xW2=
+mLt1P33PgDKW3KXqmZ6c0YBqW5zPCZr1b1dRLW7PfG8-3jP663W1_bV5D26tWCMW5gHl1f2z4V1=
+9W4Rvt2212HZhdW4S95VG2fcx77W4V2TpJ9brMlYW6vZdJV676TwrW6XqwC_3bVKmWVGcGYb72s=
+p1GW7Dmhqy4CGHFvW3HJH3V4wHgRrN5d0PrWq6xVkW8JgY2H3__DNVW430qYx2S2vsFW2vz15Q6=
+q8811W1Q9kyP3-CC-Ddtym_z04" target=3D"_blank" style=3D"color:#00a4bd" data-=
+hs-link-id=3D"2" data-hs-link-id-v2=3D"74RWI5fl">
+        <img alt=3D"Screenshot 2025-09-18 at 4.08.08 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.08.08%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.08.08%20PM.png" style=3D"outline:none; text-decoration:none; border:none;=
+ max-width:100%; font-size:16px" width=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17582369087336"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table align=3D"ce=
+nter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"border-collapse:separate!important">
+    <tbody><tr>
+      <td align=3D"center" valign=3D"middle" bgcolor=3D"#4951F5" style=3D"f=
+ont-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:bre=
+ak-word; border-radius:8px; cursor:auto; background-color:#4951F5; mso-padd=
+ing-alt:12px 18px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5nR3bW50kH_H6lZ3l5W1GnBQy6LVQ9yW87SjP=
+Q8sWmSsVQSHhj2VFrXDW20ndzS6Qb345W7x-9C88Bh2DnV64ZDT1txgX5W38dtJ92gNXS8N9dsL=
+QLcN55ZN1dc3Cv80XB-W6ZZw-25X0kDVW6JzN5r3gR5twW3hrDTP1yMVxPW4FPZ_v4fxdsQW7Np=
+M874l4FGQW2_6BJx8KWJfbW2BH8zx1H7029N575DQwD5C7LW8QPTN86g33h4W2l_NC83bJYKTW3=
+xwKz38rD-R3W2VMBLV7W4HDyVGYyGN1m-8CtN2Kxjg8gDJ_MW15CJPY2RRMGTW4kPwhf3ktjTLW=
+4mTvvW3gmWWxW6ySbFM5nwwdVV4T7v38x2RLhW5sbMjB7KXCMDW53Ssc398hQfMVs5NqT7gtq8S=
+W5gHmCf6jQ8Khf4Q_gj004" target=3D"_blank" style=3D"color:#00a4bd; font-size=
+:16px; font-family:Arial, sans-serif; Margin:0; text-transform:none; text-d=
+ecoration:none; padding:12px 18px; display:block" data-hs-link-id=3D"3" dat=
+a-hs-link-id-v2=3D"8RGfgYJ2">
+          <strong style=3D"color:#ffffff;font-weight:bold;text-decoration:n=
+one;font-style:normal;">View the full code here</strong>
+        </a>
+      </td>
+    </tr>
+  </tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758236934197" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758236934197_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823693085=
+97" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17582369308597_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"font-siz=
+e: 16px; color: #0a165b;">What =E2=80=9Cgood enough=E2=80=9D could look lik=
+e for your test cases:</span></p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">=E2=89=A590% schema-valid</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">=E2=89=A580% anchors present</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Latency within your SLO</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Cost within budget</span></p>
+</li>
+</ul></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1739926018346" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#f4f4f4; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#f4f4f4">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#f4f4f4">
+      <tr style=3D"background-color:#f4f4f4;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1739926018346_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_174078369277=
+72" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17407836927772_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><h2 style=3D"margin:0; font-size:22px; line-height:15=
+0%"><span style=3D"color: #0a165b;">Part 2 =E2=80=94 Network Infrastructure=
+ (A lightweight proxy that makes switching safe)</span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">Before we can run the harness, we need to set up</span=
+> <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4=
+N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3nGW19s_Zv8x1gm8W1d7vFG7-ftv=
+TW9cgMJL4Rt8TbV7Cjgf1drlV0VZW7WP4RF1xBW1PfxT16bGZ3cVRY4yQ6HB40CVqhwvj7WymSk=
+W5mlJGb8Bk9jJW4P7bCn7KqzRkW4y_7kN4MkCMkW3jwC1Q3LlnyWW4wPNJh6tTdhqN5gY_LdkG6=
+5KW3LNW4M4kFwR5W3SW9NT2v2HgvW2qK48C2yTLcnW8KjDWb5Z1gVsW2zbgfQ6_Q8QLW6Nfyp27=
+gYPJ4W6cSlSY1_K3fXW3kw4Ky4kl13qN53l2HRqL9HKW4nz7dm5RgFH8W8qppRZ1P_zjPW6RzFX=
+b6RzCF0f5YRkbC04" target=3D"_blank" rel=3D"noopener noreferrer" style=3D"co=
+lor:#4951f5" data-hs-link-id=3D"2" data-hs-link-id-v2=3D"xhxjkbbB">archgw</=
+a> <span style=3D"color: #0a165b;">(the smart edge and LLM proxy for agents=
+). Why bother with a proxy at all? It=E2=80=99s about giving you a consiste=
+nt API surface across providers, a unified view of logs and traces for ever=
+y model call, centralized key management, and a single abstraction layer fo=
+r model choice.</span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">The key abstraction in the proxy is the model <em>alias</em>. Instead o=
+f wiring your app to vendor-specific names like <span style=3D"color: #ff02=
+01;">gpt-4o-mini</span> or <span style=3D"color: #ff0201;">claude-3-sonnet<=
+/span>, you wire it to intent with aliases such as <span style=3D"color: #f=
+f0201;">arch.summarize.v1</span> or <span style=3D"color: #ff0201;">arch.re=
+ason.v1</span>. Your code always calls the alias; the proxy decides what mo=
+del runs underneath, how traffic is shaped, and what fallback rules apply. =
+Aliases may look like simple labels, but they encode intent rather than ven=
+dor details=E2=80=94and that shift unlocks several practical advantages:</s=
+pan></p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Decoupled application code:</strong> Instead of hardcoding <spa=
+n style=3D"color: #ff0201;">gpt-4o-mini </span>or <span style=3D"color: #ff=
+0201;">claude-3-sonnet</span> throughout your codebase, you reference a sin=
+gle alias. Swap the underlying model once in config, and your entire app up=
+dates=E2=80=94no redeploys, no hunt-and-replace.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Safe promotions:</strong> Want to test a new model? Point the a=
+lias at a candidate behind the scenes. If your canary tests or metrics hold=
+, flip the pointer to 100% traffic. If not, roll back instantly without tou=
+ching application code.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Central governance:</strong> Apply SLOs, guardrails, and polici=
+es at the alias level. For example, enforce JSON schema validation, timeout=
+ rules, or max token caps once, instead of scattering that logic across ser=
+vices.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Observability by task:</strong> Dashboards and traces group nat=
+urally by alias (<span style=3D"color: #ff0201;">arch.summarize.v1</span>) =
+rather than shifting provider names. That makes it easier to track latency,=
+ cost, and error rates by intent, not by vendor string.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Quota &amp; cost control:</strong> Throttle or cap usage per al=
+ias. For instance, you can enforce a daily budget on summarization tasks, r=
+egardless of which model powers them underneath.</span></p>
+</li>
+</ul>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Here=E2=80=99s the simple archgw config that you will need to run the t=
+est harness:</span></p></div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17582372487658" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd=
+2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0l5nR3bW50kH_H6lZ3l0W8NptL_3bRTKyW5QXSM=
+T5LvVJwW3ZwDng2FmgX3W98dY6k5g8-1mW8jKrRM7T0bvjN7FXCv0Dh0GLVFFVmq1sc6j8N5NKq=
+tLzHmGQN7G07gpfkr-sW6NhqlL6kRc03W4wm59C2RngmyW6CK-G01zcf1QN1fGvVFfDpHWMM282=
+VdSy1wW6k_8wC7g9VfFW1jLSb57qgvytVr4G3D4g6CXPW8HZkKy3KLNfdW2vbPj_1q-ygQW55z9=
+7n8Gy8cHW3SdPw47JPL52W2tHdVG4_cccNM3RjZVLKL-mW8PR86M2df6slW6qFqYX2wDPRXW1Vp=
+rhY6dJPSGW73vxjx6f2PX5W2DXzr01h9-7hW2D1Hjn4981m5F5KK3Z-gfGmW5YSyWq63KkKLN7Z=
+t_qJH8qjKf6pHVNg04" target=3D"_blank" style=3D"color:#00a4bd" data-hs-link-=
+id=3D"4" data-hs-link-id-v2=3D"THV0jFnX">
+        <img alt=3D"Screenshot 2025-09-18 at 4.14.36 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.14.36%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.14.36%20PM.png" style=3D"outline:none; text-decoration:none; border:none;=
+ max-width:100%; font-size:16px" width=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1758237324862" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1758237324862_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823732485=
+610" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modu=
+le" style=3D"color: inherit; font-size: inherit; line-height: inherit;" dat=
+a-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_=
+cos_wrapper_module_175823732485610_" class=3D"hs_cos_wrapper hs_cos_wrapper=
+_widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: =
+inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs=
+-cos-type=3D"rich_text"><h2 style=3D"margin:0; font-size:22px; line-height:=
+150%"><span style=3D"color: #0a165b;">Putting it all together</span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">For your convenience, we have packaged all the code sh=
+own in this newsletter </span><a href=3D"https://learn.educative.io/e3t/Ctc=
+/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp0F5nR3bW5BWr2F6lZ=
+3n3W8c0rrK1fKj-cW2wbJ3Q6wp3SnW7_BDB62x0TQrW8l0d8p7z7cJ_W3VZ4g399XgVvW7qPgvj=
+2tbfWCW7qwHF04VQ04jW6tXb9B3b3L6CW8FY-4564TZM_W351SrV73R1DDW19DjCp1ZpF_5VBt6=
+j42_0PX0W3X2f712K5yfwW559m-W3knx57W3_tY2H1K2XgvW4y0N3L1W6y9lVm77QH5-w-3dW3g=
+m2vY3rnzSbW4GpYCr3M0sj1W7V6nkS99GVv_W96KXHY34n3vgW1Wjh2V74l8jRVJGbXx5PfPNnV=
+YP-V-31GLxqW4nz64Y6zswvJW6gfwLc7_yz8VVD388z5d8Y9KW22bGx03W8lsQVGlSnq5MB9fZV=
+zRzBz4v3wMhW2K5HcL4WJ6XTW1J3yzK1QzvXVW89SsKq8g5Kd6W1TMt-B8M11kmf1vwp6004" t=
+arget=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#4951f5" data-h=
+s-link-id=3D"0" data-hs-link-id-v2=3D"hNsG4QTR">here</a><span style=3D"colo=
+r: #0a165b;">.&nbsp;All you need to do is:</span></span></p>
+<ol start=3D"1" style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Install the prerequisites:</strong> Follow the README to instal=
+l all the necessary prerequisites.</span></p>
+</li>
+</ol></div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_175823743108813" class=3D"hs_cos_wrapper h=
+s_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; f=
+ont-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widge=
+t" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"p=
+resentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"Screenshot 2025-09-18 at 4.18.29 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.18.29%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.18.29%20PM.png" style=3D"outline:none; text-decoration:none; max-width:10=
+0%; font-size:16px" width=3D"560" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823740255212=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos=
+_wrapper_module_175823740255212_" class=3D"hs_cos_wrapper hs_cos_wrapper_wi=
+dget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inh=
+erit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-co=
+s-type=3D"rich_text"><ol start=3D"2" style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"color: #0a165b; font-size: 16p=
+x;"><strong>Run the test:</strong> Execute the Python benchmark script as f=
+ollows:</span></p>
+</li>
+</ol></div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_175823732485611" class=3D"hs_cos_wrapper h=
+s_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; f=
+ont-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widge=
+t" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"p=
+resentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"Screenshot 2025-09-18 at 4.18.37 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.18.37%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.18.37%20PM.png" style=3D"outline:none; text-decoration:none; max-width:10=
+0%; font-size:16px" width=3D"560" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823743853714=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos=
+_wrapper_module_175823743853714_" class=3D"hs_cos_wrapper hs_cos_wrapper_wi=
+dget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inh=
+erit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-co=
+s-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"font-size=
+: 16px; color: #0a165b;">After running the command above, you should see an=
+ output like this, giving you a clear signal on which model alias performs =
+best for your task:</span></p></div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_175823747316016" class=3D"hs_cos_wrapper h=
+s_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; f=
+ont-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widge=
+t" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"p=
+resentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"Screenshot 2025-09-18 at 4.18.44 PM" src=3D"https://lea=
+rn.educative.io/hs-fs/hubfs/Screenshot%202025-09-18%20at%204.18.44%20PM.png=
+?width=3D1120&amp;upscale=3Dtrue&amp;name=3DScreenshot%202025-09-18%20at%20=
+4.18.44%20PM.png" style=3D"outline:none; text-decoration:none; max-width:10=
+0%; font-size:16px" width=3D"560" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_175823746944715=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos=
+_wrapper_module_175823746944715_" class=3D"hs_cos_wrapper hs_cos_wrapper_wi=
+dget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inh=
+erit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-co=
+s-type=3D"rich_text"><p style=3D"line-height:175%"><span style=3D"font-size=
+: 16px; color: #0a165b;">From the results shown above, you can quickly see =
+that <span style=3D"color: #ff0201;">arch.summarize.v1</span> (GPT-4o Mini)=
+ is faster but less reliable, while <span style=3D"color: #ff0201;">arch.re=
+ason.v1 </span>(o3) is slower but more reliable. </span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">This is simple, actionable data that you can use to make decisions on w=
+hat models to use in your agentic application. And, with the proxy in place=
+, you can flip the switch to a different model tomorrow without a single li=
+ne of code change in your application.</span></p></div></div></td></tr></tb=
+ody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1739926009412" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1739926009412_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_174078381061=
+610" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modu=
+le" style=3D"color: inherit; font-size: inherit; line-height: inherit;" dat=
+a-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D=
+"none" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-a=
+lign:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #000000;width:50%;marg=
+in:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #000000;wid=
+th:280px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17267675307417"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17267675307417_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; font-size:22px; line-height:175%"=
+><span style=3D"color: #0a165b; font-size: 22px;"><strong>Wrapping up</stro=
+ng></span></h2>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px;"><span style=
+=3D"color: #0a165b;">With the rate at which models are being launched, ther=
+e is no time to be overwhelmed.&nbsp;With a handful of <em>fixtures </em>(i=
+nputs + anchors + optional schema), a tiny Python harness, and a lightweigh=
+t proxy like</span> <a href=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz=
+5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3nQN3cPJSx=
+JGYvCW618hJV83MQsGW4-nxPd7ktxY4W2h5pCg21jYs3W3hjBmz3ghGF9VGSZLG6tqHhTW17_fr=
+n2jQR16W2cFqhK32tXqgVB02-14PntWKW416mlF3PmKY7W5Gdnjl70Pck0W56pw7-6_-HrqW6Kj=
+Q-K6gmqm3W5FNCvR83nFz9W5X6lNg3PbCkjW3bhyK97y-MN4W38NVzR4qWnk9N1FB2BnKS00-W3=
+42QvK3Vgv9BW7kFF_35NYg8bW1bXmxG7XslCFVYsyj58994SDW8Zjh9W16pzrFW2km4t04NXG08=
+W4p4CR89bPv0nW89PNDq6tsj-9f7qcV7F04" target=3D"_blank" rel=3D"noopener nore=
+ferrer" style=3D"color:#4951f5" data-hs-link-id=3D"3" data-hs-link-id-v2=3D=
+"0ZDzgOwY">archgw</a><span style=3D"color: #0a165b;">, you can turn the buf=
+fet of model choices into a super power.</span></span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">Here is a recap of how to quickly consider, test, and adopt new models =
+without being overwhelmed:&nbsp;</span></p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Evaluate quickly:</strong> Run fixtures across a few candidates=
+, get a clear pass/fail signal, and decide what=E2=80=99s =E2=80=9Cgood eno=
+ugh=E2=80=9D for your use case.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Swap safely:</strong> Point your app at an alias (<span style=
+=3D"color: #ff0201;">arch.summarize.v1</span>) and update the underlying mo=
+del in config =E2=80=94 no redeploys, no code changes.</span></p>
+</li>
+<li>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;"><strong>Stay consistent:</strong> Centralize guardrails, metrics, and g=
+overnance at the proxy layer so your application code stays clean.</span></=
+p>
+</li>
+</ul>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">This is about as close to a free lunch as you can get with AI. The ecos=
+ystem keeps producing better, faster, cheaper models=E2=80=94and you can ac=
+tually take advantage of them without rewrites or lock-in. Drop a proxy in =
+the middle, and the payoff compounds as the model landscape keeps shifting.=
+</span></p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"font-size: 16px; color: #0a165=
+b;">=E2=9A=A0=EF=B8=8F&nbsp;If this playbook resonates, check out <a href=
+=3D"https://learn.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4g=
+KwBW4CCSrm5CGYRxN2lhp1R3qgz0W7Y8-PT6lZ3lzW7WqZCJ6z-B21W1j3D3Y4B1ff2W8WcK0g7=
+LW1CpW8mPCpS3DdrdRW63_p9H3RlhmDW4tHthb974ZGXMllkS2PFVS0N8YGDVbBqdfgW5VNY__7=
+v8zPZN5YPwkMZfm5HN7C8GYtB2rcdW4mTsst6_MNtJVVl9SV6k8GjCMgNMSxck9wJN97zNp0527=
+HFW37BW-Z1gdLKkW5VX5k_8JlXY0Vl1xYs4J6vhlN5lsm3QgKJW_W8bcff97Fs4F2W2pyWjJ82S=
+vJMW8t3xvQ6swltkMqr2SQNrJcfW9hRKwS40DmYkW586--y8rLlRpW2fXlDd3f0y5xdlfDwl04"=
+ target=3D"_blank" rel=3D"noopener noreferrer" style=3D"color:#4951f5" data=
+-hs-link-id=3D"4" data-hs-link-id-v2=3D"C148BNIh"><strong>archgw</strong></=
+a> on GitHub, give it a star, and hop into our <a href=3D"https://learn.edu=
+cative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRxN2lhp=
+2q3qgz0W95jsWP6lZ3nnW5rbN1l1zqP8PW4sXrxm5-MykbN6BMhytDY6tlW2sfbz38YnnczW1bM=
+98918VWQfW4vL72T65LKr8W5Cn8Sg823GzQW2JCYcj46qG_0W2h0FND7Mdl_sW3l56736QnT9yW=
+2_grKz3JTNNdW3xxKjM4GdR0wVN-qnm3d_R8-W7VJc4j15MJ7-W5vK1RP3KkcFtW3KSWYg2vMHf=
+1W5YRTCX8bt4JPVDB7SL2WycqXW3NJrZ-2tB1HlW4xtq_p3zvZx-W1DtsPB7SKGH3W2ptyk75pS=
+-LYW2lMBq-7974CVW69DHk_4D5_WXW4wYcyV43dGSHW7D5w6C8MKr3hN7-R1KvttVXkW1gQtMd7=
+L-LZjW1NykRC8CwRbLW7T07X93JNlptf8yKTq404" target=3D"_blank" rel=3D"noopener=
+ noreferrer" style=3D"color:#4951f5" data-hs-link-id=3D"0" data-hs-link-id-=
+v2=3D"isuKO8zY">Discord</a> to be part of our community. It=E2=80=99s early=
+ days, but we=E2=80=99re rethinking the network stack for agents=E2=80=94bu=
+ilding an open-source edge and AI gateway, purpose-built for agentic apps. =
+With routing, guardrails, and observability built in, you can focus on your=
+ agents=E2=80=99 business logic while we ensure they run reliably in produc=
+tion.</span></p></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_174078386126412=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"no=
+ne" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-alig=
+n:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #000000;width:50%;marg=
+in:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #000000;wid=
+th:280px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_17284950748624" class=3D"hse-section" style=3D"padding=
+-left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#ffffff; padding-bottom:20px; pad=
+ding-top:20px" bgcolor=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:150px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"150" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:150px">
+<![endif]-->
+<div id=3D"column-1728495074862-0" class=3D"hse-column hse-size-3">
+  <div id=3D"hs_cos_wrapper_module_17284950748622" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <img alt=3D"Affiliate-Sep-18-2025-11-30-22-9045-PM" src=3D"https://=
+learn.educative.io/hs-fs/hubfs/Affiliate-Sep-18-2025-11-30-22-9045-PM.png?w=
+idth=3D220&amp;upscale=3Dtrue&amp;name=3DAffiliate-Sep-18-2025-11-30-22-904=
+5-PM.png" style=3D"outline:none; text-decoration:none; max-width:100%; font=
+-size:16px" width=3D"110" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+<!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:450px;padding-bottom:20px; padding-top:=
+20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"450" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:450px">
+<![endif]-->
+<div id=3D"column-1728495074862-1" class=3D"hse-column hse-size-9">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:b=
+reak-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_172849507486=
+23" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modul=
+e" style=3D"color: inherit; font-size: inherit; line-height: inherit;" data=
+-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_c=
+os_wrapper_module_17284950748623_" class=3D"hs_cos_wrapper hs_cos_wrapper_w=
+idget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: in=
+herit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-c=
+os-type=3D"rich_text"><h2 style=3D"margin:0; font-size:14px; line-height:12=
+5%">&nbsp;</h2>
+<h2 style=3D"margin:0; line-height:175%; font-size:22px"><span style=3D"col=
+or: #0a165b;"><span style=3D"caret-color: #0a165b;"><a href=3D"https://lear=
+n.educative.io/e3t/Ctc/RG+113/cz5H404/VXddyd2QNQ_4N9djxJv4gKwBW4CCSrm5CGYRx=
+N2lhp1R3qgz0W7Y8-PT6lZ3lDW7-YLnw4dB_TBW4lcfv64x1XL6W9hBjb56hW3g6W876VHz5G5s=
+MyW5xgrkR7vFlwzW1NrRFs8qXzmmV_zbYf3QFCVmW7rt6YG9jGXzJW10gsWq2LSvhmW99CT-K6s=
+fz6CW6bZ7WY8DW7ldW2sKhJm723HzVW760B5X48k2XHN5-RHWyzrsbTW99MyDG8P0G_jW6JfFtP=
+4fDScKW3W5PF-57kfYPW4bZJQP7BM30vW66mwW66hnsk8N4ZGrdDFTj_FW7qdBZV7P4Cs5VVclC=
+c8FZ12fW7Py9Mh4g0Q3TW2sQnPk72tyzNW86v1K45n5wmnW6BGgcD2ps3rHf4xy5s404" rel=
+=3D"noopener" style=3D"color:#4951f5" data-hs-link-id=3D"1" data-hs-link-id=
+-v2=3D"W03s+dih" target=3D"_blank">Salman Paracha</a></span></span></h2>
+<p style=3D"line-height:175%; font-weight:normal"><span style=3D"font-size:=
+ 16px; color: #0a165b;">Co-Founder &amp; CEO of <span style=3D"font-weight:=
+ bold;">Katanemo</span></span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1728495237855" class=3D"hse-section hse-section-last" =
+style=3D"padding-left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto; background-color:#DFE8F2; padding-top:20px" bgcolo=
+r=3D"#DFE8F2">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#DFE8F2">
+      <tr style=3D"background-color:#DFE8F2;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-top:20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1728495237855_0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-0-0-3" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table role=3D"presentation" class=3D"hse-footer hse=
+-secondary" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"fon=
+t-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#23496d=
+; margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Arial, sans-=
+serif; font-size:15px; color:#000000; word-break:break-word; text-align:cen=
+ter; margin-bottom:0; line-height:135%; padding:10px 20px">
+        <p style=3D"font-family:Arial, sans-serif;font-size:12px;font-weigh=
+t:normal;text-decoration:none;font-style:normal;color:#23496d">
+          Educative, 12280 NE District Way, Bellevue, WA 98005, United Stat=
+es
+        </p>
+        <p>
+          <a data-unsubscribe=3D"true" href=3D"https://learn.educative.io/h=
+s/preferences-center/en/page?data=3DW2nXS-N30h-MXW3jmhBz3LQs6dW4hgWqN2HVRNw=
+W3dgMvq3VSvNDW2xQGsC4p8wyxW2PhC5m1Sz6Q9W2CHyZj3BVzyJW3dpq4g3GY6-sW3NV0yl2KF=
+gjwW2WnKYZ2CwlDdW36y6lc3R3cr8W2y4zkG2-Fsf3W2zVDQ_3VM2l3W3VSvqG36hmQ6W4cPW1W=
+2sVNw7W2HKgb_2TJg4dW366Ht22TJfbHW3QTpsb3brLsxW4cLxRJ4tgLYcW3JYjNJ3XT_PBW1Xy=
+j9z3H40RMW2MQhsD2Cw26KW3D-lby4kMBD5W3_KKjN3yXq9TW45M3pM1Qk0HnW2YDs8T4tn-VfW=
+38vrFf2PBn5TW1VktdY3yN5NhW4kfWNF1LvyCBW41D1t22CWcqKW45qBWr2xZxKbW4fwF0p45mJ=
+m_W2sMlyX38rvcmW2RHBLt1BGQDjW4hJVgY3VzWdFW3gpF5J1Z96BgW2vS6j21S8ym7W4rpCmj2=
+Hs6JhW3M6VNK3d1XnsW2Pl51m41TRXmW2FTLCL1_vs8mW3z8PFw1Qg_trW4tgPpD2PKsKyW2t7s=
+rj2xZC7rW47y4br3JRWr1W3XZxtC3bqWJbW2PBlZC47wSgYW49yGNs45qbMdW4kx3Kr2-qT5GW2=
+y3PDx3V_TnSW4fyLb94cN8sQf4mj97h04&amp;utm_campaign=3D16478315-guest_post_q3=
+_2025&amp;utm_source=3Dhs_automation&amp;utm_medium=3Demail&amp;utm_content=
+=3D381393407&amp;_hsenc=3Dp2ANqtz--IG87QC6d4CltcT5cdmn4YLtrReQWHPfFS4uWJZV-=
+uI-ERpPkZj12FxCVGpVt4FF9t5dstk-5gglSe3SpDmraEjRrPnQ&amp;_hsmi=3D381393407" =
+style=3D"font-family:Helvetica,Arial,sans-serif; font-size:12px; color:#495=
+1F5; font-weight:normal; text-decoration:underline; font-style:normal" data=
+-hs-link-id=3D"0" data-hs-link-id-v2=3D"qjPJqCop" target=3D"_blank">Manage =
+preferences</a>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://learn.educative.io/e3t/Cto/RG+113/cz5H404/VXddyd2QNQ_4N=
+9djxJv4gKwBW4CCSrm5CGYRxW2lhnPk3D52F5122" alt=3D"" width=3D"1" height=3D"1"=
+ border=3D"0" style=3D"display:none!important;min-height:1px!important;widt=
+h:1px!important;border-width:0!important;margin-top:0!important;margin-bott=
+om:0!important;margin-right:0!important;margin-left:0!important;padding-top=
+:0!important;padding-bottom:0!important;padding-right:0!important;padding-l=
+eft:0!important"></body></html>
+------=_Part_963284_275500385.1758348711133--
+

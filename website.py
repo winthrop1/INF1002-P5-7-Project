@@ -27,6 +27,7 @@ ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
 def upload_file():
     #variables to hold results
     reasons = []
+    url_reason_pairs = []
     classification = None
     EmailDomainMsg = ''
     emailnotify = ''
@@ -60,7 +61,7 @@ def upload_file():
             # Domain check
             EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
-            reasons, url_suspicion_score = assessing_risk_scores(email_body)
+            reasons, url_suspicion_score, url_reason_pairs = assessing_risk_scores(email_body)
                         
             total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
                 
@@ -133,6 +134,7 @@ def upload_file():
                         total_risk_scoring=total_risk_scoring,
                         emailnotify=emailnotify, #email sending notification
                         storing_notify = storing_notify,#data storage notification
+                        url_reason_pairs = url_reason_pairs,
                         success = success) 
 
 @app.route('/admin-login-json', methods=['POST'])

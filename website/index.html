@@ -63,21 +63,23 @@
                                 <button type="button" class="btn btn-secondary" onclick="window.location.href = '/' ">Clear All</button>
                             </div>
                         </form>
+                        <hr>
                         <div>
                         {% if storing_notify %}
                             {% if success %}
                             <div id="notify" class="alert alert-success alert-dismissible fade show" role="alert">
-                                 {{ storing_notify }}
+                                {{ storing_notify }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             {% else %}
                             <div id="notify" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                 {{ storing_notify }}
+                                {{ storing_notify }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             {% endif %}
                         {% endif %}
                         </div>
+
                         <!--show whats the classification-->
                         {% if classification %}
                         <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}" id = "outputBox">
@@ -88,12 +90,21 @@
                             <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
 
                             <p><u>URL Properties</u></p>
-                            <ul>
-                                {% for reason in reasons %} 
-                                    <li>{{ reason }}</li>
-                                {% endfor %}
-
-                            </ul>
+                            {% for pair in url_reason_pairs %}
+                                <div class="url-section">
+                                    <h5>URL: {{ pair.url }}</h5>
+                                    <ul>
+                                        {% if pair.reasons %}
+                                            {% for reason in pair.reasons %}
+                                                <li>{{ reason }}</li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li>No specific issues found for this URL</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <hr>
+                            {% endfor %}
 
                             <p><u>Suspicious Keywords Used</u></p>
                             <ul>

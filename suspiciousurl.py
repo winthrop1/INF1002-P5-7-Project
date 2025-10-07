@@ -18,33 +18,43 @@ reasons = []
 #file_path = r"C:\Users\User\Documents\GitHub\INF1002-P5-7-Project\spam\spam_1.txt"  # Replace with your file's path
 
 
-def get_urls_from_email_file(email_body): # Extract URLs from the email file
+    
+    
+# def get_urls_from_email_file(email_body): # Extract URLs from the email file
+#     try:
+            
+#         # More comprehensive URL pattern
+#         url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
+#         urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
+            
+#         print(f"Found {len(urls)} URLs in the file.")
+
+#         if urls:
+#             print("Extracted URLs:")
+#             for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
+#                 print(f"{i}. {url}")
+#         else:
+#             print("No URLs found or file could not be read.") 
+    
+    
+#     except Exception as e: # Handle other exceptions
+#         print(f"An error occurred while reading the file: {e}")
+#         return []
+
+def get_domain_from_url(url):
+    """Extract domain from URL using the same method as check_domain_reputation"""
     try:
-            
-        # More comprehensive URL pattern
-        url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
-        urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
-            
-        print(f"Found {len(urls)} URLs in the file.")
-
-        if urls:
-            print("Extracted URLs:")
-            for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
-                print(f"{i}. {url}")
-        else:
-            print("No URLs found or file could not be read.") 
-    
-    
-    except Exception as e: # Handle other exceptions
-        print(f"An error occurred while reading the file: {e}")
-        return []
-
+        parsed_url = urlparse(url)
+        hostname = parsed_url.netloc
+        return hostname
+    except Exception as e:
+        print(f"Error extracting domain from {url}: {str(e)}")
+        return url.lower()
     
 
-
-def domain_resolved(url): # first level check
-    parsed_url = urlparse(url)
-    hostname = parsed_url.netloc  # This gets the hostname (domain) part of the URL
+def domain_resolved(hostname): # first level check
+    # parsed_url = urlparse(url)
+    # hostname = parsed_url.netloc  # This gets the hostname (domain) part of the URL
         
     print(hostname)
     print(len(hostname))
@@ -66,7 +76,6 @@ def domain_resolved(url): # first level check
         return False
     
     
-
 
 
 def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain reputation using WHOIS data, with a max retry of 3, and a delay of 2 seconds between retries
@@ -244,24 +253,24 @@ def subdir_count(url):
     if subdir_count > 3: # Check if subdirectory count is greater than 4
         url_suspicion_score += int(os.getenv("SUBDIR_COUNT_SCORE", "1"))  # increase risk score for URLs with many subdirectories
         reasons.append(f"URL has a suspiciously high number of subdirectories, ({subdir_count} subdirectories)")
+        
     else:
         reasons.append(f"URL has a normal number of subdirectories, ({subdir_count} subdirectories), but proceed with caution")
 
 
-def calling_all_functions(url):
-    check_domain_reputation(url, max_retries = 3, delay = 2)
-    having_ip_address(url)
-    https_check(url)
-    url_check(url)
-    subdir_count(url)
+def calling_all_functions(longest_url):
+    check_domain_reputation(longest_url, max_retries = 3, delay = 2)
+    having_ip_address(longest_url)
+    https_check(longest_url)
+    url_check(longest_url)
+    subdir_count(longest_url)
     
 
 def assessing_risk_scores(email_body):
     global url_suspicion_score
 
     
-    try:
-            
+    try: 
         # More comprehensive URL pattern
         url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
         urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
@@ -272,13 +281,28 @@ def assessing_risk_scores(email_body):
             print("Extracted URLs:")
             for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
                 print(f"{i}. {url}")
+
+            urls_with_unique_domains = {} #empty dictionary for urls with no repeated domain names
+
+            for url in urls:
+                domain = get_domain_from_url(url) #uses the function to extract the domain name. e.g. google.com
+                
+                #if the domain is not in the dictionary(urls_with_unique_domains), update the dict. If the domain name is already in the dictionary, compare the length of the url and update the dict with the longer url
+                if domain not in urls_with_unique_domains or len(url) > len(urls_with_unique_domains[domain]): 
+                    urls_with_unique_domains[domain] = url #write the url into the dictionary
+
+            print(f"Processing {len(urls_with_unique_domains)} unique domains:")
+
+            for domain, longest_url in urls_with_unique_domains.items():
+                print(f"Domain: {domain}, Longest URL: {longest_url}")
             
-            if domain_resolved(url):
-                calling_all_functions(url)
+                if domain_resolved(longest_url):
+                    calling_all_functions(longest_url)
         
-            else:
-                url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
-                reasons.append("Domain could not be resolved, which is a strong indicator of a suspicious URL")
+                else:
+                    url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
+                    reasons.append(f"Domain {domain} could not be resolved, which is a strong indicator of a suspicious URL")
+
         else: #if no URLs
             print("No URLs found or file could not be read.") 
             url_suspicion_score += int(os.getenv("NO_URLS_FOUND", "0"))

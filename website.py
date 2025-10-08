@@ -41,6 +41,8 @@ def upload_file():
     email_body = ''
     risk_level = ''
     total_risk_scoring = 0
+    number_of_urls = 0
+    number_of_unique_domains = 0
 
     if request.method == 'POST': #handle submissions
         file = request.files.get('emailfile')
@@ -61,7 +63,7 @@ def upload_file():
             # Domain check
             EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
-            reasons, url_suspicion_score, url_reason_pairs = assessing_risk_scores(email_body)
+            reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains = assessing_risk_scores(email_body)
                         
             total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
                 
@@ -134,7 +136,9 @@ def upload_file():
                         total_risk_scoring=total_risk_scoring,
                         emailnotify=emailnotify, #email sending notification
                         storing_notify = storing_notify,#data storage notification
-                        url_reason_pairs = url_reason_pairs,
+                        url_reason_pairs = url_reason_pairs,#list of what url is being assessed and its reasons
+                        number_of_urls = number_of_urls, #number of urls found in the email
+                        number_of_unique_domains = number_of_unique_domains, #number of unique domains found in the email
                         success = success) 
 
 @app.route('/admin-login-json', methods=['POST'])

@@ -51,8 +51,6 @@ def domain_resolved(url): # first level check
         print(f'Invalid domain: {hostname}') #domain is not well formatted
         return False
     
-    
-
 
 def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain reputation using WHOIS data, with a max retry of 3, and a delay of 2 seconds between retries
     
@@ -218,20 +216,6 @@ def url_check (url):
         print("No '@' symbol found in URL.")
         reasons.append("URL does not contain '@' symbol, but proceed with caution")
 
-    
-    
-# def subdir_count(url):
-#     global url_suspicion_score
-#     parsed_url = urlparse(url) 
-#     subdir_count = parsed_url.count('/')  # Count non-empty segments
-    
-    
-#     if subdir_count > 3: # Check if subdirectory count is greater than 4
-#         url_suspicion_score += int(os.getenv("SUBDIR_COUNT_SCORE", "1"))  # increase risk score for URLs with many subdirectories
-#         reasons.append(f"URL has a suspiciously high number of subdirectories, ({subdir_count} subdirectories)")
-        
-#     else:
-#         reasons.append(f"URL has a normal number of subdirectories, ({subdir_count} subdirectories), but proceed with caution")
 
 
 def calling_all_functions(longest_url):
@@ -239,7 +223,7 @@ def calling_all_functions(longest_url):
     having_ip_address(longest_url)
     https_check(longest_url)
     url_check(longest_url)
-    #subdir_count(longest_url)
+
     
 
 def assessing_risk_scores(email_body):
@@ -248,20 +232,19 @@ def assessing_risk_scores(email_body):
     
     url_suspicion_score = 0
     reasons = []
-    
-
+    number_of_urls = 0
+    number_of_unique_domains = 0
     
     try: 
-        # More comprehensive URL pattern
         url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
         urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
             
         print(f"Found {len(urls)} URLs in the file.")
+
+        number_of_urls = len(urls)
         
         if urls: #if there are URLs in the email
             print("Extracted URLs:")
-            for i, url in enumerate(urls, 1): # Enumerate through the extracted URLs and print them
-                print(f"{i}. {url}")
 
             urls_with_unique_domains = {} #empty dictionary for urls with no repeated domain names
             url_reason_pairs = []
@@ -275,31 +258,37 @@ def assessing_risk_scores(email_body):
 
             print(f"Processing {len(urls_with_unique_domains)} unique domains:")
 
-            for domain, longest_url in urls_with_unique_domains.items():
+            limited_domains = dict(list(urls_with_unique_domains.items())[:6])
+
+            number_of_unique_domains = len(urls_with_unique_domains)
+
+            if len(urls_with_unique_domains) > 6:
+                print(f"Limiting processing to first 6 domains out of {len(urls_with_unique_domains)} total domains")
+                reasons.append(f"Email contains {len(urls_with_unique_domains)} unique domains. Limited analysis to first 6 domains for performance.")
+            else:
+                print(f"Processing all {len(urls_with_unique_domains)} unique domains:")
+
+
+            for domain, longest_url in limited_domains.items():
                 print(f"Domain: {domain}, Longest URL: {longest_url}")
             
                 url_specific_reasons = []
                 
                 if domain_resolved(longest_url):
-                
                     reasons = []
-                    
                     calling_all_functions(longest_url)
-                    
                     url_specific_reasons = reasons.copy()
-                    
                     url_reason_pairs.append({
                         'url': longest_url,
                         'reasons': url_specific_reasons.copy()
                     })
-                    
                     
                 else:
                     url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
                     
                     reason_text = f"Domain {domain} could not be resolved, which is a strong indicator of a suspicious URL"
                     reasons.append(reason_text)
-                    url_specific_reasons(reason_text)
+                    url_specific_reasons.append(reason_text)
                     
                     url_reason_pairs.append({
                         'url': longest_url,
@@ -313,7 +302,6 @@ def assessing_risk_scores(email_body):
             no_url_found = "No URLs found in the email."
             reason_text = "The email does not contain any URLs"
             reasons.append(reason_text)
-
             url_reason_pairs.append({
                 'url': no_url_found,
                 'reasons': [reason_text]
@@ -340,23 +328,17 @@ def assessing_risk_scores(email_body):
     print(f'Risk Level: {risk_level}')
     print(f'Suspicion Score: {url_suspicion_score}')
     print("Reasons for suspicion:")
-    # for reason in reasons:
-    #     print(f'- {reason}')
+  
     
     
     if urls and len(urls) > 0:
         sample_url = urls[0]  
         print(f'URL Length: {len(sample_url)} characters')
-        #print(f'Subdirectory Count: {subdir_count(sample_url)}')
     else:
         print('URL Length: N/A')
         print('Subdirectory Count: N/A')
 
-    return reasons, url_suspicion_score, url_reason_pairs
+    return reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains
     
-    #def normalize_date(date_value):
-            #if date_value and isinstance(date_value, list):
-                #return date_value[0]
-            #return date_value
     
     

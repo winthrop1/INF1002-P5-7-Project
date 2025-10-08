@@ -90,6 +90,9 @@
                             <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
 
                             <p><u>URL Properties</u></p>
+                            <p><strong>Number of URLs Found:</strong> {{ number_of_urls }}</p>
+                            <p><strong>Number of Unique Domains Found:</strong> {{ number_of_unique_domains }}</p>
+                            <!--show url and its reasons-->
                             {% for pair in url_reason_pairs %}
                                 <div class="url-section">
                                     <h5>URL: {{ pair.url }}</h5>

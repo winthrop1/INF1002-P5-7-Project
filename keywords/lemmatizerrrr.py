@@ -11,15 +11,14 @@ import pandas as pd
 import nltk 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-from nltk.corpus import wordnet
 
 # Load environment variables
 load_dotenv()
 
 # Download necessary NLTK resources
-nltk.download('punkt_tab')
-nltk.download('wordnet')
-nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt_tab') # Tokeniser (identify words and sentences in text)
+nltk.download('wordnet') # References dictionary for lemmatization
+nltk.download('averaged_perceptron_tagger') # Used for assigning parts of speech to words, pre-trained model
 
 # Initialise lemmatiser
 lemmatizer = WordNetLemmatizer()
@@ -45,7 +44,7 @@ def get_wordnet_pos(tag):
 def lemmatize_text(text):
     tokens = word_tokenize(str(text).lower()) # Tokenize and convert to lowercase for each cell
     tagged = nltk.pos_tag(tokens) # Get POS tags for tokens
-    lemmatized_tokens = [lemmatizer.lemmatize(token, get_wordnet_pos(pos_tag)) for token, (word, pos_tag) in zip(tokens, tagged)] # Correct and unpack POS tags for lemmatization
+    lemmatized_tokens = [lemmatizer.lemmatize(token, get_wordnet_pos(pos_tag)) for token, pos_tag in tagged] # Unpack (token, pos_tag) from tagged
     return ' '.join(lemmatized_tokens) # Join back into a single string
 
 # Apply lemmatization to dataframe

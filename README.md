@@ -344,6 +344,7 @@ python detectfunction.py
 - **pandas>=1.5.0**: Data manipulation for domain analysis
 - **validators**: URL and domain validation
 - **whois**: Domain registration information lookup
+- **nltk**: Natural Language Processing (NLP) for data manipulation and cleaning
 
 Install all dependencies:
 ```bash

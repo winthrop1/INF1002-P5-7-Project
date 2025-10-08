@@ -146,29 +146,32 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
 
             try:
         
-            number_of_days = (expiration_date - today).days # Calculate days until expiration
-            print(f"Domain expiration in: {number_of_days} days") 
-        
-            if number_of_days < 365: 
-                url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
-                reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
-
-                print(f'expiration domain {url_suspicion_score}')
-
-            elif number_of_days < 180:
-                url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
-                reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
-
-                print(f'expiration domain {url_suspicion_score}')
+                number_of_days = (expiration_date - today).days # Calculate days until expiration
+                print(f"Domain expiration in: {number_of_days} days") 
             
-            else:
-                print("Domain expiration date is good")
-                print(f'expiration domain {url_suspicion_score}')
+                if number_of_days < 365: 
+                    url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
+                    reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
+
+                    print(f'expiration domain {url_suspicion_score}')
+
+                elif number_of_days < 180:
+                    url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
+                    reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
+
+                    print(f'expiration domain {url_suspicion_score}')
+                
+                else:
+                    print("Domain expiration date is good")
+                    print(f'expiration domain {url_suspicion_score}')
+                
             
-        
+            except Exception as e:
+                print(f"Error calculating domain expiration: {e}")
+
         else:
             print("No expiration date found")
-        
+            
         
         if updated_date and expiration_date: # 3. Check Last Updated Date - Recently updated domains can be suspicious
             try:

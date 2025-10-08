@@ -16,9 +16,9 @@ from nltk.tokenize import word_tokenize
 load_dotenv()
 
 # Download necessary NLTK resources
-nltk.download('punkt_tab')
-nltk.download('wordnet')
-nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt_tab') # Tokeniser (identify words and sentences in text)
+nltk.download('wordnet') # References dictionary for lemmatization
+nltk.download('averaged_perceptron_tagger') # Used for assigning parts of speech to words, pre-trained model
 
 # Initialise lemmatiser
 lemmatizer = WordNetLemmatizer()

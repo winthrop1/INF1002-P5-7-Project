@@ -354,3 +354,108 @@ pip install -r requirements.txt
 ## 👥 Team P5-7
 
 Developed by Team P5-7 for INF1002 Programming Fundamentals course.
+
+---
+
+## ⚠️ IMPORTANT: Security & Code Quality Notice
+
+### Code Analysis Report
+
+A comprehensive security and code quality analysis has been performed on this codebase. **Please review [`CODE_ANALYSIS_REPORT.md`](CODE_ANALYSIS_REPORT.md) before deploying or using this system.**
+
+**Key Findings:**
+- 🔴 **7 Critical Security Vulnerabilities** requiring immediate attention
+- 🟠 **9 High Severity Logical Errors** that may cause system failures
+- 🟡 **7 Medium Severity Code Quality Issues** affecting maintainability
+
+### Critical Issues Summary
+
+#### Security Vulnerabilities (Must Fix Before Any Deployment)
+1. **Exposed Credentials in `.env.example`** - Real email credentials committed to repository
+2. **Weak Admin Authentication** - Default credentials are "1"/"1"
+3. **Missing File Upload Validation** - No size limits or security checks
+4. **Session Security Issues** - No timeout, HTTPS enforcement, or secure flags
+5. **Global Variable State Pollution** - Thread-unsafe code in URL analysis
+6. **Missing Input Validation** - Email parsing can crash on malformed input
+
+#### Logical Errors (Breaks Functionality)
+1. **main.py is Non-functional** - Multiple import errors and incorrect function calls
+2. **String Formatting Bug** - Distance value not displayed in domainchecker.py
+3. **Environment Variable Mismatch** - Wrong variable names in website.py scoring caps
+4. **Global State Contamination** - suspiciousurl.py uses mutable globals causing race conditions
+
+### Security Recommendations
+
+**Before Running in Production:**
+
+1. **Fix Credential Exposure:**
+```bash
+# Remove real credentials from .env.example
+git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch .env.example" HEAD
+```
+
+2. **Implement Strong Authentication:**
+```python
+# Use bcrypt for password hashing
+from bcrypt import hashpw, gensalt, checkpw
+hashed = hashpw(password.encode('utf-8'), gensalt())
+```
+
+3. **Add File Upload Protection:**
+```python
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB limit
+ALLOWED_EXTENSIONS = {'.txt', '.eml'}
+# Validate before processing
+```
+
+4. **Enable HTTPS Only:**
+```python
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+```
+
+### Development Status
+
+**Current State:** ⚠️ Development/Educational Use Only
+
+This system is suitable for:
+- ✅ Educational purposes and learning
+- ✅ Local testing and experimentation
+- ✅ Understanding phishing detection concepts
+
+This system is **NOT** suitable for:
+- ❌ Production deployment without security fixes
+- ❌ Processing sensitive/real emails without hardening
+- ❌ Public-facing deployment without authentication improvements
+
+### For Developers
+
+**Before Making Changes:**
+1. Read the full [`CODE_ANALYSIS_REPORT.md`](CODE_ANALYSIS_REPORT.md)
+2. Review the Priority Fix Order section
+3. Implement security hardening measures
+4. Add comprehensive unit tests
+5. Enable proper logging (remove debug prints)
+
+**Testing Checklist:**
+- [ ] All critical security vulnerabilities addressed
+- [ ] main.py functionality restored and tested
+- [ ] Global variables refactored to local state
+- [ ] Input validation added to all user inputs
+- [ ] File upload security implemented
+- [ ] Session management hardened
+- [ ] Environment variables corrected
+- [ ] Unit tests added (coverage >70%)
+
+### Getting Help
+
+For questions about security issues or bug fixes:
+1. Review the detailed analysis in `CODE_ANALYSIS_REPORT.md`
+2. Check the Priority Fix Order for implementation guidance
+3. Consult the code examples provided in the report
+
+### Academic Integrity Notice
+
+This project is submitted for academic evaluation. The code analysis report identifies areas for improvement to enhance learning outcomes and prepare the system for potential future deployment.

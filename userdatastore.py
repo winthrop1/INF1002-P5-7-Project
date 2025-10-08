@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-def storeDatainTxt(classification, keywords,total_score, EmailDomainMsg, email_text):
+def storeDatainTxt(classification, keywords,total_score, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls):
     folder_path = "dataset/safe_keep" # Define the folder name
     os.makedirs(folder_path, exist_ok=True) # Ensure folder exists
 
@@ -13,6 +13,9 @@ def storeDatainTxt(classification, keywords,total_score, EmailDomainMsg, email_t
         with open(file_path, "w", encoding="utf-8") as file:
             file.write("----- Email Analysis Result -----\n\n")
             file.write(f"Classification: {classification}\n")
+
+
+
             if keywords:
                 file.write("Keywords Found:\n")
                 for kw in keywords:

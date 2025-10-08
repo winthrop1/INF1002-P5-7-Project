@@ -89,7 +89,7 @@ def upload_file():
                 EmailDomainMsg += "However, potential phishing is detected!"
             
 
-            storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text)
+            storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
 
             # Send email report to user
             if useremail:
@@ -99,6 +99,7 @@ def upload_file():
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
+                    f"URL Analysis Reasons: {', '.join(url_reason_pairs) if url_reason_pairs else 'None'}\n\n"
                     f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
                     f"Total Risk Score: {total_score}\n\n"
                     f"Domain Check Message: {EmailDomainMsg}\n"

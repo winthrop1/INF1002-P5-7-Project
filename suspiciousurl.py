@@ -312,7 +312,7 @@ def assessing_risk_scores(email_body):
     
     except Exception as e: # Handle other exceptions
         print(f"An error occurred while reading the file: {e}")
-        return [], 0, []
+        return [], 0, [], 0, 0
     
     
     if url_suspicion_score >= 5:

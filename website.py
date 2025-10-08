@@ -88,7 +88,7 @@ def upload_file():
             if "safe" in EmailDomainMsg.lower() and total_risk_scoring >2:
                 EmailDomainMsg += "However, potential phishing is detected!"
             
-
+            # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
 
             # Send email report to user

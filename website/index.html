@@ -90,8 +90,17 @@
                             <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
 
                             <p><u>URL Properties</u></p>
-                            <p><strong>Number of URLs Found:</strong> {{ number_of_urls }}</p>
-                            <p><strong>Number of Unique Domains Found:</strong> {{ number_of_unique_domains }}</p>
+                            {% if number_of_urls > 0 or number_of_unique_domains > 0 %}
+                            <div class="url-stats">
+                                {% if number_of_urls > 0 %}
+                                    <p><strong>Number of URLs Found:</strong> {{ number_of_urls }}</p>
+                                {% endif %}
+                                
+                                {% if number_of_unique_domains > 0 %}
+                                    <p><strong>Number of Unique Domains Found:</strong> {{ number_of_unique_domains }}</p>
+                                {% endif %}
+                            </div>
+                            {% endif %}
                             <!--show url and its reasons-->
                             {% for pair in url_reason_pairs %}
                                 <div class="url-section">

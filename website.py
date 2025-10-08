@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify  #import flask and needed modules
-from email_manage import parse_email_file #import from detector.py
+from email_manage import parse_email_file
 from domainchecker import domaincheck
 from suspiciouswords import classify_email
 from suspiciousurl import assessing_risk_scores#, get_urls_from_email_file
@@ -15,12 +15,16 @@ from dotenv import load_dotenv #for loading environment variables
 load_dotenv()
 
 #initialize flask app
-app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
+# app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
+app = Flask(__name__, 
+            template_folder=os.getenv('TEMPLATE_FOLDER', 'website'),
+            static_folder='website',  # Tells Flask where static files are
+            static_url_path='')       # Makes URLs like /css/styles.css work
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .env file
 
 #admin credentials
-ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin1@gmail.com')
-ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
+ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
 
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
@@ -57,28 +61,30 @@ def upload_file():
             # Parse email using the parse_email_file function
             email_title, email_subject, email_body = parse_email_file(email_text)
 
-            # Classify the email using the original detection system
-            classification, keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
-
             # Domain check
             EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
+            # URL analysis
             reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains = assessing_risk_scores(email_body)
-                        
-            total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
+
+            # Classify the email using the original detection system
+            classification, keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
+            
+            # Apply component-level caps (prevents any single component from dominating)
+            domain_capped = min(domain_suspicion_score, int(os.getenv("MAX_DOMAIN_SCORE", "15")))       # Cap domain at 15
+            url_capped = min(url_suspicion_score, int(os.getenv("MAX_URL_SCORE", "6")))            # Cap URLs at 6
+            keywords_capped = min(keywords_suspicion_score, int(os.getenv("MAX_KEYWORD_SCORE", "15")))  # Cap keywords at 15
+
+            total_risk_scoring = domain_capped + url_capped + keywords_capped
                 
-            if total_risk_scoring >= 9:
+            if total_risk_scoring >= int(os.getenv("VERY_HIGH_RISK_THRESHOLD", "16")):
                 risk_level = "VERY HIGH"
-                    
-            elif total_risk_scoring >= 7: 
+            elif total_risk_scoring >= int(os.getenv("HIGH_RISK_THRESHOLD", "12")):
                 risk_level = "HIGH"
-                    
-            elif total_risk_scoring >= 5:
+            elif total_risk_scoring >= int(os.getenv("MEDIUM_RISK_THRESHOLD", "8")):
                 risk_level = "MEDIUM"
-                    
-            elif total_risk_scoring >= 3:
+            elif total_risk_scoring >= int(os.getenv("LOW_RISK_THRESHOLD", "4")):
                 risk_level = "LOW"
-                    
             else:
                 risk_level = "VERY_LOW"
                     
@@ -140,7 +146,7 @@ def upload_file():
                         url_reason_pairs = url_reason_pairs,#list of what url is being assessed and its reasons
                         number_of_urls = number_of_urls, #number of urls found in the email
                         number_of_unique_domains = number_of_unique_domains, #number of unique domains found in the email
-                        success = success) 
+                        success = success)
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():

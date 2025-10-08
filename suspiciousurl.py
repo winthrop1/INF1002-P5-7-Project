@@ -122,16 +122,14 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             number_of_days = (expiration_date - today).days # Calculate days until expiration
             print(f"Domain expiration in: {number_of_days} days") 
         
-            if number_of_days < 365: 
-                url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
-                reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
-
-                print(f'expiration domain {url_suspicion_score}')
-
-            elif number_of_days < 180:
+            if number_of_days < 180: 
                 url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
                 reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
+                print(f'expiration domain {url_suspicion_score}')
 
+            elif number_of_days < 365:
+                url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
+                reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
                 print(f'expiration domain {url_suspicion_score}')
             
             else:
@@ -184,16 +182,15 @@ def having_ip_address(url):
 
 def https_check(url):
     global url_suspicion_score
-    if not url.startswith("https://"): # Check if URL starts with https
-        url_suspicion_score += int(os.getenv("NO_HTTPS_SCORE", "2"))  # increase risk score for URLs not using HTTPS
-        reasons.append("URL does not use HTTPS, which is a strong indicator of insecurity")
-        return
-        
-    elif url.startswith("http://"):
+
+    if url.startswith("http://"):
         reasons.append("URL uses HTTP, information sent between your browser and a website is not encrypted")
         url_suspicion_score += int(os.getenv("HTTP_SCORE", "1"))  # increase risk score for URLs using HTTP instead of HTTPS
         return 
-    
+    elif not url.startswith("https://"): # Check if URL starts with https
+        url_suspicion_score += int(os.getenv("NO_HTTPS_SCORE", "2"))  # increase risk score for URLs not using HTTPS
+        reasons.append("URL does not use HTTPS, which is a strong indicator of insecurity")
+        return
     else:
         reasons.append("URL uses HTTPS, which is good")
         return

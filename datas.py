@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get ham directory from environment variable or use default
-ham_dir = os.getenv('HAM_DATASET_DIR', 'kaggle/ham/')
+ham_dir = os.getenv('HAM_DATASET_DIR', 'dataset/kaggle/ham')
 
 
 def load_data(directory, label):

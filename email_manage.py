@@ -74,10 +74,6 @@ def parse_email_file(email_content):
     except Exception as e:
         print(f"Error parsing email content: {e}")
         return "Error", "Error parsing email", "Could not parse email content"
-    
-#detect keywords from email text
-
-
 
 if __name__ == "__main__":
     # Test file paths for email parsing functionality

@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 import socket
 import whois
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 import re
 import os 
 from dotenv import load_dotenv
@@ -63,7 +63,8 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
     
     print(f"Analyzing domain: {hostname}")
     
-    
+    domain_info = None
+
     for attempt in range(max_retries): # Retry mechanism for WHOIS lookup
         try:
             domain_info = whois.whois(hostname) # Perform WHOIS lookup
@@ -79,91 +80,125 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
 
     if domain_info: # If WHOIS data is found, analyze it
 
+    
+
         creation_date = domain_info.creation_date # 1. Check Creation Date - New domains are often suspicious
         expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
         updated_date = domain_info.updated_date # 3. Check Last Updated Date - Recently updated domains can be suspicious
     
-        if isinstance(creation_date, list):
-            creation_date = creation_date[0]
+
+        def make_comparable(dt):
+            if dt is None:
+                return None
+            if isinstance(dt, list):
+                dt = dt[0]
+            # If datetime is aware, convert to naive by removing timezone info
+            if hasattr(dt, 'tzinfo') and dt.tzinfo is not None:
+                return dt.replace(tzinfo=None)
+            return dt
+
+
+        # if isinstance(creation_date, list):
+        #     creation_date = creation_date[0]
+
+        creation_date = make_comparable(creation_date)
+        expiration_date = make_comparable(expiration_date)
+        updated_date = make_comparable(updated_date)
     
         if creation_date:
-            age_days = (datetime.now() - creation_date).days # Calculate domain age in days
-        
-            if age_days < 30: 
-                url_suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))  # increase risk score for very new domains
-                reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
+
+            try:
+                age_days = (today - creation_date).days # Calculate domain age in days
             
+                if age_days < 30: 
+                    url_suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))  # increase risk score for very new domains
+                    reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
+                
+                
+                elif age_days < 121:
+                    url_suspicion_score += int(os.getenv("MEDIUM_DOMAIN_SCORE", "2"))  # increase risk score for moderately new domains
+                    reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
+                
             
-            elif age_days < 121:
-                url_suspicion_score += int(os.getenv("MEDIUM_DOMAIN_SCORE", "2"))  # increase risk score for moderately new domains
-                reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
+                elif age_days < 366:
+                    url_suspicion_score += int(os.getenv("LOW_DOMAIN_SCORE", "1"))  # slight increase in risk score for somewhat new domains
+                    reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
+                
+            
+                else:
+                    reasons.append("Domain is older than a year, which is generally a good sign.")
+                    print("Domain age is good") 
             
         
-            elif age_days < 366:
-                url_suspicion_score += int(os.getenv("LOW_DOMAIN_SCORE", "1"))  # slight increase in risk score for somewhat new domains
-                reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
-            
+                print(f'age domain {url_suspicion_score}')
+
+            except Exception as e:
+                print(f"Error calculating domain age: {e}")
+                
         
-            else:
-                reasons.append("Domain is older than a year, which is generally a good sign.")
-                print("Domain age is good") 
-            
-        
-        print(f'age domain {url_suspicion_score}')
-        
-        expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
+        # expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
     
     
-        if isinstance(expiration_date, list): 
-            expiration_date = expiration_date[0]
+        # if isinstance(expiration_date, list): 
+        #     expiration_date = expiration_date[0]
         
-        if expiration_date: 
+        if expiration_date:
+
+            try:
         
-            number_of_days = (expiration_date - today).days # Calculate days until expiration
-            print(f"Domain expiration in: {number_of_days} days") 
-        
-            if number_of_days < 365: 
-                url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
-                reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
-
-                print(f'expiration domain {url_suspicion_score}')
-
-            elif number_of_days < 180:
-                url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
-                reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
-
-                print(f'expiration domain {url_suspicion_score}')
+                number_of_days = (expiration_date - today).days # Calculate days until expiration
+                print(f"Domain expiration in: {number_of_days} days") 
             
-            else:
-                print("Domain expiration date is good")
-                print(f'expiration domain {url_suspicion_score}')
-            
+                if number_of_days < 365: 
+                    url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
+                    reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
+
+                    print(f'expiration domain {url_suspicion_score}')
+
+                elif number_of_days < 180:
+                    url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
+                    reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
+
+                    print(f'expiration domain {url_suspicion_score}')
+                
+                else:
+                    print("Domain expiration date is good")
+                    print(f'expiration domain {url_suspicion_score}')
+                
         
+                
+            except Exception as e:
+                print(f"Error calculating domain expiration: {e}")
+
         else:
             print("No expiration date found")
         
         
-        if updated_date and isinstance(updated_date, list): # 3. Check Last Updated Date - Recently updated domains can be suspicious
-            updated_date = updated_date[0] 
-            days_since_update = (today - updated_date).days # Calculate days since last update
-            days_since_update_to_expiry = (expiration_date - updated_date).days # Calculate days between last update and expiration
+        if updated_date and expiration_date: # 3. Check Last Updated Date - Recently updated domains can be suspicious
+            try:
+            #updated_date = updated_date[0] 
+                days_since_update = (today - updated_date).days # Calculate days since last update
+                days_since_update_to_expiry = (expiration_date - updated_date).days # Calculate days between last update and expiration
 
-            print(f"Domain last updated: {days_since_update} days ago")
-            print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
-        
-            if days_since_update_to_expiry <= 365: 
-                url_suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))  # increase risk score for recently updated domains with short time to expiry
-                reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
+                print(f"Domain last updated: {days_since_update} days ago")
+                print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
+            
+                if days_since_update_to_expiry <= 365: 
+                    url_suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))  # increase risk score for recently updated domains with short time to expiry
+                    reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
 
-                print(f'updated domain {url_suspicion_score}')
+                    print(f'updated domain {url_suspicion_score}')
+
+                else:
+                    print("No updated date found") 
+
+            except Exception as e:
+                print(f"Error calculating domain update info: {e}")
+
 
         else:
-            print("No updated date found") 
-
-
-    else:
-        print("No WHOIS data found") 
-            
+            print("No WHOIS data found") 
+                
 
 
 def having_ip_address(url):

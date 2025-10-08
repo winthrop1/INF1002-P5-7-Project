@@ -307,12 +307,15 @@ def assessing_risk_scores(email_body):
                     })
 
         else: #if no URLs
+            url_reason_pairs = []
             print("No URLs found or file could not be read.") 
             url_suspicion_score += int(os.getenv("NO_URLS_FOUND", "0"))
+            no_url_found = "No URLs found in the email."
             reason_text = "The email does not contain any URLs"
             reasons.append(reason_text)
+
             url_reason_pairs.append({
-                'url': 'No URLs found',
+                'url': no_url_found,
                 'reasons': [reason_text]
             })
             

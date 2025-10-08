@@ -14,12 +14,16 @@ from dotenv import load_dotenv #for loading environment variables
 load_dotenv()
 
 #initialize flask app
-app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
+# app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
+app = Flask(__name__, 
+            template_folder=os.getenv('TEMPLATE_FOLDER', 'website'),
+            static_folder='website',  # Tells Flask where static files are
+            static_url_path='')       # Makes URLs like /css/styles.css work
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .env file
 
 #admin credentials
-ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin1@gmail.com')
-ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')
+ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
+ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
 
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post

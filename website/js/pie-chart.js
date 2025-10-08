@@ -7,9 +7,9 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'pie',
   data: {
-    labels: ["Phising Emails", "Safe Emails"],
+    labels: ["Phising", "Safe"],
     datasets: [{
-      data: [73.3, 26.7],
+      data: [9.3, 26.7],
       backgroundColor: ['#dc3545', '#28a745'],
     }],
   },

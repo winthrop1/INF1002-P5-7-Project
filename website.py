@@ -2,7 +2,8 @@ from flask import Flask, request, render_template, redirect, url_for, session, j
 from email_manage import parse_email_file #import from detector.py
 from domainchecker import domaincheck
 from suspiciouswords import classify_email
-from suspiciousurl import assessing_risk_scores, get_urls_from_email_file
+from suspiciousurl import assessing_risk_scores#, get_urls_from_email_file
+from userdatastore import storeDatainTxt
 import os #work with folders in file systems
 import smtplib
 import socket
@@ -30,9 +31,12 @@ ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 def upload_file():
     #variables to hold results
     reasons = []
+    url_reason_pairs = []
     classification = None
     EmailDomainMsg = ''
     emailnotify = ''
+    storing_notify = ''
+    success = bool
     keywords = []
     total_score = 0
     email_text = ''
@@ -41,6 +45,8 @@ def upload_file():
     email_body = ''
     risk_level = ''
     total_risk_scoring = 0
+    number_of_urls = 0
+    number_of_unique_domains = 0
 
     if request.method == 'POST': #handle submissions
         file = request.files.get('emailfile')
@@ -61,7 +67,7 @@ def upload_file():
             # Domain check
             EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
 
-            reasons, url_suspicion_score = assessing_risk_scores(email_body)
+            reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains = assessing_risk_scores(email_body)
                         
             total_risk_scoring = keywords_suspicion_score + domain_suspicion_score + url_suspicion_score
                 
@@ -85,8 +91,9 @@ def upload_file():
             
             if "safe" in EmailDomainMsg.lower() and total_risk_scoring >2:
                 EmailDomainMsg += "However, potential phishing is detected!"
-                
             
+            # Store analysis results in a text file
+            storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
 
             # Send email report to user
             if useremail:
@@ -96,6 +103,7 @@ def upload_file():
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
+                    f"URL Analysis Reasons: {', '.join(url_reason_pairs) if url_reason_pairs else 'None'}\n\n"
                     f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
                     f"Total Risk Score: {total_score}\n\n"
                     f"Domain Check Message: {EmailDomainMsg}\n"
@@ -127,11 +135,16 @@ def upload_file():
                         email_title=email_title, #parsed email title
                         email_subject=email_subject, #parsed email subject
                         email_body=email_body, #parsed email body
-                        EmailDomainMsg=EmailDomainMsg,
+                        EmailDomainMsg=EmailDomainMsg, #domain check message
                         reasons=reasons, #url analysis reasons
                         risk_level=risk_level,#risk scoring of the whole email
                         total_risk_scoring=total_risk_scoring,
-                        emailnotify=emailnotify) #domain check message
+                        emailnotify=emailnotify, #email sending notification
+                        storing_notify = storing_notify,#data storage notification
+                        url_reason_pairs = url_reason_pairs,#list of what url is being assessed and its reasons
+                        number_of_urls = number_of_urls, #number of urls found in the email
+                        number_of_unique_domains = number_of_unique_domains, #number of unique domains found in the email
+                        success = success) 
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():

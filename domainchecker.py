@@ -43,5 +43,7 @@ def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
             if dist <= threshold:
                 DistanceCheckMsg = f"Warning: Email domain '{domain}' is similar to a safe domain '{safe_domain}' (with only {dist} change(s) different)\n"
                 domain_suspicion_score += dist # increase risk score for similar domain
+            elif dist == 0:
+                DistanceCheckMsg = 'No similar domains found.'
         return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
     

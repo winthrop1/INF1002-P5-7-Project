@@ -147,8 +147,8 @@ def classify_email(email_subject, email_body):
     keywords_suspicion_score += body_score #add score to total
     keywords.extend(body_keywords) #append keywords
 
-    classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
-    return classification, keywords, keywords_suspicion_score #output score with keywords
+    # classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
+    return keywords, keywords_suspicion_score #output score with keywords
 
 
 if __name__ == "__main__":

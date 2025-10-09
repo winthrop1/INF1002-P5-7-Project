@@ -26,7 +26,6 @@ app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
-
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
     #variables to hold results
@@ -69,7 +68,7 @@ def upload_file():
             reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains = assessing_risk_scores(email_body)
 
             # Classify the email using the original detection system
-            classification, keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
+            keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
             
             # Apply component-level caps (prevents any single component from dominating)
             domain_capped = min(domain_suspicion_score, int(os.getenv("MAX_DOMAIN_SCORE", "15")))       # Cap domain at 15
@@ -88,13 +87,14 @@ def upload_file():
                 risk_level = "LOW"
             else:
                 risk_level = "VERY_LOW"
-                    
 
             # risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
             
             if "safe" in EmailDomainMsg.lower() and total_risk_scoring >int(os.getenv("MEDIUM_RISK_THRESHOLD", "8")):
                 EmailDomainMsg += "However, potential phishing is detected!"
-            
+
+            classification = "Safe" if total_risk_scoring <= int(os.getenv("PHISHING_SCORE", "8")) else "Phishing"
+
             # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
 

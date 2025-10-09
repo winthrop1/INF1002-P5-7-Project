@@ -39,7 +39,7 @@ def email_titlecheck(email_title):
 
 
 
-def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
+def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.getenv("DOMAIN_SIMILARITY_THRESHOLD", "4"))):
     domain_suspicion_score = 0
     email = email_titlecheck(email_title) 
     domain = "@" + email.split('@', 1)[1]

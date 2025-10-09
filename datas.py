@@ -10,24 +10,22 @@ load_dotenv()
 ham_dir = os.getenv('HAM_DATASET_DIR', 'dataset/kaggle/ham')
 
 
-def load_data(directory, label):
+def load_data(directory):
     texts = []
-    labels = []
     for filename in os.listdir(directory):
         with open(os.path.join(directory, filename), 'r', encoding='latin1') as file:
             texts.append(file.read())  # Read the content of the email file
-            labels.append(label)  # Assign the provided label (1 for spam, 0 for ham)
-    return texts, labels
+    return texts
 
-ham_texts, ham_labels = load_data(ham_dir, 1)  # 1 for ham
+ham_texts = load_data(ham_dir)
 
 
-# Combine all data and labels into one dataset
+# Combine all data into one dataset
 texts = ham_texts 
-labels = ham_labels
+
 
 # Create a DataFrame
-emailDataF = pd.DataFrame({'text': texts, 'label': labels})
+emailDataF = pd.DataFrame({'text': texts})
 
 def list_of_domains(text):
     domains = []

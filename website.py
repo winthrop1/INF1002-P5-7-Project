@@ -97,16 +97,24 @@ def upload_file():
 
             # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
+            
+            
 
             # Send email report to user
             if useremail:
                 admin_email = os.getenv('EMAIL_ADDRESS')
                 admin_key = os.getenv('EMAIL_KEY')
+                
+                if url_reason_pairs:
+                    formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
+                else:
+                    formatted_pairs = 'None'
+
 
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
-                    f"URL Analysis Reasons: {', '.join(f'{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}' for d in url_reason_pairs) if url_reason_pairs else 'None'}\n\n"
+                    f"URL Analysis Reasons: {formatted_pairs}\n\n"
                     f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
                     f"Total Risk Score: {total_score}\n\n"
                     f"Domain Check Message: {EmailDomainMsg}\n"

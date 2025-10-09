@@ -175,5 +175,73 @@ def logout():
     session.pop('admin_logged_in', None)
     return redirect(url_for('upload_file'))
 
+
+#testing admin dashboard 
+import glob
+from collections import Counter
+import re
+
+def parse_stored_emails():
+    """Parse all email data files and extract statistics"""
+    safe_count = 0
+    phishing_count = 0
+    all_keywords = []
+    
+    #extract all .txt files from safe_keep folder
+    folder_path = os.path.join(os.path.dirname(__file__), 'dataset', 'safe_keep', '*.txt')
+    files = glob.glob(folder_path)
+    
+    for file_path in files:
+        try:
+            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+                
+                #extract classification
+                classification_match = re.search(r'Classification:\s*(Safe|Phishing)', content, re.IGNORECASE)
+                if classification_match:
+                    classification = classification_match.group(1)
+                    if classification.lower() == 'safe':
+                        safe_count += 1
+                    else:
+                        phishing_count += 1
+                
+                #extract keywords to match your format
+                #find all lines with "Suspicious word in..." and extract text between quotes
+                keyword_matches = re.findall(r"Suspicious word in (?:subject|remaining body):\s*'([^']+)'", content)
+                all_keywords.extend(keyword_matches)
+        
+        except Exception as e:
+            print(f"Error parsing {file_path}: {e}")
+            continue
+    
+    #count keyword frequencies
+    keyword_counter = Counter(all_keywords)
+    top_keywords = keyword_counter.most_common(5)
+    
+    return {
+        'safe_count': safe_count,
+        'phishing_count': phishing_count,
+        'top_keywords': top_keywords,
+        'total_emails': safe_count + phishing_count
+    }
+
+@app.route('/api/dashboard-data')
+def dashboard_data():
+    """API endpoint to provide dashboard data"""
+    if not session.get('admin_logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    data = parse_stored_emails()
+    
+    return jsonify({
+        "safe_count": data['safe_count'],
+        "phishing_count": data['phishing_count'],
+        "top_keywords": [
+            {"keyword": keyword, "count": count} 
+            for keyword, count in data['top_keywords']
+        ],
+        "total_emails": data['total_emails']
+    })
+
 if __name__ == "__main__": #run website
     app.run(debug=True)

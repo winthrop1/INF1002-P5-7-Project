@@ -5,12 +5,12 @@ with similar meanings, and reduce the number of words in the dataset.
 
 Utilise Natural Language Processing (NLP) technique but not use Machine learning (ML)
 """
-import os
-from dotenv import load_dotenv
-import pandas as pd
-import nltk 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
+import os # For file operations
+from dotenv import load_dotenv # Load environment variables
+import pandas as pd # For database operations
+import nltk # Natural language toolkit
+from nltk.stem import WordNetLemmatizer # Lemmatizer from NLTK library
+from nltk.tokenize import word_tokenize # For breaking text into small chunks
 
 # Load environment variables
 load_dotenv()

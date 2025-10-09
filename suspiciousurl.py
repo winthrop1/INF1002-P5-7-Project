@@ -269,9 +269,9 @@ def assessing_risk_scores(email_body):
     number_of_unique_domains = 0
     
     try: 
-        url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
-        urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
-            
+        urls_in_email = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
+        urls = [re.split(r'[<>"\'&]', url)[0].rstrip('.,;:') for url in urls_in_email.findall(email_body)] # Clean URLs by removing trailing punctuation and splitting at certain characters
+        
         print(f"Found {len(urls)} URLs in the file.")
 
         number_of_urls = len(urls)

@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
 from datas import unique_from_emails
-
 load_dotenv()  # Load environment variables from .env file
+
+
 def distance_check(domain1, domain2):
     if len(domain1) < len(domain2):
         return distance_check(domain2, domain1)  # Ensure domain1 is the longer one
@@ -39,7 +40,7 @@ def email_titlecheck(email_title):
 
 
 
-def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.getenv("DOMAIN_SIMILARITY_THRESHOLD", "4"))):
+def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.getenv("DOMAIN_SIMILARITY_THRESHOLD", "3"))):
     domain_suspicion_score = 0
     email = email_titlecheck(email_title) 
     domain = "@" + email.split('@', 1)[1]

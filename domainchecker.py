@@ -22,14 +22,26 @@ def distance_check(domain1, domain2):
 
     return previous_row[-1] # Return the final distance value
 
+def email_titlecheck(email_title):
+    text = email_title.lower().strip()
+    
+    # Case 1: email inside < >
+    if '<' in text and '>' in text:
+        email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()
+        if '@' in email:
+            return email
+
+    # Case 2: fallback (no brackets, find @ manually)
+    words = text.replace('(', '').replace(')', '').replace('"', '').split() # split by whitespace
+    for w in words:
+        if '@' in w and '.' in w:  # basic email pattern
+            return w.strip('.,;:><"\' ') # strip common punctuation
+
+
 
 def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
     domain_suspicion_score = 0
-    text = email_title.lower() #convert email text to lowercase
-    #start = text.find('<') + 1 #find the first character of the email address after <
-    #end = text.find('>', start) #it looks for > and start means it start looking from the position of start which is the first character of the email address
-    #email = text[start:end].strip()
-    email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()#extract the text between < and > and remove any leading or trailing whitespace
+    email = email_titlecheck(email_title) 
     domain = "@" + email.split('@', 1)[1]
     if domain in safe_domains: #check if domain is in predefined safe list
         EmailDomainMsg = f"{email} is a safe domain. "

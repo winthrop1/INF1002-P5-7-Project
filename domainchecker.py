@@ -33,14 +33,15 @@ def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
     domain = "@" + email.split('@', 1)[1]
     if domain in safe_domains: #check if domain is in predefined safe list
         EmailDomainMsg = f"{email} is a safe domain. "
-        return EmailDomainMsg, domain_suspicion_score
+        DistanceCheckMsg = "No similar domains found."
+        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
     else:
-        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain."
+        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain.\n"
         domain_suspicion_score += int(os.getenv("SENDER_KEYWORD_SCORE", "2")) #increase risk score for unrecognized domain
         for safe_domain in safe_domains:
             dist = distance_check(domain, safe_domain)
             if dist <= threshold:
-                EmailDomainMsg += f"Warning: Email domain '{domain}' is similar to safe domain '{safe_domain}' (with distance (dist))"
+                DistanceCheckMsg = f"Warning: Email domain '{domain}' is similar to a safe domain '{safe_domain}' (with only {dist} change(s) different)\n"
                 domain_suspicion_score += dist # increase risk score for similar domain
-        return EmailDomainMsg, domain_suspicion_score
+        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
     

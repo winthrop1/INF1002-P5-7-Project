@@ -34,6 +34,7 @@ def upload_file():
     url_reason_pairs = []
     classification = None
     EmailDomainMsg = ''
+    DistanceCheckMsg = ''
     emailnotify = ''
     storing_notify = ''
     success = bool
@@ -62,7 +63,7 @@ def upload_file():
             email_title, email_subject, email_body = parse_email_file(email_text)
 
             # Domain check
-            EmailDomainMsg, domain_suspicion_score = domaincheck(email_title)
+            EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score = domaincheck(email_title)
 
             # URL analysis
             reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains = assessing_risk_scores(email_body)
@@ -91,7 +92,7 @@ def upload_file():
 
             # risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
             
-            if "safe" in EmailDomainMsg.lower() and total_risk_scoring >2:
+            if "safe" in EmailDomainMsg.lower() and total_risk_scoring >int(os.getenv("MEDIUM_RISK_THRESHOLD", "8")):
                 EmailDomainMsg += "However, potential phishing is detected!"
             
             # Store analysis results in a text file
@@ -137,7 +138,8 @@ def upload_file():
                         email_title=email_title, #parsed email title
                         email_subject=email_subject, #parsed email subject
                         email_body=email_body, #parsed email body
-                        EmailDomainMsg=EmailDomainMsg, #domain check message
+                        EmailDomainMsg=EmailDomainMsg,#domain check message
+                        DistanceCheckMsg=DistanceCheckMsg, #distance check message
                         reasons=reasons, #url analysis reasons
                         risk_level=risk_level,#risk scoring of the whole email
                         total_risk_scoring=total_risk_scoring,

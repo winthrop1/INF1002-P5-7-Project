@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from datas import unique_from_emails
 load_dotenv()  # Load environment variables from .env file
+from free_email_domains import whitelist as free_domains
 
 
 def distance_check(domain1, domain2):
@@ -44,7 +45,7 @@ def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.g
     domain_suspicion_score = 0
     email = email_titlecheck(email_title) 
     domain = "@" + email.split('@', 1)[1]
-    if domain in safe_domains: #check if domain is in predefined safe list
+    if domain in safe_domains or domain in free_domains: #check if domain is in predefined safe list
         EmailDomainMsg = f"{email} is a safe domain. "
         DistanceCheckMsg = "No similar domains found."
         return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
@@ -52,6 +53,8 @@ def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.g
         EmailDomainMsg = f"Warning: {email} is from an unrecognized domain.\n"
         DistanceCheckMsg = "No similar domains found."
         domain_suspicion_score += int(os.getenv("DOMAIN_SUSPICION_SCORE", "2")) #increase risk score for unrecognized domain
+
+        
         for safe_domain in safe_domains:
             dist = distance_check(domain, safe_domain)
             if dist <= threshold:

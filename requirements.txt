@@ -4,5 +4,6 @@ lxml==6.0.1
 python-dotenv==1.1.1
 pandas>=1.5.0
 validators
-whois
+python-whois
+free-email-domains
 nltk

@@ -1,0 +1,417 @@
+----- Email Analysis Result -----
+
+Classification: Safe
+Number of URLs Found: 2
+URL Analysis Reasons:
+  - {'url': 'https://aka.ms/JoinTeamsMeeting?omkt=en-US', 'reasons': ['Domain aka.ms is older than a year, created on 2011-01-20 16:48:05, 5376 day(s) old, which is generally a good sign.', 'Domain is set to expire on 2026-01-20 16:48:05, in 102 day(s), which is a sign of suspicious activity.', 'URL does not contain an IP address, but proceed with caution', 'URL uses HTTPS, which is good', 'URL length is normal, (42 characters), but proceed with caution', "URL does not contain '@' symbol, but proceed with caution"]}
+  - {'url': 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_MWYzMGU4NWItYWQwYy00MWVkLTgxYmItN2U1ZTkwOTkyN2Jl%40thread.v2/0?context=%7b%22Tid%22%3a%22bc1b92b9-5dc9-49be-995b-c97eb515a1d3%22%2c%22Oid%22%3a%22640d78f2-a3c5-4348-b8d6-2ec9cfdda796%22%7d', 'reasons': ['Domain teams.microsoft.com is older than a year, created on 1991-05-02 04:00:00, 12580 day(s) old, which is generally a good sign.', 'Domain is set to expire on 2026-05-03 04:00:00, in 204 day(s). Hackers will usually only purchase or renew a phishing domain for a year.', 'URL does not contain an IP address, but proceed with caution', 'URL uses HTTPS, which is good', 'URL length is unusually long, (243 characters)', "URL does not contain '@' symbol, but proceed with caution"]}
+
+Keywords Found:
+  - ('early_body', 'microsoft')
+
+Total Score: 8
+Email Domain Message: Warning: glenntan@globalpsa.com is from an unrecognized domain.
+
+========================================
+
+--- Email Text ---
+Delivered-To: matthewpdyason@gmail.com
+Received: by 2002:a17:906:6bc4:b0:b3e:158e:2d47 with SMTP id t4csp250913ejs;
+        Tue, 7 Oct 2025 05:31:55 -0700 (PDT)
+X-Forwarded-Encrypted: i=3; AJvYcCXzMYPjhvZWIPFVkE68uHm7ka8N1QhPE77HzrOaRkhDctM83918uIe+/qkneYCbyHWPaOw7wojTHfzKD9A+Sw==@gmail.com
+X-Google-Smtp-Source: AGHT+IGgTIbddW6RDxya/lf4kMzhxBwrYqA3fLwX/XXGOrUhOqRlVUflsKjb1KmzuqkUmlNgypdF
+X-Received: by 2002:a05:620a:801c:b0:870:90ff:90d with SMTP id af79cd13be357-87a3677975cmr1880063185a.8.1759840314472;
+        Tue, 07 Oct 2025 05:31:54 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1759840314; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=FPoHHOQ5MGrpZGkLpDetnmew4zAxRLlGFk82hhkqdQrx96ei33cWVViEuBZ9fjvZu+
+         MgXivJH/nNvBmupd1012TDP2MTwXxz9sPb3LbeEmHRJik0FlvToexqSE4z3exbCDY3eu
+         ZWYmqGFy+YIjxIFmccjWF4Btvud/ZYE6G63H9+PAnMs7JUhuXu76G15hI0n97yZNbhfQ
+         WMCE1kpPY7dAMJ77CipWh0h2E5+5glcO8Z2JPCj2q1rKJJcQOe4gvkqQbS8HFy1wh63t
+         iolexmEKVlj5evvlivuadAm+s6FG/ASRdisZDec1RLFJamzgmKe3tAncyBgrek/rgt6I
+         mAmQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:msip_labels:content-language:accept-language
+         :in-reply-to:references:message-id:date:thread-index:thread-topic
+         :subject:cc:from:dkim-signature;
+        bh=TDjRMaGijUL1cgwaUIZGmI5v5qUPSHc4gR1twtxSsXk=;
+        fh=nh3li+x3mWK/6VfPC5F9aWiKtKqKmYzFSnJyKD6ga9Y=;
+        b=emgk+8FJ0WprgPdAYeoFbvjyo0Q90Pf6Cq2e7MDWhSDJVxUCHyz+HMPD/rI8QIL51j
+         Gn5XbjgiJsrBwtSLcapOmnEcah0VyLZ8BBc1XKiZzsTGTgX7S/a+eU8/dh2Me8OoGd3D
+         o0e3OBZVeN2gnS7p5ReeCS1wEMPnU/rwf4hocYa1ifmFLMIz9cbS80v+stcoL6zGYrvF
+         ZaW327fS3fQ3zcq8tAVPEcnJqQkIaDVe+vdBL1UfZYq4yQW01+VuA5oMdahC31FmjloL
+         vy5Zj04N63sTq4WN2fxQ+HTisYrwtzSfp7BmWAK4j2VkhU3d6ijdnQH6dS87M0GZvdlF
+         7p4w==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@globalpsa.com header.s=selector1 header.b=ljQrWF10;
+       arc=pass (i=1 spf=pass spfdomain=globalpsa.com dkim=pass dkdomain=globalpsa.com dmarc=pass fromdomain=globalpsa.com);
+       spf=pass (google.com: domain of glenntan@globalpsa.com designates 2a01:111:f403:c40f::6 as permitted sender) smtp.mailfrom=glenntan@globalpsa.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=globalpsa.com
+Return-Path: <glenntan@globalpsa.com>
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazlp170130006.outbound.protection.outlook.com. [2a01:111:f403:c40f::6])
+        by mx.google.com with ESMTPS id d75a77b69052e-4e55d3bb6acsi72124121cf.666.2025.10.07.05.31.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 05:31:54 -0700 (PDT)
+Received-SPF: pass (google.com: domain of glenntan@globalpsa.com designates 2a01:111:f403:c40f::6 as permitted sender) client-ip=2a01:111:f403:c40f::6;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@globalpsa.com header.s=selector1 header.b=ljQrWF10;
+       arc=pass (i=1 spf=pass spfdomain=globalpsa.com dkim=pass dkdomain=globalpsa.com dmarc=pass fromdomain=globalpsa.com);
+       spf=pass (google.com: domain of glenntan@globalpsa.com designates 2a01:111:f403:c40f::6 as permitted sender) smtp.mailfrom=glenntan@globalpsa.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=globalpsa.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Y1W3hyMTnD5VVpE39AcnWdx1uqNKYiGrNdOGIDUWC9qqy9dfR5L9HWjh409BeNnZqpMM1d4jVRdFQnl7ESCWetq7ELKVnnq+q+y15iYLlXEjJYsd9GfOyVOVXI798w31F7gGueBoVXkDDphHfPrmShvg0AKcQcjVOgj73AOR/uz8NCyWutCmbeIBl+T7DFu5ho8bPvgMAB9fRvdIosDGP0EJrGx65TtEgRGwIbL9owF+BiLSiLDXM7Rmpd98cqi1rAwJtGo2IO4fbFj65NY3ZodN7aEAJu1Ps8LLpKBMxbguaaadVPvZodr637XJ/iyzAHWO+ZPe2n9Vm13H9X0uIw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TDjRMaGijUL1cgwaUIZGmI5v5qUPSHc4gR1twtxSsXk=;
+ b=psiNMusP5nYyzQB5Hs5RJoeXX7qifLVCZf5gdte3ajA78U1/KV8VqGtNt+C7fMaAqbAgvNwCTscfRnX22p4U8gf0ZzKcR/lzw8kf5rpn53O4RcyRlehTm/EWyFyZxBhx8rPRNEL5JNQCynYmeHxPQX8bnSEQ4XZOniBcw6BnHFFXjLZNnvy6l80dB8VlYQIyohghm1zhW6Yi4RBOuco4E/Y7OQF65SuIYbbhoshYVgIO2D4nAcMPwx9KSvIZ0MlxeHsGexTx+wTLOe41Zbly7NOpsIC1IP2Oq38vvYVx+zqQw5wKJDVwkrisCOfm/RWawILn/WgNAWOxhZ+vs0QQzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=globalpsa.com; dmarc=pass action=none
+ header.from=globalpsa.com; dkim=pass header.d=globalpsa.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=globalpsa.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TDjRMaGijUL1cgwaUIZGmI5v5qUPSHc4gR1twtxSsXk=;
+ b=ljQrWF10bZ3+NRwMYEi/pq4KDiGeQRhqSI9Ok4Ahe0MqAbXh8ST9KKO6rxFPR3Uaq0rWf9tGqTe7T1S/LMWKH5yJVM0M9xlaiVrY7EaBZVpxcHfiBzVCOPiR2fcurlvOZRfq1WPmq+jyrhFqjSHb5nd6NFZzZyCeMczPYl2Z7ET8zGNPaCWYp3ZQ7zcxUFK3N9Mt2bNzUk/9ac5duAs0esBpdxKTgAfw8AFEEfJK1PauOU3KaCz5JHTmzCeR3bl4jmExbqxh3RacXOuab6jkXG6Sv7pRoQWCr1Scwsw2j7ZGlpDaUsuSON0u81luLJqC6fgtqY4VNFTainmNw8KuwQ==
+Received: from SG2PR03MB6325.apcprd03.prod.outlook.com (2603:1096:4:175::7) by
+ KUZPR03MB9559.apcprd03.prod.outlook.com (2603:1096:d10:56::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9182.20; Tue, 7 Oct 2025 12:31:46 +0000
+Received: from SG2PR03MB6325.apcprd03.prod.outlook.com
+ ([fe80::d552:1a8f:d2e2:775e]) by SG2PR03MB6325.apcprd03.prod.outlook.com
+ ([fe80::d552:1a8f:d2e2:775e%6]) with mapi id 15.20.9182.017; Tue, 7 Oct 2025
+ 12:31:46 +0000
+From: GLENN TAN <glenntan@globalpsa.com>
+CC: SRIRAM RAMANUJAM <sriram@globalpsa.com>, MATTHEW CHAN
+	<cmatthew@globalpsa.com>, TAY FUNG YEN <fytay@globalpsa.com>, LEONG ENG ENG
+	<EELEONG@globalpsa.com>, CHAN GECK KEAT <gkchan@globalpsa.com>, JAY LIM
+	<jaylim@globalpsa.com>, ALOYSIUS XU <aloyxu@globalpsa.com>, DARREN YIP
+	<darreny@globalpsa.com>, EMILY CHIN <emilyc@globalpsa.com>, ELIZABETH HAN
+	<ELIZAHAN@globalpsa.com>, GLENN TAN <glenntan@globalpsa.com>, TAN YAN RU
+	<tanyr@globalpsa.com>, CHUA JIN JUN <jjchua@globalpsa.com>, ZACHARY LEE
+	<zacharyl@globalpsa.com>, TIONG KUNG HUI <khtiong@globalpsa.com>, NGAI PUI
+ SHING <psngai@globalpsa.com>, JUSTINE KEE <justinek@globalpsa.com>,
+	MADABHUSHI USHA <ushamada@globalpsa.com>, GOH WEI MING <gohwm@globalpsa.com>,
+	JIN YE <jinye@globalpsa.com>, CHRISTIANTO TEGUH <chrisnto@globalpsa.com>,
+	WANG XINYI <xywang@globalpsa.com>, HO XUAN VINH <XVHO@globalpsa.com>, WAFIR
+ HIDAYAT BIN RIDUAN <wafirhr@globalpsa.com>
+Subject: [PSA Code Sprint 2025] Virtual briefing - 10 Oct 2025, Friday, 6pm
+Thread-Topic: [PSA Code Sprint 2025] Virtual briefing - 10 Oct 2025, Friday,
+ 6pm
+Thread-Index: AQHcN4ZYWft1NDi9CECl0eVfQKUGiQ==
+Date: Tue, 7 Oct 2025 12:31:46 +0000
+Message-ID:
+ <SG2PR03MB6325046EE86B296062AC8368C9E0A@SG2PR03MB6325.apcprd03.prod.outlook.com>
+References:
+ <SI2PR03MB6082F254607B2AC94930E6FAB8772@SI2PR03MB6082.apcprd03.prod.outlook.com>
+ <PSAPR03MB54460BF56271127827D102E3CBE3A@PSAPR03MB5446.apcprd03.prod.outlook.com>
+ <SG2PR03MB6325E6EF753CE8FBD1B95F0FC9E3A@SG2PR03MB6325.apcprd03.prod.outlook.com>
+In-Reply-To:
+ <SG2PR03MB6325E6EF753CE8FBD1B95F0FC9E3A@SG2PR03MB6325.apcprd03.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=globalpsa.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SG2PR03MB6325:EE_|KUZPR03MB9559:EE_
+x-ms-office365-filtering-correlation-id: 6fd0ff7b-b2a2-47ae-4637-08de059d7b01
+x-ld-processed: bc1b92b9-5dc9-49be-995b-c97eb515a1d3,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|7416014|366016|1800799024|38070700021|8096899003;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?/oQYC8zolSo6FzpzyyzN13BHU2GX/fFe4VG3bNwxpZZl2ftejhM4iOiEfP?=
+ =?iso-8859-1?Q?P72WNOXAKxKrvB9QKQ+486A33HJVRQ1qIRUGKum4Wq7ClAYheQ0h6zMbtT?=
+ =?iso-8859-1?Q?mtX16/kRoAHKgUM4ONruLc4Bbz3yOIBWOXNOjnSqkm24iWUhBzeajndL1i?=
+ =?iso-8859-1?Q?UvzaVbQj2WMzKk2fStbQ2ZRuCFxhUxovNGd8g0nGc6TKuJBDVknME5u6hS?=
+ =?iso-8859-1?Q?q4iA/7abLfIbscz8anJiOq6scYVZb7zwdkKCVEHjmdi5lrMCS3p6fdod1c?=
+ =?iso-8859-1?Q?IXE0drb+X+uHUvySFhrBiV/3tJ+UqWLb1e1g4+IpetqCrw5cCtL/FvfLeV?=
+ =?iso-8859-1?Q?i6qWyZQGvQxYzDVHgO4CoBtkGpprOzm4e4a1CJh2mxapy1uaIsCTS5S6Du?=
+ =?iso-8859-1?Q?S9xc5cAkuo5OjdS50G014PtQt5xkLArLuQzgvVPEerFIf36j7+OzOGvaGo?=
+ =?iso-8859-1?Q?FcXXyAB0stOYL03dBONvwU0mJKE9H0zAFPg41Ix20UctrmpTu54pxukoUT?=
+ =?iso-8859-1?Q?jI3g6TrYcDOs51oR3aeSMgIBTnoxKueO07c+0N3jKd3SMrvIH9VyT5+BS5?=
+ =?iso-8859-1?Q?ArY6MGWBZgz/ntKp6OQ2bixRfncyEX1wK4YdtRJZK0YgNkuRMY7+ShFS0N?=
+ =?iso-8859-1?Q?vy+Y9MJgNudTa+ZsUvbb/mrjayxtFkc1Zdq9OLL7tcsUE6YoFffrnDti7Q?=
+ =?iso-8859-1?Q?FUbb4xe20920KfSE3/ZO5YnMbH6cimPOKMHu3fq+lfqgpPtm29VnaB+IK9?=
+ =?iso-8859-1?Q?tMojkfnOq+ub4rUj01GL/cvbmfrhbiv45CM7rtpDTORJqggdfyZJWKiZiK?=
+ =?iso-8859-1?Q?GEZGWvmbAW1pZ0nvty5vyEvVCjiHAlUkZCU9bFFONpZbkly/AEpxTI+yDo?=
+ =?iso-8859-1?Q?DZ2zRjsqe5JG9KCfEAR9wfxpaf/y79dolb4yiQ4xOwPaJPp9z9WgY7AHYI?=
+ =?iso-8859-1?Q?98yFkh25rcBCi9QPhNmLFK+EFLUfrky3twjagqA9asC5CVYLkrT7HkLnJH?=
+ =?iso-8859-1?Q?THWD2ATOTicZ7wGFERG2wENe0CG6LPBkwPT+pofEkPf9DmjBzcQxF6yiAR?=
+ =?iso-8859-1?Q?+S446mbtQiyp9n5vF7Mbosghm+PE1K0k9knwXWcDX3/x+1mf0jG9H0kQhO?=
+ =?iso-8859-1?Q?JNsWUXhtfg7oS5zVmeyPqyG8mP5piIrY8AMtf/y6Z6L/aWaFD5R04tbG8N?=
+ =?iso-8859-1?Q?L7PnmnkoVPp5D5+KjU9dBS600SbjCRq73Na2YTjp7xhfBflxbQ+8k37D0T?=
+ =?iso-8859-1?Q?6OBOFITi3XhRdyr0uC8Nx4Wbu9IM5jk8sxLqemopcEpKIGBf+K9PoGaTEu?=
+ =?iso-8859-1?Q?yL1xpmjaR67DlXxAo36CH4V2Ujkva8zweEhBGPWXNRPiv1kPoYOp6ecXpi?=
+ =?iso-8859-1?Q?25sVsjsCyXnTbsJdQSyQ0vADJl/7pvGhho3fQW12PnAQ6s6RP4p+f2rXDO?=
+ =?iso-8859-1?Q?QUsL/YLPBlviJ6Rzthtcw1xAFr5dRCLjw8AHR3QgNGW5lBU+pauq6OroZK?=
+ =?iso-8859-1?Q?lq/8U8J9cDkgfXzL7qZny9BG+JDfeZi5wGrKIeDbvspTDsSr1PJN37Lf43?=
+ =?iso-8859-1?Q?Bsnp397hV5rZ/mXzPFOr3OSt4P3T?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SG2PR03MB6325.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700021)(8096899003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?IaWlrLb5yEWmrz6XtwlNwSD9TaSYgOfieMjQwrwPsDso9AhJhvTVL3qK3w?=
+ =?iso-8859-1?Q?ZehXblBcdpe7Ez2LJ3euYj5lqN2td3qwGr46dVVHHomYZp0FsLyg7IlW4J?=
+ =?iso-8859-1?Q?/FsUZ6G2XL0s1rD40ZHBkyYr6Fudt7570wIbR4Y06mBILEysYak+b8iNYV?=
+ =?iso-8859-1?Q?o3i3p6x79AVOWEm+TY4nG3HuaEiwcyyzKRfmk08vGLOcXNSzWvr0cygq/C?=
+ =?iso-8859-1?Q?/FvMTesNVzblCtJUrHbRbgVK9H0oUKgRScWcMTt/+KbhTfGaliNQwhD09i?=
+ =?iso-8859-1?Q?7wX1ERMmQFbheJEXRZt64r/tfJNFI2U9qh9J1LS0WFXXgLkZBP0AtilXFS?=
+ =?iso-8859-1?Q?PaQUAW9IHGSP1YrhoLGwaX9XXIsjEw1tmJ8NxZcvBpVPDA2adLLygIEQc1?=
+ =?iso-8859-1?Q?C1Gf5CJ4JiuXY/eYereJExKyX4alced2D0UZhbhc54IEwyk/8hmjTaNJ0F?=
+ =?iso-8859-1?Q?lctS4wpE1R0wu9cpWWy6Zg08X5dETDDDlo6AWeOqdP2/Xbo/NbybsSHYBJ?=
+ =?iso-8859-1?Q?mXLjAlgs+ycOBZfwn07ALFmpx1w6QwO2E18v4vCQSW0Tci+A++GXonjNlM?=
+ =?iso-8859-1?Q?2/AOXRDptKefN0iHi9vJcjm5T3Z5HedMj52GYMEvjwXCysYV8Cl/DDRc4G?=
+ =?iso-8859-1?Q?tdIvqAozpAI0YFdgm2Jyja3v0nNkggwIZj1dgvGyDgPQC0r046En5YtjLl?=
+ =?iso-8859-1?Q?DOzJRpXCtjy3tbOWvs+LKVhZGfm2gZYSt3R5JUsGENEoAJAZ0s+sHOk/gK?=
+ =?iso-8859-1?Q?Yb7n/YpMonP8INtfb3pXhUu4ciqhPHxwFgDaDmMOfCA6iDyXHohi30Dmwz?=
+ =?iso-8859-1?Q?ZuTFaWl80UF08WIIVQ9tRRJRKkFABP3fjjBevGOi17sa4G2bghddr8AI09?=
+ =?iso-8859-1?Q?R1TjV9Xei5SyNKMFTpt64boAWOfa6AANm3pG9pNGpNnEIcbdvNOU3hPeen?=
+ =?iso-8859-1?Q?gDaVkSrZv30yNMEpCpZxlVSJp7Zhgc7mmKrWt+p+Ag4wD6J0juodaHcL5j?=
+ =?iso-8859-1?Q?74pZZfuYSnrTx9tIQnxtR1emV0YzK8k8foV0/nQz8oD3H8ggn4OfGhrKtE?=
+ =?iso-8859-1?Q?GEaEBg7tj7d9C78AUJE++7SpURJJBQTawzpjmt6P8sSKby7g4tg/74Igrr?=
+ =?iso-8859-1?Q?gPJC/lGEBodedvI+Sdom632oYs04JCWLsaw7g44wW/cUXYbl44m6drxalA?=
+ =?iso-8859-1?Q?K2ul79n3y7t8aw4hIU9FCFKyr3eeOsxYLGRRsGOA825ewfJDT3h1l3f5wb?=
+ =?iso-8859-1?Q?bCoerJrJJeGE4/9wtqOg3tTrjbk3lE0l6yp9qZ6ASpPbV/gwSrQobRSnJ7?=
+ =?iso-8859-1?Q?bF2bcEIetqjvJ2up4QCmRSFbnndoAsmTE1diqtkpTQUZLDEnAYDl2KyTLu?=
+ =?iso-8859-1?Q?HnHNTkoi3ovYZEKhDh6PVmef4vzYZ0iEoPNMdKdH8kahcliVD9grbfCwwy?=
+ =?iso-8859-1?Q?mYHSu1OtPHGM1w78wMo+UCwJFPelO3YL5+R0PVwUo6IZbG8pzZsTmnAqs8?=
+ =?iso-8859-1?Q?6gWnfAyyE+P3KCtQTznR9RddJxIO58kO6oJXZeoEn12XGj4tA2l9Stgzyv?=
+ =?iso-8859-1?Q?9VAmvEOrlPZ6f8FEHRuuLDliGLycHzc7AxDCkEN+fiJrXkHpW9GbjNvEna?=
+ =?iso-8859-1?Q?HQP9H4AxTj/3225WuKkb+vF9yVvsZYibfv?=
+Content-Type: multipart/alternative;
+	boundary="_000_SG2PR03MB6325046EE86B296062AC8368C9E0ASG2PR03MB6325apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: globalpsa.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR03MB6325.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6fd0ff7b-b2a2-47ae-4637-08de059d7b01
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2025 12:31:46.4526
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bc1b92b9-5dc9-49be-995b-c97eb515a1d3
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Niy1NhU1SZmDU3Pk8kqYIIzddKUBX0JvG6bgmHM8Lvz4Jw8jn1PJYVgjQ7F53kjNLP9rHIkh52CtwkNDugsdtw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR03MB9559
+
+--_000_SG2PR03MB6325046EE86B296062AC8368C9E0ASG2PR03MB6325apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+ Hi All (bcc-ed),
+
+
+
+Thank you for registering for PSA Code Sprint 2025!
+
+
+
+For the participating teams who were unable to attend the physical briefing=
+ session, you may join us in this online briefing on the 10 Oct 2025, Frida=
+y, 6pm- 6:30pm.
+
+
+
+This is optional for participants/teams who have attended the Tuas Port Tou=
+r and Briefing Session.
+
+You may also join in if you have any questions or required any clarificatio=
+ns.
+
+
+
+Please join in the MS Teams meeting using the link below.
+
+
+
+Microsoft Teams Need help?<https://aka.ms/JoinTeamsMeeting?omkt=3Den-US>
+
+Join the meeting now<https://teams.microsoft.com/l/meetup-join/19%3ameeting=
+_MWYzMGU4NWItYWQwYy00MWVkLTgxYmItN2U1ZTkwOTkyN2Jl%40thread.v2/0?context=3D%=
+7b%22Tid%22%3a%22bc1b92b9-5dc9-49be-995b-c97eb515a1d3%22%2c%22Oid%22%3a%226=
+40d78f2-a3c5-4348-b8d6-2ec9cfdda796%22%7d>
+Meeting ID: 430 296 509 572 8
+Passcode: tW63W3AP
+
+
+
+The meeting room will be opened from 5:45pm.
+
+
+
+
+Regards,
+
+On behalf of PSA Code Sprint Organising Team
+
+
+Disclaimer: This email is confidential and may also be privileged. Any form=
+ of unauthorised use or dissemination is prohibited. Statements that do not=
+ relate to the official business of the company shall be understood as neit=
+her given nor endorsed by it. If you are not the intended recipient of this=
+ email is otherwise sent to you in error, you should not disseminate, distr=
+ibute, print or copy this email, and you should delete it immediately and n=
+otify us. Thank you.
+
+--_000_SG2PR03MB6325046EE86B296062AC8368C9E0ASG2PR03MB6325apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;" class=3D"elementToProof">
+&nbsp;<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: =
+11pt; color: black;">Hi All (bcc-ed),</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">Thank you for registering for PSA Code Sprint 2025!</span></=
+p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;"><b>&nbsp;</b></span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;" class=3D"elementToProof">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">For the participating teams who were unable to attend the ph=
+ysical briefing session, you may join us in this
+<b>online briefing </b>on the <b><u>10 Oct 2025, Friday, 6pm- 6:30pm.</u></=
+b></span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">This is optional for participants/teams who have attended th=
+e Tuas Port Tour and Briefing Session.</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">You may also join in if you have any questions or required a=
+ny clarifications.</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">Please join in the MS Teams meeting using the link below.</s=
+pan></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<table style=3D"direction: ltr; box-sizing: border-box; border-collapse: co=
+llapse; border-spacing: 0px;" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td style=3D"direction: ltr; border-width: 1pt; border-style: solid; border=
+-color: initial; padding: 0in 5.4pt; vertical-align: top; width: 561pt; hei=
+ght: 59pt;">
+<p style=3D"direction: ltr; text-align: left; text-indent: 0px; background-=
+color: rgb(255, 255, 255); margin: 0px 0px 12px;" class=3D"elementToProof">
+<span style=3D"font-family: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot=
+;, Helvetica, Arial, sans-serif; font-size: 24px; color: rgb(36, 36, 36); f=
+ont-weight: 700;">Microsoft Teams</span><span style=3D"font-family: &quot;S=
+egoe UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; fo=
+nt-size: 14px; color: rgb(36, 36, 36);">&nbsp;</span><span style=3D"font-fa=
+mily: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, s=
+ans-serif; font-size: 14px; color: rgb(91, 95, 199);"><u><a style=3D"color:=
+ rgb(91, 95, 199); margin: 0px;" data-linkindex=3D"0" data-auth=3D"NotAppli=
+cable" rel=3D"noopener noreferrer" title=3D"https://aka.ms/JoinTeamsMeeting=
+?omkt=3Den-US" class=3D"x_me-email-link OWAAutoLink" id=3D"OWA57b7ff34-670a=
+-288f-84e4-fec40ee1332f" target=3D"_blank" href=3D"https://aka.ms/JoinTeams=
+Meeting?omkt=3Den-US">Need
+ help?</a></u></span></p>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; backgroun=
+d-color: rgb(255, 255, 255); margin: 0px 0px 6px; font-family: &quot;Segoe =
+UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-si=
+ze: 20px; color: rgb(91, 95, 199);" class=3D"elementToProof">
+<span style=3D"font-weight: 600;"><u><a style=3D"color: rgb(91, 95, 199); m=
+argin: 0px;" data-linkindex=3D"1" data-auth=3D"NotApplicable" rel=3D"norefe=
+rrer noopener" title=3D"https://teams.microsoft.com/l/meetup-join/19%3ameet=
+ing_MWYzMGU4NWItYWQwYy00MWVkLTgxYmItN2U1ZTkwOTkyN2Jl%40thread.v2/0?context=
+=3D%7b%22Tid%22%3a%22bc1b92b9-5dc9-49be-995b-c97eb515a1d3%22%2c%22Oid%22%3a=
+%22640d78f2-a3c5-4348-b8d6-2ec9cfdda796%22%7d" class=3D"x_me-email-headline=
+ OWAAutoLink" id=3D"OWA322a5b27-df9b-28a4-b18c-6cf7b744cb04" target=3D"_bla=
+nk" href=3D"https://teams.microsoft.com/l/meetup-join/19%3ameeting_MWYzMGU4=
+NWItYWQwYy00MWVkLTgxYmItN2U1ZTkwOTkyN2Jl%40thread.v2/0?context=3D%7b%22Tid%=
+22%3a%22bc1b92b9-5dc9-49be-995b-c97eb515a1d3%22%2c%22Oid%22%3a%22640d78f2-a=
+3c5-4348-b8d6-2ec9cfdda796%22%7d">Join
+ the meeting now</a></u></span></div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; backgroun=
+d-color: rgb(255, 255, 255); margin: 0px 0px 6px; font-family: &quot;Segoe =
+UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-si=
+ze: 14px;" class=3D"elementToProof">
+<span style=3D"color: rgb(97, 97, 97);">Meeting ID: </span><span style=3D"c=
+olor: rgb(36, 36, 36);">430 296 509 572 8</span></div>
+<div style=3D"direction: ltr; text-align: left; text-indent: 0px; backgroun=
+d-color: rgb(255, 255, 255); margin: 0px 0px 24px; font-family: &quot;Segoe=
+ UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-s=
+ize: 14px;" class=3D"elementToProof">
+<span style=3D"color: rgb(97, 97, 97);">Passcode: </span><span style=3D"col=
+or: rgb(36, 36, 36);">tW63W3AP</span></div>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">The meeting room will be opened from 5:45pm.</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;">&nbsp;</span></p>
+<div id=3D"x_Signature">
+<div style=3D"direction: ltr; font-family: Arial, Helvetica, sans-serif; fo=
+nt-size: 11pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<p style=3D"direction: ltr; margin: 0in;"><span style=3D"font-family: Arial=
+, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">Regards,</s=
+pan></p>
+<p style=3D"direction: ltr; margin: 0in;"><span style=3D"font-family: Arial=
+, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">On behalf o=
+f PSA Code Sprint Organising Team</span></p>
+</div>
+<p style=3D"direction: ltr; margin: 0in; font-family: Aptos, sans-serif; fo=
+nt-size: 12pt;">
+<span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11pt; =
+color: black;"><br>
+</span></p>
+Disclaimer: This email is confidential and may also be privileged. Any form=
+ of unauthorised use or dissemination is prohibited. Statements that do not=
+ relate to the official business of the company shall be understood as neit=
+her given nor endorsed by it. If
+ you are not the intended recipient of this email is otherwise sent to you =
+in error, you should not disseminate, distribute, print or copy this email,=
+ and you should delete it immediately and notify us. Thank you.
+</body>
+</html>
+
+--_000_SG2PR03MB6325046EE86B296062AC8368C9E0ASG2PR03MB6325apcp_--

@@ -96,43 +96,38 @@ csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDA
 #load keywords from files
 sus_keywords = load_keywords(csv_path)
 
-
 def detection_subject(subject):
-    score = 0 #assign scores
+    score = 0
     keywords = []
-    subject_lower = subject.lower() #convert subject to lowercase in case of case-sensitive match
+    subject_lower = subject.lower()
 
     for keyword in sus_keywords:
-        pattern = r'\b' + re.escape(keyword) + r'\b' #regex pattern to match whole word
+        pattern = r'\b' + re.escape(keyword) + r'\b'
         if re.search(pattern, subject_lower):
-            score += int(os.getenv("SUBJECT_KEYWORD_SCORE", "3"), ) #higher weight for sus words in subject
-            keywords.append(f"Suspicious word in subject: '{keyword}'")
-    return score, keywords #output total score with keywords
+            score += int(os.getenv("SUBJECT_KEYWORD_SCORE", "3"))
+            keywords.append(("subject", keyword))  # Return tuple
+    return score, keywords
 
-#score the keywords based on their position subject or body
 def detection_body(body):
     score = 0
     keywords = []
-    body_lower = body.lower() #convert body to lowercase incase of case-sensitive match
-    early_words_count = int(os.getenv("EARLY_BODY_WORD_COUNT", "100")) #number of words to check for early keywords
+    body_lower = body.lower()
+    early_words_count = int(os.getenv("EARLY_BODY_WORD_COUNT", "100"))
 
-    # Split body into words and find the position of early words
     words = body_lower.split()
     early_words = ' '.join(words[:early_words_count]) if len(words) > early_words_count else body_lower
     remaining_words = ' '.join(words[early_words_count:]) if len(words) > early_words_count else ""
 
     for keyword in sus_keywords:
-        pattern = r'\b' + re.escape(keyword) + r'\b' #regex pattern to match whole word
+        pattern = r'\b' + re.escape(keyword) + r'\b'
 
-        # Check if keyword is in early email words
         if re.search(pattern, early_words):
-            score += int(os.getenv("EARLY_BODY_KEYWORD_SCORE", "2")) #higher weight for early sus words
-            keywords.append(f"Suspicious word in early body: '{keyword}'")
-        # Check if keyword is in remaining words (after early detection)
+            score += int(os.getenv("EARLY_BODY_KEYWORD_SCORE", "2"))
+            keywords.append(("early_body", keyword))  # Return tuple
         elif remaining_words and re.search(pattern, remaining_words):
-            score += int(os.getenv("BODY_KEYWORD_SCORE", "1")) #lower weight for remaining sus words
-            keywords.append(f"Suspicious word in remaining body: '{keyword}'")
-    return score, keywords #ouput total scoore with keywords
+            score += int(os.getenv("BODY_KEYWORD_SCORE", "1"))
+            keywords.append(("remaining_body", keyword))  # Return tuple
+    return score, keywords
 
 #classify email as safe/phishing
 def classify_email(email_subject, email_body):

@@ -32,8 +32,7 @@ ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
 def organize_keywords_by_category(keywords_list):
     """
-    Organize keywords into categories: subject, early_body, remaining_body
-    Returns a dictionary with organized keywords
+    Organize keywords into categories based on tuples (location, keyword)
     """
     organized = {
         'subject': [],
@@ -41,13 +40,13 @@ def organize_keywords_by_category(keywords_list):
         'remaining_body': []
     }
     
-    for keyword in keywords_list:
-        if 'In subject:' in keyword:
-            organized['subject'].append(keyword)
-        elif 'In early body:' in keyword:
-            organized['early_body'].append(keyword)
-        elif 'In remaining body:' in keyword:
-            organized['remaining_body'].append(keyword)
+    for location, keyword in keywords_list:
+        if location == 'subject':
+            organized['subject'].append(f"Found: '{keyword}'")
+        elif location == 'early_body':
+            organized['early_body'].append(f"Found: '{keyword}'")
+        elif location == 'remaining_body':
+            organized['remaining_body'].append(f"Found: '{keyword}'")
     
     return organized
 
@@ -141,8 +140,7 @@ def upload_file():
                     formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
                 else:
                     formatted_pairs = 'None'
-
-
+                
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"

@@ -13,6 +13,7 @@ from dotenv import load_dotenv #for loading environment variables
 import glob
 from collections import Counter
 import re
+import time  # For runtime measurement
 
 #load environment variables from .env file
 load_dotenv()
@@ -84,6 +85,9 @@ def upload_file():
         if not file:
             classification = ("Please upload a valid email file.")
         else:
+            # Start runtime measurement
+            start_time = time.time()
+
             # Read and decode the uploaded file
             email_text = file.read().decode('utf-8', errors='ignore') #use utf-8 to read and decode, ignore decoding errors
 
@@ -127,6 +131,10 @@ def upload_file():
 
             classification = "Safe" if total_risk_scoring <= int(os.getenv("PHISHING_SCORE", "8")) else "Phishing"
 
+            # End runtime measurement and print to console
+            runtime = time.time() - start_time
+            print(f"\n=== Analysis Runtime: {runtime:.4f} seconds ===\n")
+
             # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
             
@@ -165,8 +173,11 @@ def upload_file():
                     server.send_message(msg)
                     server.quit()
                     emailnotify = "Email sent successfully."
+
                 except (socket.gaierror, smtplib.SMTPException, Exception) as e:
                         emailnotify = f"Failed to send email: {e}"
+
+            
 
     return render_template("index.html",
                         classification=classification, #classification

@@ -4,6 +4,7 @@ from domainchecker import domaincheck
 from suspiciouswords import classify_email
 from suspiciousurl import assessing_risk_scores#, get_urls_from_email_file
 from userdatastore import storeDatainTxt
+from logger import setup_logging, log_analysis, log_admin_login_success, log_admin_login_failure, log_admin_logout, log_email_sent, log_email_failed, log_data_storage_success  # Logging functions
 import os #work with folders in file systems
 import smtplib
 import socket
@@ -18,6 +19,8 @@ import time  # For runtime measurement
 #load environment variables from .env file
 load_dotenv()
 
+#configure logging
+setup_logging()
 
 #initialize flask app
 # app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
@@ -85,6 +88,9 @@ def upload_file():
         if not file:
             classification = ("Please upload a valid email file.")
         else:
+            # Get filename for logging
+            filename = file.filename if file.filename else "unknown"
+
             # Start runtime measurement
             start_time = time.time()
 
@@ -135,9 +141,27 @@ def upload_file():
             runtime = time.time() - start_time
             print(f"\n=== Analysis Runtime: {runtime:.4f} seconds ===\n")
 
+            # Log analysis results using the logger module
+            log_analysis(
+                filename=filename,
+                runtime=runtime,
+                classification=classification,
+                risk_level=risk_level,
+                total_risk_scoring=total_risk_scoring,
+                domain_capped=domain_capped,
+                url_capped=url_capped,
+                keywords_capped=keywords_capped,
+                keywords_count=len(keywords),
+                number_of_urls=number_of_urls,
+                number_of_unique_domains=number_of_unique_domains,
+                url_reason_pairs=url_reason_pairs,
+                EmailDomainMsg=EmailDomainMsg
+            )
+
             # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
-            
+            if success:
+                log_data_storage_success()
 
             # Send email report to user
             if useremail:
@@ -173,9 +197,11 @@ def upload_file():
                     server.send_message(msg)
                     server.quit()
                     emailnotify = "Email sent successfully."
+                    log_email_sent()
 
                 except (socket.gaierror, smtplib.SMTPException, Exception) as e:
                         emailnotify = f"Failed to send email: {e}"
+                        log_email_failed(type(e).__name__)
 
             
     return render_template("index.html",
@@ -266,8 +292,10 @@ def admin_login_json():
 
     if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
         session['admin_logged_in'] = True
+        log_admin_login_success()
         return jsonify({"success": True})
 
+    log_admin_login_failure()
     return jsonify({"success": False, "error": "Invalid email or password."})
 
 
@@ -280,6 +308,7 @@ def admin_page():
 
 @app.route('/logout')
 def logout():
+    log_admin_logout()
     session.pop('admin_logged_in', None)
     return redirect(url_for('upload_file'))
 

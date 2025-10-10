@@ -102,21 +102,21 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             
                 if age_days < 30:
                     url_suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))  # increase risk score for very new domains
-                    reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
+                    reasons.append(f'Domain {hostname} is very new, created on {creation_date}, {age_days} day(s) old, which is often a sign of a suspicious domain.')
                 
                 
                 elif age_days < 121:
                     url_suspicion_score += int(os.getenv("MEDIUM_DOMAIN_SCORE", "2"))  # increase risk score for moderately new domains
-                    reasons.append("Domain is relatively new (between 30 and 120 days old), which can be a sign of a suspicious domain.")
+                    reasons.append(f'Domain {hostname} is relatively new, created on {creation_date}, {age_days} day(s) old, which can be a sign of a suspicious domain.')
                 
             
                 elif age_days < 366:
                     url_suspicion_score += int(os.getenv("LOW_DOMAIN_SCORE", "1"))  # slight increase in risk score for somewhat new domains
-                    reasons.append("Domain is somewhat new (between 120 and 365 days old), which may warrant caution.")
+                    reasons.append(f'Domain {hostname} is somewhat new, created on {creation_date}, {age_days} day(s) old, which may warrant caution.')
                 
             
                 else:
-                    reasons.append("Domain is older than a year, which is generally a good sign.")
+                    reasons.append(f'Domain {hostname} is older than a year, created on {creation_date}, {age_days} day(s) old, which is generally a good sign.')
                     print("Domain age is good") 
             
 
@@ -132,16 +132,16 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             
                 if number_of_days < 180:
                     url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
-                    reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
+                    reasons.append(f"Domain is set to expire on {expiration_date}, in {number_of_days} day(s), which is a sign of suspicious activity.")
 
                 
                 elif number_of_days < 365:
                     url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
-                    reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
+                    reasons.append(f"Domain is set to expire on {expiration_date}, in {number_of_days} day(s). Hackers will usually only purchase or renew a phishing domain for a year.") 
 
                 
                 else:
-                    reasons.append("Domain expiration date is more than a year away, which is generally a good sign.")
+                    reasons.append(f"Domain expiration date is {expiration_date}, in {number_of_days} day(s), which is generally a good sign.")
                 
             
             except Exception as e:
@@ -159,7 +159,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             
                 if days_since_update_to_expiry <= 365: 
                     url_suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))  # increase risk score for recently updated domains with short time to expiry
-                    reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
+                    reasons.append(f'Domain was updated {days_since_update} day(s) ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} day(s).')
 
                 else:
                     print("No updated date found")

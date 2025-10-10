@@ -6,136 +6,226 @@
     <title>Phishing Email Detection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#">Phishing Email Detection</a>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> Phishing Email Detection
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="adminLoginPrompt()">Admin</a>
+                        <a class="nav-link" href="#" onclick="adminLoginPrompt()">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main class="container flex-grow-1 py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <form method="POST" enctype="multipart/form-data"> <!--upload email-->
-                            <div class="mb-3">
-                                <label for="fileInput" class="form-label">Upload email file</label>
-                                <input id="fileInput" type="file" name="emailfile" accept=".eml,.txt,text/plain" class="form-control" required onchange="previewFile()">
+    <main class="main-container">
+        <div class="page-header">
+            <h1><i class="fas fa-envelope-open-text"></i> Email Security Scanner</h1>
+            <p>Upload and analyze emails for potential phishing threats</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="upload-card">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-upload"></i>
                             </div>
-                            <div class="mb-3">
-                                <label for="userEmail" class="form-label">Input your email:</label>
-                                <input id="userEmail" type="email" name="userEmail" class="form-control" placeholder="example@domain.com">
-                                {% if emailnotify %}
-                                    {% if emailnotify == "Email sent successfully." %}
-                                        <!-- Green Success Alert -->
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            {{ emailnotify }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    {% else %}
-                                        <!-- Red Danger Alert -->
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            {{ emailnotify }}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
+                            <h3>Upload Email File</h3>
+                        </div>
+                        <div class="upload-area">
+                            <input id="fileInput" type="file" name="emailfile" accept=".eml,.txt,text/plain" class="file-input" required onchange="previewFile()">
+                            <label for="fileInput" class="upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choose file or drag here</span>
+                                <small>Accepts .eml and .txt files</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-at"></i>
                             </div>
-                            <div class="mb-3">
-                                <label for="emailContent" class="form-label">Email contents</label> <!--display text in content-->
-                                <textarea id="emailContent" name="emailContent" class="form-control" rows="10" readonly>{{ email_content or '' }}</textarea>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Analyze</button>
-                                <button type="button" class="btn btn-secondary" onclick="window.location.href = '/' ">Clear All</button>
-                            </div>
-                        </form>
-                        <hr>
-                        <div>
-                        {% if storing_notify %}
-                            {% if success %}
-                            <div id="notify" class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ storing_notify }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                            <h3>Your Email Address</h3>
+                        </div>
+                        <input id="userEmail" type="email" name="userEmail" class="modern-input" placeholder="example@domain.com">
+                        {% if emailnotify %}
+                            {% if emailnotify == "Email sent successfully." %}
+                                <div class="alert alert-success alert-modern" role="alert">
+                                    <i class="fas fa-check-circle"></i> {{ emailnotify }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                             {% else %}
-                            <div id="notify" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ storing_notify }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                                <div class="alert alert-danger alert-modern" role="alert">
+                                    <i class="fas fa-exclamation-triangle"></i> {{ emailnotify }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                             {% endif %}
                         {% endif %}
-                        </div>
+                    </div>
 
-                        <!--show whats the classification-->
-                        {% if classification %}
-                        <div class="mt-4 alert alert-{{ 'success' if classification == 'Safe' else 'danger' }}" id = "outputBox">
-                            <h5 class="alert-heading">Classification: {{ classification }}</h5>
-                            <h5 class="alert-heading">Domain Check: {{ EmailDomainMsg }}</h5>
-                            <!--<h5 class="alert-heading">URL Analysis: {{ reasons }}</h5>-->
-                            <h5 class="alert-heading">Risk Scoring: {{ risk_level }}</h5>
-                            <p><strong>Risk Score:</strong> {{ total_risk_scoring }}</p>
-
-                            <p><u>URL Properties</u></p>
-                            {% if number_of_urls > 0 or number_of_unique_domains > 0 %}
-                            <div class="url-stats">
-                                {% if number_of_urls > 0 %}
-                                    <p><strong>Number of URLs Found:</strong> {{ number_of_urls }}</p>
-                                {% endif %}
-                                
-                                {% if number_of_unique_domains > 0 %}
-                                    <p><strong>Number of Unique Domains Found:</strong> {{ number_of_unique_domains }}</p>
-                                {% endif %}
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-file-alt"></i>
                             </div>
-                            {% endif %}
-                            <!--show url and its reasons-->
-                            {% for pair in url_reason_pairs %}
-                                <div class="url-section">
-                                    <h5>URL: {{ pair.url }}</h5>
-                                    <ul>
-                                        {% if pair.reasons %}
-                                            {% for reason in pair.reasons %}
-                                                <li>{{ reason }}</li>
-                                            {% endfor %}
-                                        {% else %}
-                                            <li>No specific issues found for this URL</li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                                <hr>
-                            {% endfor %}
-
-                            <p><u>Suspicious Keywords Used</u></p>
-                            <ul>
-                                <!--show sus keywords detected-->
-                                {% for keyword in keywords %}
-                                    <li>{{ keyword }}</li>
-                                {% endfor %}
-                            </ul>
+                            <h3>Email Content Preview</h3>
                         </div>
+                        <textarea id="emailContent" name="emailContent" class="modern-textarea" rows="12" readonly>{{ email_content or '' }}</textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn-modern btn-primary">
+                            <i class="fas fa-search"></i> Analyze Email
+                        </button>
+                        <button type="button" class="btn-modern btn-secondary" onclick="window.location.href = '/'">
+                            <i class="fas fa-redo"></i> Clear All
+                        </button>
+                    </div>
+                </form>
+
+                {% if storing_notify %}
+                    {% if success %}
+                    <div class="alert alert-success alert-modern" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ storing_notify }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger alert-modern" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i> {{ storing_notify }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if classification %}
+                <div class="results-card results-{{ 'safe' if classification == 'Safe' else 'danger' }}">
+                    <div class="results-header">
+                        <div class="results-icon">
+                            <i class="fas fa-{{ 'shield-check' if classification == 'Safe' else 'shield-exclamation' }}"></i>
+                        </div>
+                        <div>
+                            <h2>Analysis Results</h2>
+                            <p class="results-status">Classification: <strong>{{ classification }}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="metrics-row">
+                        <div class="metric-card metric-highlight">
+                            <div class="metric-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">Risk Level</div>
+                                <div class="metric-value-large">{{ risk_level }}</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card metric-highlight">
+                            <div class="metric-icon metric-icon-score">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">Risk Score</div>
+                                <div class="metric-value-large metric-score">{{ total_risk_scoring }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <div class="detail-header">
+                                <i class="fas fa-globe"></i>
+                                <span>Domain Check</span>
+                            </div>
+                            <div class="detail-content">{{ EmailDomainMsg }}</div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-header">
+                                <i class="fas fa-ruler"></i>
+                                <span>Distance Check</span>
+                            </div>
+                            <div class="detail-content">{{ DistanceCheckMsg }}</div>
+                        </div>
+                    </div>
+
+                    {% if number_of_urls > 0 or number_of_unique_domains > 0 %}
+                    <div class="info-section">
+                        <h4><i class="fas fa-link"></i> URL Properties</h4>
+                        <div class="info-grid">
+                            {% if number_of_urls > 0 %}
+                                <div class="info-stat">
+                                    <span class="info-number">{{ number_of_urls }}</span>
+                                    <span class="info-text">URLs Found</span>
+                                </div>
+                            {% endif %}
+                            {% if number_of_unique_domains > 0 %}
+                                <div class="info-stat">
+                                    <span class="info-number">{{ number_of_unique_domains }}</span>
+                                    <span class="info-text">Unique Domains</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for pair in url_reason_pairs %}
+                    <div class="url-analysis">
+                        <div class="url-header">
+                            <i class="fas fa-link"></i>
+                            <span class="url-text">{{ pair.url }}</span>
+                        </div>
+                        <ul class="reason-list">
+                            {% if pair.reasons %}
+                                {% for reason in pair.reasons %}
+                                    <li><i class="fas fa-chevron-right"></i> {{ reason }}</li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="no-issues"><i class="fas fa-check"></i> No specific issues found for this URL</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+
+                    <div class="info-section">
+                        <h4><i class="fas fa-flag"></i> Suspicious Keywords Detected</h4>
+                        {% if keywords %}
+                            <div class="keyword-grid">
+                                {% for keyword in keywords %}
+                                    <span class="keyword-badge">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="no-keywords-message">
+                                <p>No suspicious keywords found.</p>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </main>
 
-    <footer class="bg-light py-3 mt-auto">
+    <footer class="modern-footer">
         <div class="container text-center">
-            <p class="mb-0">Made for Programming Fundamentals</p>
+            <p> Made for INF1003, Team LAB-P5-7 </p>
         </div>
     </footer>
     

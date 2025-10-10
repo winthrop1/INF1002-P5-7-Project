@@ -91,7 +91,7 @@ def load_keywords(filepath):
 
 #file paths for retrieving
 #construct absolute path from environment variable or default
-csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDATE_FILE', 'keywords/consolidate_keywords.csv'))
+csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDATE_FILE', 'keywords/lemmatized_keywords.csv'))
 
 #load keywords from files
 sus_keywords = load_keywords(csv_path)
@@ -147,8 +147,8 @@ def classify_email(email_subject, email_body):
     keywords_suspicion_score += body_score #add score to total
     keywords.extend(body_keywords) #append keywords
 
-    classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
-    return classification, keywords, keywords_suspicion_score #output score with keywords
+    # classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
+    return keywords, keywords_suspicion_score #output score with keywords
 
 
 if __name__ == "__main__":

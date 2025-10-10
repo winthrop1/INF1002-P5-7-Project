@@ -19,7 +19,6 @@ def get_domain_from_url(url):
     """Extract domain from URL using the same method as check_domain_reputation"""
     try:
         parsed_url = urlparse(url)
-        print(f'{parsed_url} this is parsed url')
         hostnames = parsed_url.netloc
         print(f'{hostnames} this is get domain')
         return hostnames
@@ -31,12 +30,8 @@ def get_domain_from_url(url):
 def domain_resolved(url): # first level check
     parsed_url = urlparse(url)
     hostname = parsed_url.netloc  # This gets the hostname (domain) part of the URL
-        
-    print(hostname)
-    print(len(hostname))
     
-    if validators.domain(hostname):
-        print(f'Valid domain: {hostname}') #domain is well formatted
+    if validators.domain(hostname): #domain is well formatted
     
         try:
             socket.gethostbyname(hostname) # Try to resolve the domain to an IP address
@@ -59,9 +54,6 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
     today = datetime.now() 
     parsed_url = urlparse(url) 
     hostname = parsed_url.netloc  # This gets the hostname (domain) part of the URL
-        
-    
-    print(f"Analyzing domain: {hostname}")
     
     domain_info = None
 
@@ -79,8 +71,6 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
                 return {"risk": "high", "reason": f"WHOIS lookup failed after {max_retries} attempts: {e}"}
 
     if domain_info: # If WHOIS data is found, analyze it
-
-    
 
         creation_date = domain_info.creation_date # 1. Check Creation Date - New domains are often suspicious
         expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
@@ -110,7 +100,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             try:
                 age_days = (today - creation_date).days # Calculate domain age in days
             
-                if age_days < 30: 
+                if age_days < 30:
                     url_suspicion_score += int(os.getenv("HIGH_DOMAIN_SCORE", "3"))  # increase risk score for very new domains
                     reasons.append("Domain is very new (less than 30 days old), which is often a sign of a suspicious domain.")
                 
@@ -129,41 +119,29 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
                     reasons.append("Domain is older than a year, which is generally a good sign.")
                     print("Domain age is good") 
             
-        
-                print(f'age domain {url_suspicion_score}')
 
             except Exception as e:
                 print(f"Error calculating domain age: {e}")
-                
-        
-        # expiration_date = domain_info.expiration_date # 2. Check Expiration Date - Domains expiring soon can be suspicious
     
-    
-        # if isinstance(expiration_date, list): 
-        #     expiration_date = expiration_date[0]
         
         if expiration_date:
 
             try:
         
                 number_of_days = (expiration_date - today).days # Calculate days until expiration
-                print(f"Domain expiration in: {number_of_days} days") 
             
-                if number_of_days < 365: 
-                    url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
-                    reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
-
-                    print(f'expiration domain {url_suspicion_score}')
-
-                elif number_of_days < 180:
+                if number_of_days < 180:
                     url_suspicion_score += int(os.getenv("HIGH_DOMAIN_EXPIRY_SCORE", "2"))  # increase risk score for domains expiring within 6 months
                     reasons.append("Domain is set to expire within the next 6 months, which is a sign of suspicious activity.")
 
-                    print(f'expiration domain {url_suspicion_score}')
+                
+                elif number_of_days < 365:
+                    url_suspicion_score += int(os.getenv("LOW_DOMAIN_EXPIRY_SCORE", "1"))  # increase risk score for domains expiring within a year
+                    reasons.append("Domain is set to expire within the next year, as hackers will usually only renew a phishing domain for a year.") 
+
                 
                 else:
-                    print("Domain expiration date is good")
-                    print(f'expiration domain {url_suspicion_score}')
+                    reasons.append("Domain expiration date is more than a year away, which is generally a good sign.")
                 
             
             except Exception as e:
@@ -178,25 +156,20 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             #updated_date = updated_date[0] 
                 days_since_update = (today - updated_date).days # Calculate days since last update
                 days_since_update_to_expiry = (expiration_date - updated_date).days # Calculate days between last update and expiration
-
-                print(f"Domain last updated: {days_since_update} days ago")
-                print(f"Days between last update and expiration: {days_since_update_to_expiry} days")
             
                 if days_since_update_to_expiry <= 365: 
                     url_suspicion_score += int(os.getenv("DOMAIN_UPDATE_SCORE", "1"))  # increase risk score for recently updated domains with short time to expiry
                     reasons.append(f'Domain was updated {days_since_update} days ago, which is suspicious given its expiration date, {expiration_date}, only extending their lifespan by {days_since_update_to_expiry} days.')
 
-                    print(f'updated domain {url_suspicion_score}')
-
                 else:
-                    print("No updated date found") 
+                    print("No updated date found")
 
             except Exception as e:
                 print(f"Error calculating domain update info: {e}")
 
 
         else:
-            print("No WHOIS data found") 
+            print("No WHOIS data found")
                 
 
 
@@ -269,9 +242,9 @@ def assessing_risk_scores(email_body):
     number_of_unique_domains = 0
     
     try: 
-        url_pattern = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
-        urls = re.findall(url_pattern, email_body) # Find all URLs in the email content
-            
+        urls_in_email = re.compile(r"https?://[^\s]+") # Regex pattern to match URLs starting with http or https
+        urls = [re.split(r'[<>"\'&]', url)[0].rstrip('.,;:') for url in urls_in_email.findall(email_body)] # Clean URLs by removing trailing punctuation and splitting at certain characters
+        
         print(f"Found {len(urls)} URLs in the file.")
 
         number_of_urls = len(urls)
@@ -341,37 +314,19 @@ def assessing_risk_scores(email_body):
             })
             
         
-    
-    
     except Exception as e: # Handle other exceptions
         print(f"An error occurred while reading the file: {e}")
         return [], 0, [], 0, 0
     
     
-    if url_suspicion_score >= 5:
+    if url_suspicion_score >= int(os.getenv("HIGH_URL_RISK_THRESHOLD", "5")):
         risk_level = "HIGH"
-    elif url_suspicion_score >= 3:
+    elif url_suspicion_score >= int(os.getenv("MEDIUM_URL_RISK_THRESHOLD", "3")):
         risk_level = "MEDIUM"
-    elif url_suspicion_score >= 1:
+    elif url_suspicion_score >= int(os.getenv("LOW_URL_RISK_THRESHOLD", "1")):
         risk_level = "LOW"
     else:
         risk_level = "VERY_LOW"
         
-    print("testing reasons")
-    print(f'Risk Level: {risk_level}')
-    print(f'Suspicion Score: {url_suspicion_score}')
-    print("Reasons for suspicion:")
-  
-    
-    
-    if urls and len(urls) > 0:
-        sample_url = urls[0]  
-        print(f'URL Length: {len(sample_url)} characters')
-    else:
-        print('URL Length: N/A')
-        print('Subdirectory Count: N/A')
 
     return reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains
-    
-    
-    

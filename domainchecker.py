@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
 from datas import unique_from_emails
-
 load_dotenv()  # Load environment variables from .env file
+
+
 def distance_check(domain1, domain2):
     if len(domain1) < len(domain2):
         return distance_check(domain2, domain1)  # Ensure domain1 is the longer one
@@ -22,25 +23,41 @@ def distance_check(domain1, domain2):
 
     return previous_row[-1] # Return the final distance value
 
+def email_titlecheck(email_title):
+    text = email_title.lower().strip()
+    
+    # Case 1: email inside < >
+    if '<' in text and '>' in text:
+        email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()
+        if '@' in email:
+            return email
 
-def domaincheck(email_title, safe_domains=unique_from_emails, threshold=4):
+    # Case 2: fallback (no brackets, find @ manually)
+    words = text.replace('(', '').replace(')', '').replace('"', '').split() # split by whitespace
+    for w in words:
+        if '@' in w and '.' in w:  # basic email pattern
+            return w.strip('.,;:><"\' ') # strip common punctuation
+
+
+
+def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.getenv("DOMAIN_SIMILARITY_THRESHOLD", "3"))):
     domain_suspicion_score = 0
-    text = email_title.lower() #convert email text to lowercase
-    #start = text.find('<') + 1 #find the first character of the email address after <
-    #end = text.find('>', start) #it looks for > and start means it start looking from the position of start which is the first character of the email address
-    #email = text[start:end].strip()
-    email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()#extract the text between < and > and remove any leading or trailing whitespace
+    email = email_titlecheck(email_title) 
     domain = "@" + email.split('@', 1)[1]
     if domain in safe_domains: #check if domain is in predefined safe list
         EmailDomainMsg = f"{email} is a safe domain. "
-        return EmailDomainMsg, domain_suspicion_score
+        DistanceCheckMsg = "No similar domains found."
+        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
     else:
-        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain."
-        domain_suspicion_score += int(os.getenv("SENDER_KEYWORD_SCORE", "2")) #increase risk score for unrecognized domain
+        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain.\n"
+        DistanceCheckMsg = "No similar domains found."
+        domain_suspicion_score += int(os.getenv("DOMAIN_SUSPICION_SCORE", "2")) #increase risk score for unrecognized domain
         for safe_domain in safe_domains:
             dist = distance_check(domain, safe_domain)
             if dist <= threshold:
-                EmailDomainMsg += f"Warning: Email domain '{domain}' is similar to safe domain '{safe_domain}' (with distance (dist))"
+                DistanceCheckMsg = f"Warning: Email domain '{domain}' is similar to a safe domain '{safe_domain}' (with only {dist} change(s) different)\n"
                 domain_suspicion_score += dist # increase risk score for similar domain
-        return EmailDomainMsg, domain_suspicion_score
+            elif dist == 0:
+                DistanceCheckMsg = 'No similar domains found.'
+        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
     

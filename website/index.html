@@ -206,10 +206,42 @@
                     <div class="info-section">
                         <h4><i class="fas fa-flag"></i> Suspicious Keywords Detected</h4>
                         {% if keywords %}
-                            <div class="keyword-grid">
-                                {% for keyword in keywords %}
-                                    <span class="keyword-badge">{{ keyword }}</span>
-                                {% endfor %}
+                            {% if organized_keywords['subject'] %}
+                            <div class="keyword-category">
+                                <h6 class="category-title"><i class="fas fa-envelope"></i> Subject Line: Found {{ organized_keywords['subject']|length }}</h6>
+                                <div class="keyword-grid">
+                                    {% for keyword in organized_keywords['subject'] %}
+                                        <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br>
+                            {% endif %}
+
+                            {% if organized_keywords['early_body'] %}
+                            <div class="keyword-category">
+                                <h6 class="category-title"><i class="fas fa-arrow-down"></i> Early Body: Found {{ organized_keywords['early_body']|length }}</h6>
+                                <div class="keyword-grid">
+                                    {% for keyword in organized_keywords['early_body'] %}
+                                        <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br>
+                            {% endif %}
+
+                            {% if organized_keywords['remaining_body'] %}
+                            <div class="keyword-category">
+                                <h6 class="category-title"><i class="fas fa-file-lines"></i> Remaining Body: Found {{ organized_keywords['remaining_body']|length }}</h6>
+                                <div class="keyword-grid">
+                                    {% for keyword in organized_keywords['remaining_body'] %}
+                                        <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="keyword-category" style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #dee2e6;">
+                                <h6 class="category-title"><i class="fas fa-list"></i> Total Keywords Found: {{ keywords|length }}</h6>
                             </div>
                         {% else %}
                             <div class="no-keywords-message">
@@ -217,6 +249,8 @@
                             </div>
                         {% endif %}
                     </div>
+
+
                 </div>
                 {% endif %}
             </div>

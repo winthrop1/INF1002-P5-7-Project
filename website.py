@@ -10,9 +10,13 @@ import socket
 from email.message import EmailMessage
 from email.utils import parseaddr
 from dotenv import load_dotenv #for loading environment variables
+import glob
+from collections import Counter
+import re
 
 #load environment variables from .env file
 load_dotenv()
+
 
 #initialize flask app
 # app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
@@ -26,6 +30,27 @@ app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
+def organize_keywords_by_category(keywords_list):
+    """
+    Organize keywords into categories: subject, early_body, remaining_body
+    Returns a dictionary with organized keywords
+    """
+    organized = {
+        'subject': [],
+        'early_body': [],
+        'remaining_body': []
+    }
+    
+    for keyword in keywords_list:
+        if 'In subject:' in keyword:
+            organized['subject'].append(keyword)
+        elif 'In early body:' in keyword:
+            organized['early_body'].append(keyword)
+        elif 'In remaining body:' in keyword:
+            organized['remaining_body'].append(keyword)
+    
+    return organized
+
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
     #variables to hold results
@@ -38,6 +63,11 @@ def upload_file():
     storing_notify = ''
     success = bool
     keywords = []
+    organized_keywords = {
+    'subject': [],
+    'early_body': [],
+    'remaining_body': []
+}
     total_score = 0
     email_text = ''
     email_title = ''
@@ -70,6 +100,9 @@ def upload_file():
             # Classify the email using the original detection system
             keywords, keywords_suspicion_score = classify_email(email_subject, email_body)
             
+            # Organize keywords by category for better display
+            organized_keywords = organize_keywords_by_category(keywords)
+
             # Apply component-level caps (prevents any single component from dominating)
             domain_capped = min(domain_suspicion_score, int(os.getenv("MAX_DOMAIN_SCORE", "15")))       # Cap domain at 15
             url_capped = min(url_suspicion_score, int(os.getenv("MAX_URL_SCORE", "6")))            # Cap URLs at 6
@@ -86,7 +119,7 @@ def upload_file():
             elif total_risk_scoring >= int(os.getenv("LOW_RISK_THRESHOLD", "4")):
                 risk_level = "LOW"
             else:
-                risk_level = "VERY_LOW"
+                risk_level = "VERY LOW"
 
             # risk_level, suspicion_score, reasons = assessing_risk_scores(email_body)
             
@@ -98,42 +131,27 @@ def upload_file():
             # Store analysis results in a text file
             storing_notify, success = storeDatainTxt(classification, keywords,total_risk_scoring, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)
             
-            
 
             # Send email report to user
             if useremail:
                 admin_email = os.getenv('EMAIL_ADDRESS')
                 admin_key = os.getenv('EMAIL_KEY')
                 
+                if url_reason_pairs:
+                    formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
+                else:
+                    formatted_pairs = 'None'
 
-                def format_url_analysis_for_email(url_reason_pairs):
-                    url_email_text = []
-                    for pair in url_reason_pairs:
-                        # Header for URL
-                        url_email_text.append(f"URL: {pair['url']}")
-                        # Reasons list
-                        if pair.get('reasons'):
-                            for reason in pair['reasons']:
-                                url_email_text.append(f"- {reason}")
-                        else:
-                            url_email_text.append("- No specific issues found for this URL")
-                        url_email_text.append("")  # Add empty line for spacing
-                    return "\n".join(url_email_text)
-                
-                formatted_pairs = format_url_analysis_for_email(url_reason_pairs)
-    
+
                 report_body = (
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
-                    f"Total Risk Score: {total_risk_scoring}\n"
-                    f"Overall Risk Level: {risk_level}\n\n"
-                    "----- Analysis Details -----\n\n"
-                    f"URL Analysis: {formatted_pairs}\n\n"
+                    f"URL Analysis Reasons: {formatted_pairs}\n\n"
                     f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
-                    f"Domain Check: {EmailDomainMsg}\n"
-                    f"Distance Check: {DistanceCheckMsg}\n\n"
-            
-                    "Thank you for using our email phishing analysis service."
+                    f"Total Risk Score: {total_score}\n\n"
+                    f"Domain Check Message: {EmailDomainMsg}\n"
+                    "Email Content:\n"
+                    f"{email_text}\n\n"
                 )
 
                 msg = EmailMessage()
@@ -155,6 +173,7 @@ def upload_file():
     return render_template("index.html",
                         classification=classification, #classification
                         keywords=keywords, #keywords found
+                        organized_keywords=organized_keywords, #organise keywords 
                         total_score=total_score, #risk score
                         email_content=email_text, #original email content
                         email_title=email_title, #parsed email title
@@ -198,11 +217,6 @@ def logout():
     return redirect(url_for('upload_file'))
 
 
-#testing admin dashboard 
-import glob
-from collections import Counter
-import re
-
 def parse_stored_emails():
     """Parse all email data files and extract statistics"""
     safe_count = 0
@@ -229,7 +243,8 @@ def parse_stored_emails():
                 
                 #extract keywords to match your format
                 #find all lines with "Suspicious word in..." and extract text between quotes
-                keyword_matches = re.findall(r"Suspicious word in (?:subject|remaining body):\s*'([^']+)'", content)
+                # keyword_matches = re.findall(r"Suspicious word in (?:subject|remaining body):\s*'([^']+)'", content)
+                keyword_matches = re.findall(r"In (?:subject|early body|remaining body):\s*'([^']+)'", content)
                 all_keywords.extend(keyword_matches)
         
         except Exception as e:

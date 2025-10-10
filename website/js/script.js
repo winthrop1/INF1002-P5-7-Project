@@ -181,8 +181,8 @@ function initializeBarChart(keywords, counts) {
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: yAxisMax,
-                        stepSize: 5,
+                        max: 60,
+                        stepSize: 30,
                         callback: function(value) {
                             return value;
                         }

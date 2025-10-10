@@ -178,7 +178,6 @@ def upload_file():
                         emailnotify = f"Failed to send email: {e}"
 
             
-
     return render_template("index.html",
                         classification=classification, #classification
                         keywords=keywords, #keywords found
@@ -199,6 +198,65 @@ def upload_file():
                         number_of_urls = number_of_urls, #number of urls found in the email
                         number_of_unique_domains = number_of_unique_domains, #number of unique domains found in the email
                         success = success)
+
+def parse_stored_emails():
+    """Parse all email data files and extract statistics"""
+    safe_count = 0
+    phishing_count = 0
+    all_keywords = []
+    
+    # Extract all .txt files from safe_keep folder
+    folder_path = os.path.join(os.path.dirname(__file__), 'dataset', 'safe_keep', '*.txt')
+    files = glob.glob(folder_path)
+    
+    print(f"DEBUG: Found {len(files)} files to parse")
+    
+    for file_path in files:
+        try:
+            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
+                
+                # Extract classification
+                classification_match = re.search(r'Classification:\s*(Safe|Phishing)', content, re.IGNORECASE)
+                if classification_match:
+                    classification = classification_match.group(1)
+                    if classification.lower() == 'safe':
+                        safe_count += 1
+                    else:
+                        phishing_count += 1
+                
+                # Extract keywords from tuple format: ('location', 'keyword')
+                # This matches the exact format from your stored files
+                keyword_pattern = r"\('(?:subject|early_body|remaining_body)',\s*'([^']+)'\)"
+                matches = re.findall(keyword_pattern, content)
+                
+                if matches:
+                    print(f"DEBUG: Found {len(matches)} keywords in {os.path.basename(file_path)}")
+                    all_keywords.extend(matches)
+        
+        except Exception as e:
+            print(f"ERROR parsing {file_path}: {e}")
+            continue
+    
+    print(f"DEBUG: Total keywords found: {len(all_keywords)}")
+    
+    # Clean keywords and count frequencies
+    if all_keywords:
+        # Remove duplicates per analysis (convert to lowercase for consistent counting)
+        cleaned_keywords = [kw.strip().lower() for kw in all_keywords if kw and kw.strip()]
+        keyword_counter = Counter(cleaned_keywords)
+        top_keywords = keyword_counter.most_common(5)
+        print(f"DEBUG: Top 5 keywords: {top_keywords}")
+    else:
+        top_keywords = []
+        print("DEBUG: No keywords found in any files!")
+    
+    return {
+        'safe_count': safe_count,
+        'phishing_count': phishing_count,
+        'top_keywords': top_keywords,
+        'total_emails': safe_count + phishing_count
+    }
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():
@@ -225,52 +283,6 @@ def logout():
     session.pop('admin_logged_in', None)
     return redirect(url_for('upload_file'))
 
-
-def parse_stored_emails():
-    """Parse all email data files and extract statistics"""
-    safe_count = 0
-    phishing_count = 0
-    all_keywords = []
-    
-    #extract all .txt files from safe_keep folder
-    folder_path = os.path.join(os.path.dirname(__file__), 'dataset', 'safe_keep', '*.txt')
-    files = glob.glob(folder_path)
-    
-    for file_path in files:
-        try:
-            with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read()
-                
-                #extract classification
-                classification_match = re.search(r'Classification:\s*(Safe|Phishing)', content, re.IGNORECASE)
-                if classification_match:
-                    classification = classification_match.group(1)
-                    if classification.lower() == 'safe':
-                        safe_count += 1
-                    else:
-                        phishing_count += 1
-                
-                #extract keywords to match your format
-                #find all lines with "Suspicious word in..." and extract text between quotes
-                # keyword_matches = re.findall(r"Suspicious word in (?:subject|remaining body):\s*'([^']+)'", content)
-                keyword_matches = re.findall(r"In (?:subject|early body|remaining body):\s*'([^']+)'", content)
-                all_keywords.extend(keyword_matches)
-        
-        except Exception as e:
-            print(f"Error parsing {file_path}: {e}")
-            continue
-    
-    #count keyword frequencies
-    keyword_counter = Counter(all_keywords)
-    top_keywords = keyword_counter.most_common(5)
-    
-    return {
-        'safe_count': safe_count,
-        'phishing_count': phishing_count,
-        'top_keywords': top_keywords,
-        'total_emails': safe_count + phishing_count
-    }
-
 @app.route('/api/dashboard-data')
 def dashboard_data():
     """API endpoint to provide dashboard data"""
@@ -279,15 +291,26 @@ def dashboard_data():
     
     data = parse_stored_emails()
     
-    return jsonify({
+    # Ensure we always return at least empty data for the bar chart
+    top_keywords_data = [
+        {"keyword": keyword, "count": count} 
+        for keyword, count in data['top_keywords']
+    ]
+    
+    # If no keywords found, return empty list (not None)
+    if not top_keywords_data:
+        top_keywords_data = []
+    
+    response_data = {
         "safe_count": data['safe_count'],
         "phishing_count": data['phishing_count'],
-        "top_keywords": [
-            {"keyword": keyword, "count": count} 
-            for keyword, count in data['top_keywords']
-        ],
+        "top_keywords": top_keywords_data,
         "total_emails": data['total_emails']
-    })
+    }
+    
+    print(f"API Response: {response_data}")  # Debug line
+    
+    return jsonify(response_data)
 
 if __name__ == "__main__": #run website
     app.run(debug=True)

@@ -208,7 +208,7 @@
                         {% if keywords %}
                             {% if organized_keywords['subject'] %}
                             <div class="keyword-category">
-                                <h6 class="category-title"><i class="fas fa-envelope"></i> Subject Line: Found {{ organized_keywords['subject']|length }}</h6>
+                                <h6 class="category-title"><i class="fas fa-envelope"></i> Subject Line Found: {{ organized_keywords['subject']|length }}</h6>
                                 <div class="keyword-grid">
                                     {% for keyword in organized_keywords['subject'] %}
                                         <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>
@@ -220,7 +220,7 @@
 
                             {% if organized_keywords['early_body'] %}
                             <div class="keyword-category">
-                                <h6 class="category-title"><i class="fas fa-arrow-down"></i> Early Body: Found {{ organized_keywords['early_body']|length }}</h6>
+                                <h6 class="category-title"><i class="fas fa-arrow-down"></i> Early Body Found: {{ organized_keywords['early_body']|length }}</h6>
                                 <div class="keyword-grid">
                                     {% for keyword in organized_keywords['early_body'] %}
                                         <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>
@@ -232,7 +232,7 @@
 
                             {% if organized_keywords['remaining_body'] %}
                             <div class="keyword-category">
-                                <h6 class="category-title"><i class="fas fa-file-lines"></i> Remaining Body: Found {{ organized_keywords['remaining_body']|length }}</h6>
+                                <h6 class="category-title"><i class="fas fa-file-lines"></i> Remaining Body Found: {{ organized_keywords['remaining_body']|length }}</h6>
                                 <div class="keyword-grid">
                                     {% for keyword in organized_keywords['remaining_body'] %}
                                         <span class="keyword-badge">Found: "{{ keyword.split("'")[1] }}"</span>

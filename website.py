@@ -104,7 +104,7 @@ def upload_file():
             organized_keywords = organize_keywords_by_category(keywords)
 
             # Apply component-level caps (prevents any single component from dominating)
-            domain_capped = min(domain_suspicion_score, int(os.getenv("MAX_DOMAIN_SCORE", "15")))       # Cap domain at 15
+            domain_capped = min(domain_suspicion_score, int(os.getenv("MAX_DOMAIN_SCORE", "5")))       # Cap domain at 5
             url_capped = min(url_suspicion_score, int(os.getenv("MAX_URL_SCORE", "6")))            # Cap URLs at 6
             keywords_capped = min(keywords_suspicion_score, int(os.getenv("MAX_KEYWORD_SCORE", "15")))  # Cap keywords at 15
 

@@ -27,6 +27,7 @@ A comprehensive Python-based phishing email detection application developed for 
 - [API Endpoints](#api-endpoints)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
+- [Documentation](#documentation)
 - [License](#license)
 
 ---
@@ -39,53 +40,66 @@ A comprehensive Python-based phishing email detection application developed for 
   - Keyword-based detection with position-weighted scoring
   - Domain verification with typosquatting detection using Levenshtein distance
   - Comprehensive URL risk assessment with WHOIS integration
+  - Component-level score capping to prevent false positives
 
 - **File Format Support**
   - Accepts `.txt` plain text email files
   - Accepts `.eml` structured email files
-  - HTML accept attribute for file type filtering
+  - Robust email parsing for multiple formats
 
 - **Risk Scoring System**
   - 5-tier risk assessment: VERY HIGH, HIGH, MEDIUM, LOW, VERY LOW
-  - Component-level score capping to prevent false positives
   - Configurable thresholds via environment variables
+  - Domain score cap: 5 points
+  - URL score cap: 6 points
+  - Keyword score cap: 15 points
+  - Total possible score: 26 points
 
 - **Web Interface**
   - User-friendly Flask-based web application
   - Real-time email analysis with instant results
   - Optional email reporting for analysis results
   - Responsive Bootstrap design with modern UI/UX
+  - Performance metrics (runtime tracking)
 
 - **Admin Dashboard**
   - Protected admin panel with authentication
   - Real-time analytics and statistics
-  - Visual data representation with charts
-  - Email classification distribution tracking
-  - Top suspicious keywords frequency analysis
+  - Visual data representation with Chart.js
+  - Email classification distribution (pie chart)
+  - Top 5 suspicious keywords frequency analysis (bar chart)
+  - Auto-refresh functionality (30-second intervals)
 
-- **Data Persistence**
-  - Automatic storage of analysis results
-  - Timestamped email data archives
-  - Historical analysis tracking
+- **Data Persistence & Logging**
+  - Automatic storage of analysis results in `dataset/safe_keep/`
+  - Timestamped file naming for historical tracking
+  - Comprehensive logging system using Python's logging module
+  - Logs stored in `log/` directory with rotation
 
 ### Advanced Features
 
 - **Intelligent Keyword Detection**
-  - Position-based scoring (subject: 3 points, early body: 2 points, remaining body: 1 point)
-  - CSV keyword consolidation and lemmatization
+  - Position-based scoring:
+    - Subject keywords: 3 points each
+    - Early body keywords (first 100 words): 2 points each
+    - Remaining body keywords: 1 point each
+  - CSV keyword database with lemmatization support
   - Regex word boundary matching for accurate detection
+  - Organized keyword display by location
 
 - **Domain Analysis**
-  - Safe domain whitelist validation
+  - Safe domain whitelist validation from ham email dataset
   - Typosquatting detection using Levenshtein distance algorithm
-  - Configurable similarity threshold
+  - Configurable similarity threshold (default: 4)
+  - Robust email extraction from multiple formats
 
 - **URL Risk Assessment**
   - Domain age verification (flags domains < 30 days old)
   - WHOIS data analysis with retry mechanism
   - IP address detection in URLs
   - HTTPS/HTTP protocol verification
-  - URL length and subdirectory count analysis
+  - URL length analysis (>75 characters flagged)
+  - Subdirectory count analysis (>3 flagged)
   - Special character detection (@ symbol obfuscation)
   - Domain resolution validation
 
@@ -95,22 +109,24 @@ A comprehensive Python-based phishing email detection application developed for 
 
 ### Backend Components
 
-#### 1. **website.py** - Flask Web Application
+#### 1. **website.py** - Flask Web Application (Main Entry Point)
 The main application server that orchestrates all detection components.
 
 **Key Functions:**
-- `upload_file()`: Handles email file uploads and analysis
+- `upload_file()`: Handles email file uploads, orchestrates analysis, sends reports
 - `admin_login_json()`: Processes admin authentication
 - `admin_page()`: Serves admin dashboard
 - `parse_stored_emails()`: Extracts statistics from archived data
 - `dashboard_data()`: Provides API endpoint for dashboard analytics
+- `organize_keywords_by_category()`: Groups keywords by detection location
 
 **Features:**
 - Multi-component integration (keywords, domain, URL analysis)
-- Component-level score capping (domain: 15, URL: 6, keywords: 15)
+- Component-level score capping
 - Enhanced risk messaging for safe domains with suspicious content
 - Session management for admin authentication
-- Email reporting functionality
+- Email reporting via SMTP (Gmail)
+- Runtime measurement and logging
 
 #### 2. **email_manage.py** - Email Parsing Engine
 Extracts components from email files in multiple formats.
@@ -120,7 +136,7 @@ Extracts components from email files in multiple formats.
 
 **Capabilities:**
 - Handles multipart MIME messages
-- Extracts title, subject, and body
+- Extracts title (From), subject, and body
 - UTF-8 decoding with error handling
 - Supports structured and unstructured email formats
 
@@ -132,13 +148,14 @@ Analyzes email content for suspicious keywords with position-based scoring.
 - `load_keywords(filepath)`: Loads keywords from CSV files
 - `detection_subject(subject)`: Analyzes email subject (3 points per keyword)
 - `detection_body(body)`: Analyzes email body with early/late detection
-- `classify_email(subject, body)`: Returns keywords and suspicion score
+- `classify_email(subject, body)`: Returns tuple list of (location, keyword) and suspicion score
 
 **Features:**
 - CSV-based keyword management
 - Position-aware scoring (subject > early body > remaining body)
 - Regex word boundary matching
 - Environment-configurable scoring weights
+- Lemmatized keyword support
 
 #### 4. **domainchecker.py** - Domain Verification System
 Validates sender domains and detects typosquatting attempts.
@@ -149,11 +166,10 @@ Validates sender domains and detects typosquatting attempts.
 - `domaincheck(email_title, safe_domains, threshold)`: Performs domain analysis
 
 **Features:**
-- Safe domain whitelist verification
-- Typosquatting detection with configurable threshold (default: 4)
+- Safe domain whitelist verification from ham dataset
+- Typosquatting detection with configurable threshold
 - Similarity scoring for suspicious domains
-- Integration with safe domain database
-- Improved email extraction handling (supports bracketed and non-bracketed formats)
+- Improved email extraction (supports bracketed and non-bracketed formats)
 
 #### 5. **suspiciousurl.py** - URL Risk Assessment Engine
 Performs comprehensive URL analysis using multiple risk factors.
@@ -163,13 +179,14 @@ Performs comprehensive URL analysis using multiple risk factors.
 - `assessing_risk_scores(email_body)`: Analyzes URLs and returns risk data
 
 **Risk Factors:**
-- Domain age analysis (< 30 days: HIGH, 30-120 days: MEDIUM, 120-365 days: LOW)
-- WHOIS data verification with retry mechanism
+- Domain age analysis (<30 days: HIGH, 30-120 days: MEDIUM, 120-365 days: LOW)
+- WHOIS data verification with retry mechanism (max 3 retries)
 - IP address detection in URLs
 - HTTPS/HTTP protocol checking
-- URL length analysis (> 75 characters flagged)
-- Subdirectory count (> 3 flagged)
+- URL length analysis (>75 characters flagged)
+- Subdirectory count (>3 flagged)
 - '@' symbol detection for obfuscation
+- Domain resolution check
 
 #### 6. **datas.py** - Domain Database Management
 Extracts and maintains safe domain database from ham email dataset.
@@ -185,14 +202,33 @@ Extracts and maintains safe domain database from ham email dataset.
 Stores email analysis results for historical tracking and admin dashboard.
 
 **Key Functions:**
-- `storeDatainTxt(classification, keywords, total_score, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)`: Saves analysis to file
+- `storeDatainTxt(classification, keywords, total_score, EmailDomainMsg, email_text, url_reason_pairs, number_of_urls)`: Saves analysis to timestamped file
 
 **Features:**
-- Timestamped file naming
-- Structured data format
+- Timestamped file naming (format: `email_data_YYYYMMDD_HHMMSS.txt`)
+- Structured data format with classification, keywords, scores, and email content
 - Error handling and status reporting
 
-#### 8. **keyword_scrape_web.py** - Web Keyword Scraper
+#### 8. **logger.py** - Logging System
+Centralized logging configuration and functions.
+
+**Key Functions:**
+- `setup_logging()`: Configures logging with file rotation
+- `log_analysis()`: Logs detailed analysis results
+- `log_admin_login_success()`: Logs successful admin authentication
+- `log_admin_login_failure()`: Logs failed login attempts
+- `log_admin_logout()`: Logs admin logout
+- `log_email_sent()`: Logs successful email report delivery
+- `log_email_failed()`: Logs email sending failures
+- `log_data_storage_success()`: Logs successful data storage
+
+**Features:**
+- Daily log rotation
+- 30-day log retention
+- Comprehensive analysis logging with performance metrics
+- Security event logging
+
+#### 9. **keyword_scrape_web.py** - Web Keyword Scraper
 Scrapes spam keywords from external sources to update detection database.
 
 **Key Functions:**
@@ -201,73 +237,59 @@ Scrapes spam keywords from external sources to update detection database.
 
 **Source:** Configurable via `SPAM_SOURCE_URL` environment variable
 
-#### 9. **keyword_scrape_file.py** - File-Based Keyword Analyzer
-Analyzes spam email datasets to extract frequent keywords.
-
-**Key Functions:**
-- `extract_email_content(file_path)`: Extracts subject and body from emails
-- `clean_text(text)`: Normalizes and cleans text
-- `get_words(text)`: Extracts meaningful words, filtering stop words
-- `analyze_spam_directory(directory_path)`: Processes entire directories
-
-**Features:**
-- Top 2 words per file extraction
-- Stop word filtering
-- HTML tag and artifact removal
-- Timestamp-based versioning
-
-#### 10. **detectfunction.py** - Legacy Detection Module
-Original phishing detection implementation (replaced by modular components).
-
 ### Frontend Components
 
 #### 1. **website/index.html** - Main User Interface
 Bootstrap-based responsive landing page for email analysis.
 
 **Sections:**
-- File upload area with drag-and-drop support
-- Email content preview
-- Analysis results display
-- Risk metrics visualization
-- URL analysis details
-- Keyword detection results
+- Hero section with application description
+- File upload area with file preview
+- Analysis results display with color-coded risk levels
+- Domain verification results
+- URL analysis details with individual URL breakdown
+- Keyword detection results (organized by location)
+- Optional email report delivery form
 
 **Features:**
 - File type validation (accept=".eml,.txt,text/plain")
-- Real-time file preview
-- Color-coded risk levels
+- Real-time file content preview
+- Color-coded risk levels (green to red gradient)
 - Responsive design for mobile/tablet
+- Modern gradient-based styling
 
 #### 2. **website/adminPage.html** - Admin Dashboard
 Protected analytics dashboard for monitoring system performance.
 
 **Sections:**
-- Safe vs. Phishing email statistics
+- Safe vs. Phishing email statistics cards
 - Pie chart for email distribution
 - Bar chart for top 5 suspicious keywords
-- Real-time data updates (30-second intervals)
+- Navigation with logout functionality
 
 **Features:**
 - Chart.js integration for data visualization
-- Auto-refresh functionality
+- Auto-refresh functionality (30-second intervals)
 - Session-based authentication
+- Responsive dashboard layout
 
 #### 3. **website/css/styles.css** - Main Stylesheet
 Modern gradient-based design system for user interface.
 
 **Design Features:**
 - CSS custom properties for theming
-- Gradient backgrounds
-- Card-based layouts
+- Gradient backgrounds (purple to pink)
+- Card-based layouts with glassmorphism effects
 - Smooth animations and transitions
 - Responsive breakpoints
+- Modern button designs with hover effects
 
 #### 4. **website/css/styles2.css** - Admin Dashboard Stylesheet
 Specialized styling for admin analytics interface.
 
 **Design Features:**
-- Stat card designs
-- Chart containers
+- Stat card designs with shadows
+- Chart containers with proper spacing
 - Dashboard grid layouts
 
 #### 5. **website/js/script.js** - Frontend JavaScript
@@ -275,8 +297,8 @@ Handles file preview, admin authentication, and dashboard updates.
 
 **Key Functions:**
 - `previewFile()`: Displays uploaded file content
-- `adminLoginPrompt()`: Handles admin login flow
-- `fetchDashboardData()`: Retrieves analytics data
+- `adminLoginPrompt()`: Handles admin login flow with JavaScript prompt
+- `fetchDashboardData()`: Retrieves analytics data from API
 - `updateDashboard(data)`: Updates charts and statistics
 - `initializePieChart()`: Creates email distribution chart
 - `initializeBarChart()`: Creates keyword frequency chart
@@ -288,16 +310,15 @@ Handles file preview, admin authentication, and dashboard updates.
 ```
 INF1002-P5-7-Project/
 │
-├── website.py                    # Main Flask application
+├── website.py                    # Main Flask application (entry point)
 ├── email_manage.py               # Email parsing engine
 ├── suspiciouswords.py            # Keyword detection system
 ├── domainchecker.py              # Domain verification module
 ├── suspiciousurl.py              # URL risk assessment engine
 ├── datas.py                      # Domain database management
 ├── userdatastore.py              # Data persistence layer
+├── logger.py                     # Centralized logging system
 ├── keyword_scrape_web.py         # Web keyword scraper
-├── keyword_scrape_file.py        # File-based keyword analyzer
-├── detectfunction.py             # Legacy detection module
 │
 ├── website/                      # Frontend files
 │   ├── index.html                # Main user interface
@@ -305,34 +326,45 @@ INF1002-P5-7-Project/
 │   ├── css/
 │   │   ├── styles.css            # Main stylesheet
 │   │   └── styles2.css           # Admin stylesheet
-│   └── js/
-│       └── script.js             # Frontend JavaScript
+│   ├── js/
+│   │   └── script.js             # Frontend JavaScript
+│   └── style.css                 # Legacy stylesheet
 │
 ├── dataset/                      # Email datasets
-│   ├── testing/                  # Test email files
+│   ├── testing/                  # Test email files (not in repo)
 │   │   ├── spam/                 # Spam email samples (12 files)
 │   │   └── ham/                  # Legitimate email samples (12 files)
 │   ├── kaggle/                   # Large datasets
-│   │   ├── spam_2/               # Spam dataset for analysis
-│   │   └── ham/                  # Ham dataset for safe domain extraction
-│   └── safe_keep/                # Stored analysis results (timestamped)
+│   │   ├── spam_2/               # Spam dataset (500+ files)
+│   │   └── hamEmails/            # Ham dataset for safe domain extraction (500+ files)
+│   └── safe_keep/                # Stored analysis results (timestamped .txt files)
 │
 ├── keywords/                     # Keyword databases
 │   ├── consolidate_keywords.csv  # Unified keyword list
-│   ├── lemmatized_keywords.csv   # Processed keywords
-│   ├── raw_data/                 # Source keyword files
-│   │   ├── spam_words.csv
-│   │   └── phishing_keywords.csv
-│   └── lemmatizer.py             # Keyword processing scripts
+│   ├── lemmatized_keywords.csv   # Processed keywords (preferred)
+│   ├── lemmatizer.py             # Keyword lemmatization script
+│   └── raw_data/                 # Source keyword files
 │
-├── .env.example                  # Environment configuration template
+├── log/                          # Log files directory
+│   └── phishing_detector.log     # Application logs with rotation
+│
+├── words/                        # Additional keyword resources
+│
 ├── .env                          # Active environment config (not in repo)
+├── .env.example                  # Environment configuration template
 ├── requirements.txt              # Python dependencies
-├── README.md                     # This file
+├── .gitignore                    # Git ignore rules
+│
+├── README.md                     # This file (comprehensive documentation)
+├── USAGE.md                      # Detailed usage guide
 ├── CLAUDE.md                     # Claude Code assistant instructions
 ├── CODE_ANALYSIS_REPORT.md       # Security and code quality analysis
 ├── CURRENT_ISSUES.md             # Known issues and limitations
-└── SYSTEM_DESIGN.md              # Detailed system architecture
+├── SYSTEM_DESIGN.md              # Detailed system architecture
+├── PROJECT_REPORT.md             # Project report
+├── PROJECT_REPORT_FINAL.md       # Final project report
+├── UNIFIED_RULE_BASED_SYSTEM.md  # Rule-based system documentation
+└── DOMAIN_CHECKER_PROCESS.md     # Domain checking process documentation
 ```
 
 ---
@@ -344,6 +376,7 @@ INF1002-P5-7-Project/
 - Python 3.8 or higher
 - pip package manager
 - Virtual environment (recommended)
+- Git
 
 ### Step-by-Step Installation
 
@@ -378,10 +411,16 @@ cp .env.example .env
 ```
 Edit `.env` file with your configuration (see [Configuration](#configuration) section)
 
-6. **Download NLTK Data** (if using lemmatization features)
+6. **Download NLTK Data** (for lemmatization features)
 ```python
 python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
 ```
+
+7. **Verify Installation**
+```bash
+python website.py
+```
+Application should start on `http://127.0.0.1:5000`
 
 ---
 
@@ -405,7 +444,7 @@ ADMIN_PASSWORD=your_secure_password
 
 #### Dataset Paths
 ```env
-HAM_DATASET_DIR=dataset/kaggle/ham
+HAM_DATASET_DIR=dataset/kaggle/hamEmails
 SPAM_DATASET_DIR=dataset/kaggle/spam_2
 ```
 
@@ -414,6 +453,7 @@ SPAM_DATASET_DIR=dataset/kaggle/spam_2
 EMAIL_ADDRESS=your-email@gmail.com
 EMAIL_KEY=your-app-specific-password
 ```
+**Note:** For Gmail, you need to generate an App Password. Visit [Google App Passwords](https://myaccount.google.com/apppasswords)
 
 #### Keyword Configuration
 ```env
@@ -455,16 +495,20 @@ EARLY_BODY_KEYWORD_SCORE=2       # Keyword in early body
 BODY_KEYWORD_SCORE=1             # Keyword in remaining body
 ```
 
-**Risk Thresholds:**
+**Score Caps:**
 ```env
-MAX_DOMAIN_SCORE=15              # Cap for domain score
+MAX_DOMAIN_SCORE=5               # Cap for domain score
 MAX_URL_SCORE=6                  # Cap for URL score
 MAX_KEYWORD_SCORE=15             # Cap for keyword score
+```
 
-VERY_HIGH_RISK_THRESHOLD=16      # ≥16 points
-HIGH_RISK_THRESHOLD=12           # 12-15 points
-MEDIUM_RISK_THRESHOLD=8          # 8-11 points
-LOW_RISK_THRESHOLD=4             # 4-7 points
+**Risk Thresholds:**
+```env
+VERY_HIGH_RISK_THRESHOLD=16      # ≥16 points = VERY HIGH
+HIGH_RISK_THRESHOLD=12           # 12-15 points = HIGH
+MEDIUM_RISK_THRESHOLD=8          # 8-11 points = MEDIUM
+LOW_RISK_THRESHOLD=4             # 4-7 points = LOW
+                                 # <4 points = VERY LOW
 
 PHISHING_SCORE=8                 # Threshold to classify as phishing
 ```
@@ -497,27 +541,32 @@ python website.py
    - (Optional) Enter your email address to receive analysis report
    - Click "Analyze Email" button
    - View comprehensive results including:
-     - Risk level classification
-     - Total risk score
+     - Risk level classification (VERY HIGH to VERY LOW)
+     - Total risk score (out of 26)
+     - Component scores (domain, URL, keywords)
      - Domain verification results
-     - URL analysis with reasons
-     - Detected suspicious keywords
+     - URL analysis with individual URL breakdown
+     - Detected suspicious keywords (organized by location)
+     - Runtime performance metrics
 
 ### Accessing Admin Dashboard
 
 1. **Login to Admin Panel**
-   - Click "Admin" in navigation bar
+   - Click "Admin" button in navigation bar
    - Enter admin credentials (from `.env` file)
+   - JavaScript prompt will appear
    - Click OK to authenticate
 
 2. **View Analytics**
    - Safe vs. Phishing email counts
+   - Total emails analyzed
    - Email distribution pie chart
    - Top 5 suspicious keywords bar chart
    - Auto-refreshes every 30 seconds
 
 3. **Logout**
    - Click "Logout" in navigation bar
+   - Returns to main page
 
 ### Command-Line Tools
 
@@ -525,13 +574,13 @@ python website.py
 ```bash
 python keyword_scrape_web.py
 ```
-Scrapes latest spam keywords from configured URL
+Scrapes latest spam keywords from configured URL and saves to CSV
 
-#### Consolidate Keywords
+#### Lemmatize Keywords
 ```bash
-python suspiciouswords.py
+python keywords/lemmatizer.py
 ```
-Merges all CSV keyword sources into single file
+Processes keywords to base forms for better detection
 
 #### Test Email Parsing
 ```bash
@@ -543,7 +592,7 @@ Tests email parsing functionality on test file
 ```bash
 python datas.py
 ```
-Builds safe domain database from ham emails
+Builds safe domain database from ham email dataset
 
 ---
 
@@ -551,65 +600,87 @@ Builds safe domain database from ham emails
 
 ### Multi-Component Risk Scoring
 
-The system uses a sophisticated multi-layered approach:
+The system uses a sophisticated multi-layered approach with component-level capping:
+
+```
+Total Score = min(Domain Score, 5) + min(URL Score, 6) + min(Keyword Score, 15)
+Maximum Possible Score = 26 points
+```
 
 #### 1. Keyword Detection (`suspiciouswords.py`)
 
+**Position-Based Scoring:**
 ```python
-# Position-based scoring
+# Subject keywords (highest weight)
 if keyword in subject:
     score += SUBJECT_KEYWORD_SCORE  # Default: 3
 
+# Early body keywords (first 100 words)
 elif keyword in first_100_words_of_body:
     score += EARLY_BODY_KEYWORD_SCORE  # Default: 2
 
+# Remaining body keywords (lowest weight)
 elif keyword in remaining_body:
     score += BODY_KEYWORD_SCORE  # Default: 1
+
+# Maximum capped at 15 points
 ```
 
-**Keyword Detection Features:**
+**Detection Features:**
 - Regex word boundary matching (`\b` anchors)
 - Case-insensitive matching
-- CSV-based keyword database
+- CSV-based keyword database with lemmatization
 - Position-aware scoring (subject > early > late)
+- Returns tuple list: `[(location, keyword), ...]`
 
 #### 2. Domain Analysis (`domainchecker.py`)
 
+**Typosquatting Detection:**
 ```python
-# Extract email from title (handles <email> and plain text)
-email = email_titlecheck(email_title)
+# Extract email from title
+email = email_titlecheck(email_title)  # Handles multiple formats
 domain = "@" + email.split('@')[1]
 
-# Typosquatting detection
-domain_distance = levenshtein_distance(sender_domain, safe_domain)
-
+# Check against safe domain whitelist
 if domain not in safe_domains:
     score += DOMAIN_SUSPICION_SCORE  # Default: 2
 
-if domain_distance <= THRESHOLD:  # Default threshold: 4
+# Levenshtein distance calculation
+domain_distance = levenshtein_distance(sender_domain, safe_domain)
+
+if domain_distance <= THRESHOLD:  # Default: 4
     score += domain_distance
-    # Example: "microsft.com" vs "microsoft.com" = 1 change
+    # Example: "microsft.com" vs "microsoft.com" = 1 character change
+
+# Maximum capped at 5 points
 ```
 
-**Domain Analysis Features:**
-- Levenshtein distance algorithm
-- Safe domain whitelist
-- Similarity threshold configuration
-- Typosquatting alerts
+**Analysis Features:**
+- Levenshtein distance algorithm for similarity
+- Safe domain whitelist from ham dataset
+- Configurable similarity threshold
+- Typosquatting alerts with similarity score
 
 #### 3. URL Risk Assessment (`suspiciousurl.py`)
 
+**Multi-Factor Analysis:**
 ```python
-# Multi-factor URL analysis
+# Domain age check
 if domain_age < 30_days:
     score += HIGH_DOMAIN_SCORE  # Default: 3
+elif domain_age < 120_days:
+    score += MEDIUM_DOMAIN_SCORE  # Default: 2
+elif domain_age < 365_days:
+    score += LOW_DOMAIN_SCORE  # Default: 1
 
+# Security checks
 if ip_address_in_url:
     score += IP_ADDRESS_SCORE  # Default: 2
 
 if not uses_https:
     score += NO_HTTPS_SCORE  # Default: 2
 
+# Structural checks
 if url_length > 75:
     score += LONG_URL_SCORE  # Default: 1
 
@@ -618,36 +689,46 @@ if '@' in url:
 
 if subdirectory_count > 3:
     score += SUBDIR_COUNT_SCORE  # Default: 1
+
+# Domain resolution
+if not can_resolve_domain:
+    score += UNRESOLVED_DOMAIN_SCORE  # Default: 3
+
+# Maximum capped at 6 points
 ```
 
-**URL Analysis Features:**
-- WHOIS data integration
-- Domain age verification
+**Analysis Features:**
+- WHOIS data integration with retry mechanism
+- Domain age and expiry verification
 - Protocol analysis (HTTPS/HTTP)
 - Structural analysis (length, subdirectories)
 - Obfuscation detection (@ symbol, IP addresses)
+- Returns list of dictionaries with URL and reasons
 
 #### 4. Final Risk Calculation (`website.py`)
 
+**Component-Level Capping:**
 ```python
-# Component-level capping
-domain_capped = min(domain_score, MAX_DOMAIN_SCORE)  # Cap: 15
-url_capped = min(url_score, MAX_URL_SCORE)  # Cap: 6
-keywords_capped = min(keywords_score, MAX_KEYWORD_SCORE)  # Cap: 15
+# Apply individual caps to prevent single component from dominating
+domain_capped = min(domain_score, MAX_DOMAIN_SCORE)      # Cap: 5
+url_capped = min(url_score, MAX_URL_SCORE)               # Cap: 6
+keywords_capped = min(keywords_score, MAX_KEYWORD_SCORE) # Cap: 15
 
 total_risk_score = domain_capped + url_capped + keywords_capped
+```
 
-# Risk level assignment
+**Risk Level Assignment:**
+```python
 if total_risk_score >= 16:
-    risk_level = "VERY HIGH"
+    risk_level = "VERY HIGH"  # Critical threat
 elif total_risk_score >= 12:
-    risk_level = "HIGH"
+    risk_level = "HIGH"       # High threat
 elif total_risk_score >= 8:
-    risk_level = "MEDIUM"
+    risk_level = "MEDIUM"     # Moderate threat
 elif total_risk_score >= 4:
-    risk_level = "LOW"
+    risk_level = "LOW"        # Low threat
 else:
-    risk_level = "VERY LOW"
+    risk_level = "VERY LOW"   # Minimal threat
 ```
 
 **Final Classification:**
@@ -656,36 +737,40 @@ else:
 classification = "Safe" if total_risk_score <= PHISHING_SCORE else "Phishing"
 ```
 
-### Algorithm Flow
+### Algorithm Flow Diagram
 
 ```
-Email Upload
-    ↓
-Parse Email (email_manage.py)
-    ↓
-Extract: Title, Subject, Body
-    ↓
-┌─────────────────┬──────────────────┬─────────────────┐
-│                 │                  │                 │
-│ Keyword         │ Domain           │ URL             │
-│ Detection       │ Verification     │ Analysis        │
-│                 │                  │                 │
-│ suspiciouswords │ domainchecker    │ suspiciousurl   │
-│                 │                  │                 │
-│ Score: 0-15     │ Score: 0-15      │ Score: 0-6      │
-└─────────────────┴──────────────────┴─────────────────┘
-    │                 │                  │
-    └─────────────────┴──────────────────┘
-                      ↓
-            Apply Score Caps
-                      ↓
-            Sum Total Score
-                      ↓
-         Assign Risk Level
-                      ↓
-    Classify (Safe/Phishing)
-                      ↓
-          Display Results
+Email Upload (.txt or .eml)
+           ↓
+    Parse Email (email_manage.py)
+           ↓
+Extract: From/Title, Subject, Body
+           ↓
+    ┌──────────────┬────────────────┬──────────────┐
+    │              │                │              │
+    │  Keyword     │   Domain       │     URL      │
+    │  Detection   │   Analysis     │   Analysis   │
+    │              │                │              │
+    │ suspicious   │  domain        │  suspicious  │
+    │ words.py     │  checker.py    │  url.py      │
+    │              │                │              │
+    │ Score: 0-15  │  Score: 0-5    │  Score: 0-6  │
+    │ (capped)     │  (capped)      │  (capped)    │
+    └──────────────┴────────────────┴──────────────┘
+         │              │                │
+         └──────────────┴────────────────┘
+                       ↓
+              Sum Component Scores
+                       ↓
+           Total Score: 0-26 points
+                       ↓
+          Assign Risk Level (VERY HIGH to VERY LOW)
+                       ↓
+         Classify (Safe ≤8 / Phishing >8)
+                       ↓
+              Display Results
+                       ↓
+          Store Data + Send Email Report (optional)
 ```
 
 ---
@@ -695,23 +780,37 @@ Extract: Title, Subject, Body
 ### User Endpoints
 
 #### `GET /` - Main Application Page
-Returns the main email analysis interface.
+Returns the main email analysis interface (index.html).
+
+**Response:**
+- HTML page with file upload form
 
 #### `POST /` - Analyze Email
+Analyzes uploaded email file and returns results.
+
 **Request:**
 - Method: POST
 - Content-Type: multipart/form-data
 - Parameters:
-  - `emailfile`: File upload (.txt or .eml)
-  - `userEmail`: (Optional) User email for report
+  - `emailfile`: File upload (.txt or .eml) - Required
+  - `userEmail`: User email for report - Optional
 
 **Response:**
-- HTML page with analysis results
-- Risk level, score, keywords, URL analysis, domain check
+- HTML page with analysis results including:
+  - Classification (Safe/Phishing)
+  - Risk level (VERY HIGH to VERY LOW)
+  - Total risk score and component scores
+  - Keywords found (organized by location)
+  - URL analysis with reasons
+  - Domain verification results
+  - Email notification status (if email provided)
+  - Data storage confirmation
 
 ### Admin Endpoints
 
 #### `POST /admin-login-json` - Admin Authentication
+Authenticates admin credentials via JSON.
+
 **Request:**
 ```json
 {
@@ -735,9 +834,15 @@ or
 ```
 
 #### `GET /admin` - Admin Dashboard
-Returns admin dashboard page (requires authentication).
+Returns admin dashboard page. Requires authentication (session).
+
+**Response:**
+- HTML page (adminPage.html) if authenticated
+- Redirect to main page if not authenticated
 
 #### `GET /api/dashboard-data` - Dashboard Analytics
+Provides analytics data for admin dashboard. Requires authentication.
+
 **Response:**
 ```json
 {
@@ -754,8 +859,19 @@ Returns admin dashboard page (requires authentication).
 }
 ```
 
+**Error Response:**
+```json
+{
+  "error": "Unauthorized"
+}
+```
+Status Code: 401
+
 #### `GET /logout` - Logout
-Clears admin session and redirects to home page.
+Clears admin session and redirects to main page.
+
+**Response:**
+- Redirect to main page (/)
 
 ---
 
@@ -764,17 +880,18 @@ Clears admin session and redirects to home page.
 ### Core Python Packages
 
 ```txt
-flask==3.1.2               # Web framework
+flask==3.1.2               # Web framework for application server
 requests==2.32.5           # HTTP library for web scraping
-lxml==6.0.1                # HTML/XML processing
+lxml==6.0.1                # HTML/XML processing for parsing
 python-dotenv==1.1.1       # Environment variable management
-pandas>=1.5.0              # Data manipulation
-validators                 # URL/domain validation
-whois                      # Domain WHOIS lookup
-nltk                       # Natural language processing
+pandas>=1.5.0              # Data manipulation for domain analysis
+validators                 # URL/domain validation library
+python-whois               # Domain WHOIS lookup integration
+free-email-domains         # Free email domain detection
+nltk                       # Natural language processing (lemmatization)
 ```
 
-### Frontend Libraries
+### Frontend Libraries (CDN)
 
 - **Bootstrap 5.3.0** - Responsive CSS framework
 - **Font Awesome 6.3.0** - Icon library
@@ -782,14 +899,17 @@ nltk                       # Natural language processing
 
 ### Standard Library Modules
 
-- `re` - Regular expressions
+- `re` - Regular expressions for text processing
 - `os` - File system operations
 - `csv` - CSV file handling
 - `glob` - File pattern matching
-- `smtplib` - Email sending
-- `email` - Email parsing
+- `smtplib` - Email sending (SMTP)
+- `email` - Email parsing and message creation
 - `datetime` - Timestamp generation
 - `collections` - Counter for frequency analysis
+- `socket` - Network operations
+- `time` - Performance measurement
+- `logging` - Application logging
 
 ### Installation
 
@@ -803,25 +923,49 @@ pip install -r requirements.txt
 
 ### Test Email Datasets
 
-Located in `dataset/testing/`:
-
-**Spam Emails:**
-- `spam/spam_1.txt` through `spam/spam_12.txt`
-- Known phishing emails for detection accuracy testing
+Located in `dataset/` directory:
 
 **Ham Emails:**
-- `ham/ham_1.txt` through `ham/ham_12.txt`
-- Legitimate emails for false positive testing
+- `dataset/kaggle/hamEmails/` - 500+ legitimate email files
+- Used for safe domain extraction
+- Used for false positive testing
+
+**Spam Emails:**
+- `dataset/kaggle/spam_2/` - 500+ phishing email files
+- Used for detection accuracy testing
+- Used for keyword extraction
 
 ### Manual Testing
 
-#### Test Email Parsing
+#### Test Full Application
+```bash
+python website.py
+```
+Then upload test files through web interface at `http://127.0.0.1:5000`
+
+#### Test Individual Components
+
+**Email Parsing:**
 ```bash
 python email_manage.py
 ```
-Tests email parsing on configured test file.
 
-#### Test Individual Components
+**Domain Extraction:**
+```bash
+python datas.py
+```
+
+**Keyword Scraping:**
+```bash
+python keyword_scrape_web.py
+```
+
+**Keyword Lemmatization:**
+```bash
+python keywords/lemmatizer.py
+```
+
+#### Test with Python Script
 ```python
 from email_manage import parse_email_file
 from suspiciouswords import classify_email
@@ -829,7 +973,7 @@ from domainchecker import domaincheck
 from suspiciousurl import assessing_risk_scores
 
 # Load test email
-with open('dataset/testing/spam/spam_1.txt', 'r') as f:
+with open('dataset/kaggle/spam_2/0001.txt', 'r') as f:
     email_content = f.read()
 
 # Parse email
@@ -840,18 +984,32 @@ keywords, keywords_score = classify_email(subject, body)
 domain_msg, distance_msg, domain_score = domaincheck(title)
 reasons, url_score, url_pairs, num_urls, num_domains = assessing_risk_scores(body)
 
-# Calculate total
-total_score = keywords_score + domain_score + url_score
-print(f"Total Risk Score: {total_score}")
+# Calculate total with caps
+domain_capped = min(domain_score, 5)
+url_capped = min(url_score, 6)
+keywords_capped = min(keywords_score, 15)
+
+total_score = domain_capped + url_capped + keywords_capped
+
+print(f"Total Risk Score: {total_score}/26")
+print(f"Classification: {'Safe' if total_score <= 8 else 'Phishing'}")
 ```
 
 ### Web Interface Testing
 
 1. Start the application: `python website.py`
 2. Navigate to `http://127.0.0.1:5000`
-3. Upload test files from `dataset/testing/`
+3. Upload test files from `dataset/kaggle/`
 4. Verify risk scores and classifications
-5. Test admin dashboard functionality
-6. Verify data storage in `dataset/safe_keep/`
+5. Test email reporting functionality (optional)
+6. Test admin dashboard:
+   - Click "Admin" button
+   - Login with credentials from `.env`
+   - Verify statistics and charts
+   - Check auto-refresh functionality
+   - Logout and verify session cleared
+7. Verify data storage in `dataset/safe_keep/`
+8. Check logs in `log/phishing_detector.log`
 
 
+**Last Updated:** October 10, 2025

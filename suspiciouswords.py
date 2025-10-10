@@ -91,7 +91,7 @@ def load_keywords(filepath):
 
 #file paths for retrieving
 #construct absolute path from environment variable or default
-csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDATE_FILE', 'keywords/consolidate_keywords.csv'))
+csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDATE_FILE', 'keywords/lemmatized_keywords.csv'))
 
 #load keywords from files
 sus_keywords = load_keywords(csv_path)

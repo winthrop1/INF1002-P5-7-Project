@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 import socket
 import whois
 import time
-from datetime import datetime, timezone
+from datetime import datetime
 import re
 import os 
 from dotenv import load_dotenv
@@ -15,12 +15,10 @@ url_suspicion_score = 0
 reasons = []
 
 
-def get_domain_from_url(url):
-    """Extract domain from URL using the same method as check_domain_reputation"""
+def get_domain_from_url(url): # Extract domain from URL
     try:
         parsed_url = urlparse(url)
         hostnames = parsed_url.netloc
-        print(f'{hostnames} this is get domain')
         return hostnames
     except Exception as e:
         print(f"Error extracting domain from {url}: {str(e)}")
@@ -68,7 +66,8 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             if attempt < max_retries: # If not the last attempt, wait and retry
                 time.sleep(delay * attempt)  # Wait before retrying
             else:
-                return {"risk": "high", "reason": f"WHOIS lookup failed after {max_retries} attempts: {e}"}
+                print(f"WHOIS lookup failed for {hostname }after {max_retries} attempts: {e}")
+                
 
     if domain_info: # If WHOIS data is found, analyze it
 
@@ -77,25 +76,20 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
         updated_date = domain_info.updated_date # 3. Check Last Updated Date - Recently updated domains can be suspicious
     
 
-        def make_comparable(dt):
-            if dt is None:
+        def make_comparable(date_time): # Helper function to handle different date formats and convert to naive datetime
+            if date_time is None:
                 return None
-            if isinstance(dt, list):
-                dt = dt[0]
-            # If datetime is aware, convert to naive by removing timezone info
-            if hasattr(dt, 'tzinfo') and dt.tzinfo is not None:
-                return dt.replace(tzinfo=None)
-            return dt
-
-
-        # if isinstance(creation_date, list):
-        #     creation_date = creation_date[0]
+            if isinstance(date_time, list):
+                date_time = date_time[0]
+            if hasattr(date_time, 'tzinfo') and date_time.tzinfo is not None: # If datetime is aware, convert to naive by removing timezone info
+                return date_time.replace(tzinfo=None)
+            return date_time
 
         creation_date = make_comparable(creation_date)
         expiration_date = make_comparable(expiration_date)
         updated_date = make_comparable(updated_date)
     
-        if creation_date:
+        if creation_date: # Check Creation Date - New domains are often suspicious
 
             try:
                 age_days = (today - creation_date).days # Calculate domain age in days
@@ -120,14 +114,13 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
                     print("Domain age is good") 
             
 
-            except Exception as e:
+            except Exception as e: # Handle potential errors in date calculation
                 print(f"Error calculating domain age: {e}")
     
         
-        if expiration_date:
+        if expiration_date: # Check Expiration Date - Domains expiring soon can be suspicious
 
             try:
-        
                 number_of_days = (expiration_date - today).days # Calculate days until expiration
             
                 if number_of_days < 180:
@@ -144,16 +137,15 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
                     reasons.append(f"Domain expiration date is {expiration_date}, in {number_of_days} day(s), which is generally a good sign.")
                 
             
-            except Exception as e:
+            except Exception as e: # Handle potential errors in date calculation
                 print(f"Error calculating domain expiration: {e}")
 
         else:
             print("No expiration date found")
             
         
-        if updated_date and expiration_date: # 3. Check Last Updated Date - Recently updated domains can be suspicious
+        if updated_date and expiration_date: #Check Last Updated Date - Recently updated domains can be suspicious
             try:
-            #updated_date = updated_date[0] 
                 days_since_update = (today - updated_date).days # Calculate days since last update
                 days_since_update_to_expiry = (expiration_date - updated_date).days # Calculate days between last update and expiration
             
@@ -175,19 +167,40 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
 
 def having_ip_address(url):
     global url_suspicion_score
-    match = re.search( # search for digits and dots, with a slash at the end 
-        '(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.'
-        '([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\/)|'  # IPv4
-        '((0x[0-9a-fA-F]{1,2})\\.(0x[0-9a-fA-F]{1,2})\\.(0x[0-9a-fA-F]{1,2})\\.(0x[0-9a-fA-F]{1,2})\\/)' # IPv4 in hexadecimal
-        '(?:[a-fA-F0-9]{1,4}:){7}[a-fA-F0-9]{1,4}', url)  # Ipv6
+    parsed_url = urlparse(url)
+    hostname = parsed_url.netloc.split(':')[0]  # This gets the hostname (domain) part of the URL, removing port number if present
+
+
+    ipv4_pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$' # Regex pattern for IPv4
+    ipv6_pattern = r'^(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}$' # Regex pattern for IPv6
     
-    if match:
+    # Check for various obfuscated formats
+    obfuscated_formats = [
+        (r'^0x[0-9a-fA-F]{1,8}$', 'hexadecimal_ip'), # Hexadecimal IP (0x455e8c6f)
+        (r'^\d{8,10}$', 'dword_ip'), # Hexadecimal IP (0x455e8c6f)
+        (r'^0[0-7]{1,3}(\.[0-7]{1,3}){3}$', 'octal_ip'), # Octal IP (0177.0.0.1)
+        (r'^(0x[0-9a-fA-F]{1,2}\.){3}0x[0-9a-fA-F]{1,2}$', 'mixed_hex_ip'), # Mixed hex notation (0xC0.0xA8.0x01.0x01)
+        (r'^0x[0-9a-fA-F]{8}$', 'combined_hex_ip') # Combined hex (0xC0A80101)
+    ]
+
+    standard_ip_address = re.match(ipv4_pattern, hostname) or re.match(ipv6_pattern, hostname, re.IGNORECASE) #check if hostname is an IP address in IPv4 or IPv6 format 
+    
+    obfuscated_match = None
+    for pattern, format_type in obfuscated_formats: #check if hostname matches any obfuscated IP address formats
+        if re.match(pattern, hostname, re.IGNORECASE):
+            obfuscated_match = format_type
+            break
+    
+    if standard_ip_address:
         url_suspicion_score += int(os.getenv("IP_ADDRESS_SCORE", "2"))  # increase risk score for URLs with IP addresses
         reasons.append("URL contains an IP address instead of a domain name, which is often used in malicious URLs to obscure the destination")
+
+    elif obfuscated_match:
+        url_suspicion_score += int(os.getenv("IP_ADDRESS_SCORE", "2"))  # increase risk score for URLs with obfuscated IP addresses
+        reasons.append("URL contains an obfuscated IP address, which is often used in malicious URLs to obscure the destination")
         
     else:
         reasons.append("URL does not contain an IP address, but proceed with caution")
-
 
 def https_check(url):
     global url_suspicion_score
@@ -250,7 +263,6 @@ def assessing_risk_scores(email_body):
         number_of_urls = len(urls)
         
         if urls: #if there are URLs in the email
-            print("Extracted URLs:")
 
             urls_with_unique_domains = {} #empty dictionary for urls with no repeated domain names
             url_reason_pairs = []
@@ -262,34 +274,31 @@ def assessing_risk_scores(email_body):
                 if domain not in urls_with_unique_domains or len(url) > len(urls_with_unique_domains[domain]): 
                     urls_with_unique_domains[domain] = url #write the url into the dictionary
 
-            print(f"Processing {len(urls_with_unique_domains)} unique domains:")
-
-            limited_domains = dict(list(urls_with_unique_domains.items())[:6])
+            limited_domains = dict(list(urls_with_unique_domains.items())[:6]) # takes the first 6 items from the dictionary
 
             number_of_unique_domains = len(urls_with_unique_domains)
 
-            if len(urls_with_unique_domains) > 6:
+            if len(urls_with_unique_domains) > 6: #limit to first 6 domains for performance
                 print(f"Limiting processing to first 6 domains out of {len(urls_with_unique_domains)} total domains")
                 reasons.append(f"Email contains {len(urls_with_unique_domains)} unique domains. Limited analysis to first 6 domains for performance.")
             else:
                 print(f"Processing all {len(urls_with_unique_domains)} unique domains:")
 
 
-            for domain, longest_url in limited_domains.items():
-                print(f"Domain: {domain}, Longest URL: {longest_url}")
+            for domain, longest_url in limited_domains.items(): #go through each domain and its corresponding longest url in the dictionary
             
                 url_specific_reasons = []
                 
-                if domain_resolved(longest_url):
+                if domain_resolved(longest_url): #if the domain can be resolved
                     reasons = []
-                    calling_all_functions(longest_url)
+                    calling_all_functions(longest_url) #call all the functions to assess the url
                     url_specific_reasons = reasons.copy()
-                    url_reason_pairs.append({
+                    url_reason_pairs.append({ #append the url and its specific reasons to the list
                         'url': longest_url,
                         'reasons': url_specific_reasons.copy()
                     })
                     
-                else:
+                else: #if the domain cannot be resolved
                     url_suspicion_score += int(os.getenv("UNRESOLVED_DOMAIN_SCORE", "3"))  # increase risk score for domains that cannot be resolved
                     
                     reason_text = f"Domain {domain} could not be resolved, which is a strong indicator of a suspicious URL"
@@ -317,16 +326,6 @@ def assessing_risk_scores(email_body):
     except Exception as e: # Handle other exceptions
         print(f"An error occurred while reading the file: {e}")
         return [], 0, [], 0, 0
-    
-    
-    if url_suspicion_score >= int(os.getenv("HIGH_URL_RISK_THRESHOLD", "5")):
-        risk_level = "HIGH"
-    elif url_suspicion_score >= int(os.getenv("MEDIUM_URL_RISK_THRESHOLD", "3")):
-        risk_level = "MEDIUM"
-    elif url_suspicion_score >= int(os.getenv("LOW_URL_RISK_THRESHOLD", "1")):
-        risk_level = "LOW"
-    else:
-        risk_level = "VERY_LOW"
         
 
     return reasons, url_suspicion_score, url_reason_pairs, number_of_urls, number_of_unique_domains

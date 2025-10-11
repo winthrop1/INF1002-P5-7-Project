@@ -27,15 +27,7 @@ def distance_check(domain1, domain2):
 def email_titlecheck(email_title):
     try:
         text = email_title.lower().strip()
-        
-        # Case 1: email inside < >
-        if '<' in text and '>' in text:
-            email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()
-            if '@' in email:
-                return email
-
-        # Case 2: fallback (no brackets, find @ manually)
-        words = text.replace('(', '').replace(')', '').replace('"', '').split() # split by whitespace
+        words = text.replace('(', '').replace(')', '').replace('"', '').replace('<','').replace('>','').split() # split by whitespace and remove common brackets
         for w in words:
             if '@' in w and '.' in w:  # basic email pattern
                 return w.strip('.,;:><"\' ') # strip common punctuation

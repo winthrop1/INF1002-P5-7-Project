@@ -1,20 +1,20 @@
 from flask import Flask, request, render_template, redirect, url_for, session, jsonify  #import flask and needed modules
-from email_manage import parse_email_file
-from domainchecker import domaincheck
-from suspiciouswords import classify_email
-from suspiciousurl import assessing_risk_scores#, get_urls_from_email_file
-from userdatastore import storeDatainTxt
-from logger import setup_logging, log_analysis, log_admin_login_success, log_admin_login_failure, log_admin_logout, log_email_sent, log_email_failed, log_data_storage_success  # Logging functions
+from email_manage import parse_email_file #import function to parse email structure
+from domainchecker import domaincheck #import function to verify domain authenticity
+from suspiciouswords import classify_email #import function to detect suspicious keywords
+from suspiciousurl import assessing_risk_scores #get_urls_from_email_file
+from userdatastore import storeDatainTxt #import function to store analysis results
+from logger import setup_logging, log_analysis, log_admin_login_success, log_admin_login_failure, log_admin_logout, log_email_sent, log_email_failed, log_data_storage_success  #logging functions
 import os #work with folders in file systems
-import smtplib
-import socket
-from email.message import EmailMessage
-from email.utils import parseaddr
+import smtplib #send emails via SMTP protocol
+import socket #handle network-related errors
+from email.message import EmailMessage #construct email messages
+from email.utils import parseaddr #parse email addresses
 from dotenv import load_dotenv #for loading environment variables
-import glob
-from collections import Counter
-import re
-import time  # For runtime measurement
+import glob #find files matching patterns
+from collections import Counter #count keyword frequencies
+import re #regular expressions for pattern matching
+import time  #for runtime measurement
 
 #load environment variables from .env file
 load_dotenv()
@@ -23,27 +23,28 @@ load_dotenv()
 setup_logging()
 
 #initialize flask app
-# app = Flask(__name__, template_folder=os.getenv('TEMPLATE_FOLDER', 'website')) #create flask app and link to where my html file is
 app = Flask(__name__, 
             template_folder=os.getenv('TEMPLATE_FOLDER', 'website'),
-            static_folder='website',  # Tells Flask where static files are
-            static_url_path='')       # Makes URLs like /css/styles.css work
+            static_folder='website',  #tells Flask where static files are
+            static_url_path='')       #makes URLs like /css/styles.css work
+
+#set secret key for session management (encrypts session cookies)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .env file
 
-#admin credentials
+#admin credentials loaded from environment variables for security
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
 
 def organize_keywords_by_category(keywords_list):
-    """
-    Organize keywords into categories based on tuples (location, keyword)
-    """
+    #organize keywords into categories based on tuples (location, keyword)
+    #initialize dictionary with empty lists for each category
     organized = {
         'subject': [],
         'early_body': [],
         'remaining_body': []
     }
-    
+
+    #iterate through keyword tuples and categorize by location
     for location, keyword in keywords_list:
         if location == 'subject':
             organized['subject'].append(f"Found: '{keyword}'")
@@ -57,7 +58,7 @@ def organize_keywords_by_category(keywords_list):
 @app.route('/', methods=['GET', 'POST']) #accepts both get and post
 def upload_file():
     #variables to hold results
-    reasons = []
+    reasons = [] 
     url_reason_pairs = []
     classification = None
     EmailDomainMsg = ''
@@ -65,7 +66,8 @@ def upload_file():
     emailnotify = ''
     storing_notify = ''
     success = bool
-    keywords = []
+    keywords = [] #list of detected keywords
+    #organized keywords by location (subject, early_body, remaining_body)
     organized_keywords = {
     'subject': [],
     'early_body': [],
@@ -82,9 +84,11 @@ def upload_file():
     number_of_unique_domains = 0
 
     if request.method == 'POST': #handle submissions
+        #retrieve uploaded file and user email from form
         file = request.files.get('emailfile')
         useremail = request.form.get('userEmail')
 
+        #validate file upload
         if not file:
             classification = ("Please upload a valid email file.")
         else:
@@ -235,7 +239,7 @@ def parse_stored_emails():
     folder_path = os.path.join(os.path.dirname(__file__), 'dataset', 'safe_keep', '*.txt')
     files = glob.glob(folder_path)
     
-    print(f"DEBUG: Found {len(files)} files to parse")
+    print(f"Print: Found {len(files)} files to parse")
     
     for file_path in files:
         try:
@@ -257,14 +261,14 @@ def parse_stored_emails():
                 matches = re.findall(keyword_pattern, content)
                 
                 if matches:
-                    print(f"DEBUG: Found {len(matches)} keywords in {os.path.basename(file_path)}")
+                    print(f"Print: Found {len(matches)} keywords in {os.path.basename(file_path)}")
                     all_keywords.extend(matches)
         
         except Exception as e:
             print(f"ERROR parsing {file_path}: {e}")
             continue
     
-    print(f"DEBUG: Total keywords found: {len(all_keywords)}")
+    print(f"Print: Total keywords found: {len(all_keywords)}")
     
     # Clean keywords and count frequencies
     if all_keywords:
@@ -272,10 +276,10 @@ def parse_stored_emails():
         cleaned_keywords = [kw.strip().lower() for kw in all_keywords if kw and kw.strip()]
         keyword_counter = Counter(cleaned_keywords)
         top_keywords = keyword_counter.most_common(5)
-        print(f"DEBUG: Top 5 keywords: {top_keywords}")
+        print(f"Print: Top 5 keywords: {top_keywords}")
     else:
         top_keywords = []
-        print("DEBUG: No keywords found in any files!")
+        print("Print: No keywords found in any files!")
     
     return {
         'safe_count': safe_count,
@@ -286,60 +290,72 @@ def parse_stored_emails():
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():
+    #aPI endpoint for admin authentication
+    #receives JSON credentials and returns success/failure response
     data = request.get_json()
     username = data.get('username', '').strip()
     password = data.get('password', '').strip()
 
+    #verify credentials against environment variables
     if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
-        session['admin_logged_in'] = True
-        log_admin_login_success()
+        session['admin_logged_in'] = True #set session flag
+        log_admin_login_success() #log successful login
         return jsonify({"success": True})
-
+    
+    #log failed login attempt
     log_admin_login_failure()
     return jsonify({"success": False, "error": "Invalid email or password."})
 
 
 @app.route('/admin')
 def admin_page():
+    #admin dashboard page
+    #requires authentication via session
     if not session.get('admin_logged_in'):
-        return redirect(url_for('upload_file'))
-    return render_template("adminPage.html")
+        return redirect(url_for('upload_file')) #redirect to homepage if not authenticated
+    return render_template("adminPage.html") #render admin dashboard
 
 
 @app.route('/logout')
 def logout():
-    log_admin_logout()
-    session.pop('admin_logged_in', None)
-    return redirect(url_for('upload_file'))
+    #admin logout endpoint
+    #clears session and redirects to homepage
+    log_admin_logout() #log logout event
+    session.pop('admin_logged_in', None) #remove session flag
+    return redirect(url_for('upload_file')) #redirect to homepage
 
 @app.route('/api/dashboard-data')
 def dashboard_data():
-    """API endpoint to provide dashboard data"""
+    #aPI endpoint to provide dashboard statistics
+    #returns JSON data for charts and counters on admin dashboard
+    
+    # #verify admin authentication
     if not session.get('admin_logged_in'):
         return jsonify({"error": "Unauthorized"}), 401
     
-    data = parse_stored_emails()
+    data = parse_stored_emails() #parse all stored emails to generate statistics
     
-    # Ensure we always return at least empty data for the bar chart
+    #ensure we always return at least empty data for the bar chart
     top_keywords_data = [
         {"keyword": keyword, "count": count} 
         for keyword, count in data['top_keywords']
     ]
     
-    # If no keywords found, return empty list (not None)
+    #if no keywords found, return empty list (not None)
     if not top_keywords_data:
         top_keywords_data = []
     
+    #construct response dictionary with all dashboard data
     response_data = {
         "safe_count": data['safe_count'],
         "phishing_count": data['phishing_count'],
         "top_keywords": top_keywords_data,
         "total_emails": data['total_emails']
     }
+
+    print(f"API Response: {response_data}") #debug output
     
-    print(f"API Response: {response_data}")  # Debug line
-    
-    return jsonify(response_data)
+    return jsonify(response_data) #return JSON response
 
 if __name__ == "__main__": #run website
-    app.run(debug=True)
+    app.run(debug=True) #enable debug mode for development (auto-reload on code changes)

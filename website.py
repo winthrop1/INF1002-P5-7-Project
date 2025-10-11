@@ -23,7 +23,7 @@ load_dotenv()
 setup_logging()
 
 #initialize flask app
-app = Flask(__name__, 
+app = Flask(__name__,
             template_folder=os.getenv('TEMPLATE_FOLDER', 'website'),
             static_folder='website',  #tells Flask where static files are
             static_url_path='')       #makes URLs like /css/styles.css work

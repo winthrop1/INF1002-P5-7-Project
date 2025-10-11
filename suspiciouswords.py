@@ -41,7 +41,7 @@ def consolidate_csv_keywords() -> None:
         print(f"Processing: {csv_file}")
 
         try:
-            # Try reading with pandas first (handles headers automatically)
+            # Try reading with pandas first
             df = pd.read_csv(file_path)
 
             # Extract all non-null values from all columns

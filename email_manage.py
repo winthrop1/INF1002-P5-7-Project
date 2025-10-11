@@ -11,12 +11,9 @@ def parse_email_file(email_content):
     """
     Parse decoded email content and separate into different parts.
     Takes the decoded message string from website and returns separated components.
-
-    Args:
-        email_content (str): Decoded email content from Flask file upload
-
-    Returns:
-        tuple: (title, subject, body) as strings
+    - title: A brief title for the email (e.g., "Email from
+    - subject: <subject line>")
+    - body: The main content of the email
     """
     try:
         from email import message_from_string
@@ -25,7 +22,7 @@ def parse_email_file(email_content):
         subject = ""
         body = ""
 
-        # Check if it's an .eml format (structured email with headers)
+        # Check if it's an .eml format
         if "From:" in email_content and "To:" in email_content:
             msg = message_from_string(email_content)
 
@@ -51,7 +48,7 @@ def parse_email_file(email_content):
                 else:
                     body = str(payload)
         else:
-            # Handle plain text format (simple emails)
+            # Handle plain text format
             lines = email_content.splitlines()
 
             # Look for subject line

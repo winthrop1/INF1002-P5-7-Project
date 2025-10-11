@@ -66,7 +66,7 @@ def check_domain_reputation(url, max_retries = 3, delay = 2):  #check domain rep
             if attempt < max_retries: # If not the last attempt, wait and retry
                 time.sleep(delay * attempt)  # Wait before retrying
             else:
-                print(f"WHOIS lookup failed for {hostname }after {max_retries} attempts: {e}")
+                print(f"WHOIS lookup failed for {hostname} after {max_retries} attempts: {e}")
                 
 
     if domain_info: # If WHOIS data is found, analyze it
@@ -170,14 +170,13 @@ def having_ip_address(url):
     parsed_url = urlparse(url)
     hostname = parsed_url.netloc.split(':')[0]  # This gets the hostname (domain) part of the URL, removing port number if present
 
-
     ipv4_pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$' # Regex pattern for IPv4
     ipv6_pattern = r'^(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}$' # Regex pattern for IPv6
     
     # Check for various obfuscated formats
     obfuscated_formats = [
         (r'^0x[0-9a-fA-F]{1,8}$', 'hexadecimal_ip'), # Hexadecimal IP (0x455e8c6f)
-        (r'^\d{8,10}$', 'dword_ip'), # Hexadecimal IP (0x455e8c6f)
+        (r'^\d{8,10}$', 'dword_ip'), # Dword IP (3232235777)
         (r'^0[0-7]{1,3}(\.[0-7]{1,3}){3}$', 'octal_ip'), # Octal IP (0177.0.0.1)
         (r'^(0x[0-9a-fA-F]{1,2}\.){3}0x[0-9a-fA-F]{1,2}$', 'mixed_hex_ip'), # Mixed hex notation (0xC0.0xA8.0x01.0x01)
         (r'^0x[0-9a-fA-F]{8}$', 'combined_hex_ip') # Combined hex (0xC0A80101)
@@ -188,7 +187,7 @@ def having_ip_address(url):
     obfuscated_match = None
     for pattern, format_type in obfuscated_formats: #check if hostname matches any obfuscated IP address formats
         if re.match(pattern, hostname, re.IGNORECASE):
-            obfuscated_match = format_type
+            obfuscated_match = format_type #format type found is stored in obfuscated_match 
             break
     
     if standard_ip_address:
@@ -197,7 +196,7 @@ def having_ip_address(url):
 
     elif obfuscated_match:
         url_suspicion_score += int(os.getenv("IP_ADDRESS_SCORE", "2"))  # increase risk score for URLs with obfuscated IP addresses
-        reasons.append("URL contains an obfuscated IP address, which is often used in malicious URLs to obscure the destination")
+        reasons.append("URL contains an obfuscated IP address instead of a domain name, which is often used in malicious URLs to obscure the destination")
         
     else:
         reasons.append("URL does not contain an IP address, but proceed with caution")

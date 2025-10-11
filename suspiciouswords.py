@@ -75,19 +75,19 @@ def consolidate_csv_keywords() -> None:
     except Exception as e:
         print(f"Error writing to {output_file}: {e}")
 
-#load keywords from txt file
+#load keywords from csv file
 def load_keywords(filepath):
     keywords = [] #empty list to hold keywords
     if not os.path.exists(filepath): #check that file exsist
         print(f"Keyword file not found: {filepath}") #if not found, output not found
         return keywords #return empty list if not found
     
-    with open(filepath, "r", encoding="utf-8") as file: #read the file using utf-8 encoding 
-        for line in file:
+    with open(filepath, "r", encoding="utf-8") as file: #read the file using utf-8 encoding to handle special characters 
+        for line in file: #process each line in the file
             word = line.strip() #remove whitespace
-            if word: 
+            if word: #only for non-empty lines, skips empty ones
                 keywords.append(word.lower()) #make all lowercase
-    return keywords
+    return keywords #returns complete list of loaded keywords
 
 #file paths for retrieving
 #construct absolute path from environment variable or default
@@ -96,57 +96,78 @@ csv_path = os.path.join(os.path.dirname(__file__), os.getenv('KEYWORDS_CONSOLIDA
 #load keywords from files
 sus_keywords = load_keywords(csv_path)
 
+#analyse email subject line for sus keywords
 def detection_subject(subject):
-    score = 0
-    keywords = []
-    subject_lower = subject.lower()
+    score = 0 #initialize sus score for subject line
+    keywords = [] #empty list to store detected keywords
+    subject_lower = subject.lower() #convert subject line to lowercase for matching
 
+    #scan sus keywords 
     for keyword in sus_keywords:
-        pattern = r'\b' + re.escape(keyword) + r'\b'
+        #create regex pattern with word boundaries to match whole words only
+        #\b ensures we match "fun" but not "funny" or "unfunny"
+        pattern = r'\b' + re.escape(keyword) + r'\b' #re.escape handles special regex characters in keywords
+        
+        #checks if keyword pattern exists in subject line
         if re.search(pattern, subject_lower):
-            score += int(os.getenv("SUBJECT_KEYWORD_SCORE", "3"))
-            keywords.append(("subject", keyword))  # Return tuple
-    return score, keywords
+            score += int(os.getenv("SUBJECT_KEYWORD_SCORE", "3")) #add score for subject line detection
+            keywords.append(("subject", keyword)) #store tuple: (location, keyword_found)
+    return score, keywords #return total score and list of detected keywords
 
+#analyse email body for sus keywords
 def detection_body(body):
-    score = 0
-    keywords = []
-    body_lower = body.lower()
+    score = 0 #initialize sus score for body
+    keywords = [] #empty list to store detected keywords 
+    body_lower = body.lower() #convert body to lowercase for matching
+
+    #define if found in early body is first 100 words 
     early_words_count = int(os.getenv("EARLY_BODY_WORD_COUNT", "100"))
 
+    #spilt body in 2 
     words = body_lower.split()
+
+    #early_words: first 100 words (phishing often front-loads suspicious content)
     early_words = ' '.join(words[:early_words_count]) if len(words) > early_words_count else body_lower
+   
+    #remaining_words: everything after first 100 words
     remaining_words = ' '.join(words[early_words_count:]) if len(words) > early_words_count else ""
 
+    #go through the keywords
     for keyword in sus_keywords:
+        #create regex pattern with word boundaries to match whole words only
+        #\b ensures we match "fun" but not "funny" or "unfunny"
         pattern = r'\b' + re.escape(keyword) + r'\b'
 
+        #check early body section first (higher priority/score)
         if re.search(pattern, early_words):
-            score += int(os.getenv("EARLY_BODY_KEYWORD_SCORE", "2"))
-            keywords.append(("early_body", keyword))  # Return tuple
+            score += int(os.getenv("EARLY_BODY_KEYWORD_SCORE", "2")) #add score for early body
+            keywords.append(("early_body", keyword)) #store tuple: (location, keyword_found)
+
+        #check remaining body section if keyword not found in early body
         elif remaining_words and re.search(pattern, remaining_words):
-            score += int(os.getenv("BODY_KEYWORD_SCORE", "1"))
-            keywords.append(("remaining_body", keyword))  # Return tuple
-    return score, keywords
+            score += int(os.getenv("BODY_KEYWORD_SCORE", "1")) #add score for remaining body
+            keywords.append(("remaining_body", keyword)) #store tuple: (location, keyword_found)
+    return score, keywords #return total score and list of detected keywords
 
 #classify email as safe/phishing
 def classify_email(email_subject, email_body):
-    keywords_suspicion_score = 0
-    keywords = []
+    keywords_suspicion_score = 0 #initialize total sus score
+    keywords = [] #list to accumulate all detected keywords from all sections
 
+    #analyse subject line for sus keywords
     subject_score, subject_keywords = detection_subject(email_subject) #detect suspicious keywords in subject
-    keywords_suspicion_score += subject_score #add score to total
-    keywords.extend(subject_keywords) #append keywords
+    keywords_suspicion_score += subject_score #add subject score to total
+    keywords.extend(subject_keywords) #append keywords to list
 
+    #analyze email body for sus keywords
     body_score, body_keywords = detection_body(email_body) #detect suspicious keywords in body
-    keywords_suspicion_score += body_score #add score to total
-    keywords.extend(body_keywords) #append keywords
+    keywords_suspicion_score += body_score #add body score to total
+    keywords.extend(body_keywords) #append keywords to list
 
-    # classification = "Safe" if keywords_suspicion_score == 0 else "Phishing"
     return keywords, keywords_suspicion_score #output score with keywords
 
-
+#test execution block - only runs when script is executed directly
 if __name__ == "__main__":
-    # Test the consolidate_csv_keywords function
+    #placeholder for testing the consolidate_csv_keywords function
     print("Running consolidate_csv_keywords function...")
     consolidate_csv_keywords()

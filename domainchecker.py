@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from datas import unique_from_emails
 load_dotenv()  # Load environment variables from .env file
-from free_email_domains import whitelist as free_domains
+from free_email_domains import whitelist as free_domains # Import free email domains
 
 
 def distance_check(domain1, domain2):
@@ -25,42 +25,48 @@ def distance_check(domain1, domain2):
     return previous_row[-1] # Return the final distance value
 
 def email_titlecheck(email_title):
-    text = email_title.lower().strip()
-    
-    # Case 1: email inside < >
-    if '<' in text and '>' in text:
-        email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()
-        if '@' in email:
-            return email
+    try:
+        text = email_title.lower().strip()
+        
+        # Case 1: email inside < >
+        if '<' in text and '>' in text:
+            email = text[text.find('<') + 1:text.find('>', text.find('<') + 1)].strip()
+            if '@' in email:
+                return email
 
-    # Case 2: fallback (no brackets, find @ manually)
-    words = text.replace('(', '').replace(')', '').replace('"', '').split() # split by whitespace
-    for w in words:
-        if '@' in w and '.' in w:  # basic email pattern
-            return w.strip('.,;:><"\' ') # strip common punctuation
-
+        # Case 2: fallback (no brackets, find @ manually)
+        words = text.replace('(', '').replace(')', '').replace('"', '').split() # split by whitespace
+        for w in words:
+            if '@' in w and '.' in w:  # basic email pattern
+                return w.strip('.,;:><"\' ') # strip common punctuation
+            
+    except Exception as e:
+        print(f"Error extracting email from title: {e}")
+        return None
 
 
 def domaincheck(email_title, safe_domains=unique_from_emails, threshold=int(os.getenv("DOMAIN_SIMILARITY_THRESHOLD", "3"))):
-    domain_suspicion_score = 0
-    email = email_titlecheck(email_title) 
-    domain = "@" + email.split('@', 1)[1]
-    if domain in safe_domains or domain in {('@' + d) for d in free_domains}: #check if domain is in predefined safe list
-        EmailDomainMsg = f"{email} is a safe domain. "
-        DistanceCheckMsg = "No similar domains found."
-        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
-    else:
-        EmailDomainMsg = f"Warning: {email} is from an unrecognized domain.\n"
-        DistanceCheckMsg = "No similar domains found."
-        domain_suspicion_score += int(os.getenv("DOMAIN_SUSPICION_SCORE", "2")) #increase risk score for unrecognized domain
-        for safe_domain in safe_domains | free_domains:
-            if not safe_domain.startswith('@'):
-                safe_domain = '@' + safe_domain
-            dist = distance_check(domain, safe_domain)
-            if dist <= threshold:
-                DistanceCheckMsg = f"Warning: Email domain '{domain}' is similar to a safe domain '{safe_domain}' (with only {dist} change(s) different)\n"
-                domain_suspicion_score += dist # increase risk score for similar domain
-            elif dist == 0:
-                DistanceCheckMsg = 'No similar domains found.'
-        return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
-    
+    try:
+        domain_suspicion_score = 0
+        email = email_titlecheck(email_title) 
+        domain = "@" + email.split('@', 1)[1]
+        if domain in safe_domains or domain in {('@' + d) for d in free_domains}: #check if domain is in predefined safe list or free email domains
+            EmailDomainMsg = f"{email} is a safe domain. "
+            DistanceCheckMsg = "No similar domains found."
+            return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
+        else:
+            EmailDomainMsg = f"Warning: {email} is from an unrecognized domain.\n"
+            DistanceCheckMsg = "No similar domains found."
+            domain_suspicion_score += int(os.getenv("DOMAIN_SUSPICION_SCORE", "2")) #increase risk score for unrecognized domain
+            for safe_domain in safe_domains | free_domains: #check for similar domains in safe list and free email domains as they are sets they are combined with pipe operator
+                if not safe_domain.startswith('@'):
+                    safe_domain = '@' + safe_domain
+                dist = distance_check(domain, safe_domain)
+                if dist <= threshold:
+                    DistanceCheckMsg = f"Warning: Email domain '{domain}' is similar to a safe domain '{safe_domain}' (with only {dist} change(s) different)\n"
+                    domain_suspicion_score += dist # increase risk score for similar domain
+                elif dist == 0:
+                    DistanceCheckMsg = 'No similar domains found.'
+            return EmailDomainMsg, DistanceCheckMsg, domain_suspicion_score
+    except Exception as e:
+        return f"Error processing email title: {e}", "No similar domains found.", 0

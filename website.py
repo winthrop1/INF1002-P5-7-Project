@@ -181,7 +181,7 @@ def upload_file():
                     "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
                     f"URL Analysis Reasons: {formatted_pairs}\n\n"
-                    f"Keywords Found: {', '.join(keywords) if keywords else 'None'}\n\n"
+                    f"Keywords Found: {', '.join(word for word, _ in keywords) if keywords else 'None'}\n\n"
                     f"Total Risk Score: {total_score}\n\n"
                     f"Domain Check Message: {EmailDomainMsg}\n"
                     "Email Content:\n"

@@ -172,20 +172,39 @@ def upload_file():
                 admin_email = os.getenv('EMAIL_ADDRESS')
                 admin_key = os.getenv('EMAIL_KEY')
                 
-                if url_reason_pairs:
-                    formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
-                else:
-                    formatted_pairs = 'None'
+                # if url_reason_pairs:
+                #     formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
+                # else:
+                #     formatted_pairs = 'None'
+
+                def format_url_analysis_for_email(url_reason_pairs):
+                    url_email_text = []
+                    for pair in url_reason_pairs:
+                        # Header for URL
+                        url_email_text.append(f"URL: {pair['url']}")
+                        # Reasons list
+                        if pair.get('reasons'):
+                            for reason in pair['reasons']:
+                                url_email_text.append(f"- {reason}")
+                        else:
+                            url_email_text.append("- No specific issues found for this URL")
+                        url_email_text.append("")  # Add empty line for spacing
+                    return "\n".join(url_email_text)
+                
+                formatted_pairs = format_url_analysis_for_email(url_reason_pairs)
                 
                 report_body = (
-                    "----- Email Analysis Result -----\n\n"
+                "----- Email Analysis Result -----\n\n"
                     f"Classification: {classification}\n\n"
-                    f"URL Analysis Reasons: {formatted_pairs}\n\n"
-                    f"Keywords Found: {', '.join(word for word, _ in keywords) if keywords else 'None'}\n\n"
-                    f"Total Risk Score: {total_score}\n\n"
-                    f"Domain Check Message: {EmailDomainMsg}\n"
-                    "Email Content:\n"
-                    f"{email_text}\n\n"
+                    f"Total Risk Score: {total_risk_scoring}\n"
+                    f"Overall Risk Level: {risk_level}\n\n"
+                    "----- Analysis Details -----\n\n"
+                    f"URL Analysis: {formatted_pairs}\n\n"
+                    f"Keywords Found: {', '.join(keyword for _, keyword in keywords) if keywords else 'None'}\n\n"
+                    f"Domain Check: {EmailDomainMsg}\n"
+                    f"Distance Check: {DistanceCheckMsg}\n\n"
+            
+                    "Thank you for using our email phishing analysis service."
                 )
 
                 msg = EmailMessage()

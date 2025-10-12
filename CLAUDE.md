@@ -267,7 +267,7 @@ Remember: All functions update global `url_suspicion_score` and `reasons`.
 
 ## Testing Notes
 
-- Test emails located in `dataset/kaggle/spam_2/` and `dataset/kaggle/hamEmails/`
+- Test emails located in `dataset/testing/spam/` and `dataset/testing/ham/`
 - Each analysis result is automatically stored in `dataset/safe_keep/` with timestamp
 - Admin dashboard reads from `dataset/safe_keep/` to generate statistics
 - Manual testing can be done by uploading files through web interface or running individual modules

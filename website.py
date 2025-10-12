@@ -172,11 +172,6 @@ def upload_file():
                 admin_email = os.getenv('EMAIL_ADDRESS')
                 admin_key = os.getenv('EMAIL_KEY')
                 
-                # if url_reason_pairs:
-                #     formatted_pairs = ', '.join(f"{d.get('url', 'N/A')}: {d.get('reason', 'N/A')}" for d in url_reason_pairs)
-                # else:
-                #     formatted_pairs = 'None'
-
                 def format_url_analysis_for_email(url_reason_pairs):
                     url_email_text = []
                     for pair in url_reason_pairs:

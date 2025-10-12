@@ -27,8 +27,6 @@ A comprehensive Python-based phishing email detection application developed for 
 - [API Endpoints](#api-endpoints)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
-- [Documentation](#documentation)
-- [License](#license)
 
 ---
 
@@ -310,7 +308,7 @@ Handles file preview, admin authentication, and dashboard updates.
 ```
 INF1002-P5-7-Project/
 │
-├── website.py                    # Main Flask application (entry point)
+├── website.py                    # Main Flask application
 ├── email_manage.py               # Email parsing engine
 ├── suspiciouswords.py            # Keyword detection system
 ├── domainchecker.py              # Domain verification module
@@ -324,47 +322,28 @@ INF1002-P5-7-Project/
 │   ├── index.html                # Main user interface
 │   ├── adminPage.html            # Admin dashboard
 │   ├── css/
-│   │   ├── styles.css            # Main stylesheet
-│   │   └── styles2.css           # Admin stylesheet
-│   ├── js/
-│   │   └── script.js             # Frontend JavaScript
-│   └── style.css                 # Legacy stylesheet
+│   │   └── styles.css            # Stylesheet
+│   └── js/
+│       └── script.js             # Frontend JavaScript
 │
 ├── dataset/                      # Email datasets
-│   ├── testing/                  # Test email files (not in repo)
-│   │   ├── spam/                 # Spam email samples (12 files)
-│   │   └── ham/                  # Legitimate email samples (12 files)
-│   ├── kaggle/                   # Large datasets
-│   │   ├── spam_2/               # Spam dataset (500+ files)
-│   │   └── hamEmails/            # Ham dataset for safe domain extraction (500+ files)
-│   └── safe_keep/                # Stored analysis results (timestamped .txt files)
+│   └── kaggle/
+│       ├── ham/                  # Legitimate emails
+│       └── spam_2/               # Spam emails
 │
 ├── keywords/                     # Keyword databases
 │   ├── consolidate_keywords.csv  # Unified keyword list
-│   ├── lemmatized_keywords.csv   # Processed keywords (preferred)
+│   ├── lemmatized_keywords.csv   # Processed keywords
 │   ├── lemmatizer.py             # Keyword lemmatization script
 │   └── raw_data/                 # Source keyword files
+│       ├── phishing_keywords.csv
+│       └── spam_words.csv
 │
-├── log/                          # Log files directory
-│   └── phishing_detector.log     # Application logs with rotation
-│
-├── words/                        # Additional keyword resources
-│
-├── .env                          # Active environment config (not in repo)
 ├── .env.example                  # Environment configuration template
-├── requirements.txt              # Python dependencies
 ├── .gitignore                    # Git ignore rules
-│
-├── README.md                     # This file (comprehensive documentation)
-├── USAGE.md                      # Detailed usage guide
-├── CLAUDE.md                     # Claude Code assistant instructions
-├── CODE_ANALYSIS_REPORT.md       # Security and code quality analysis
-├── CURRENT_ISSUES.md             # Known issues and limitations
-├── SYSTEM_DESIGN.md              # Detailed system architecture
-├── PROJECT_REPORT.md             # Project report
-├── PROJECT_REPORT_FINAL.md       # Final project report
-├── UNIFIED_RULE_BASED_SYSTEM.md  # Rule-based system documentation
-└── DOMAIN_CHECKER_PROCESS.md     # Domain checking process documentation
+├── requirements.txt              # Python dependencies
+├── README.md                     # Project documentation
+└── CLAUDE.md                     # Claude Code instructions
 ```
 
 ---
@@ -444,8 +423,8 @@ ADMIN_PASSWORD=your_secure_password
 
 #### Dataset Paths
 ```env
-HAM_DATASET_DIR=dataset/kaggle/hamEmails
-SPAM_DATASET_DIR=dataset/kaggle/spam_2
+HAM_DATASET_DIR=dataset/kaggle/ham          # Directory for legitimate email samples (2800+ files)
+SPAM_DATASET_DIR=dataset/kaggle/spam_2      # Directory for spam/phishing samples (1400+ files)
 ```
 
 #### Email Reporting (Optional)
@@ -923,17 +902,19 @@ pip install -r requirements.txt
 
 ### Test Email Datasets
 
-Located in `dataset/` directory:
+Located in `dataset/testing/` directory:
 
-**Ham Emails:**
-- `dataset/kaggle/hamEmails/` - 500+ legitimate email files
-- Used for safe domain extraction
+**Ham (Legitimate) Emails:**
+- `dataset/testing/ham/` - 12 legitimate email files
+- Used for safe domain extraction via `datas.py`
 - Used for false positive testing
+- Helps build the trusted domain whitelist
 
-**Spam Emails:**
-- `dataset/kaggle/spam_2/` - 500+ phishing email files
+**Spam/Phishing Emails:**
+- `dataset/testing/spam/` - 12 phishing/spam email files
 - Used for detection accuracy testing
 - Used for keyword extraction
+- Provides real-world phishing examples
 
 ### Manual Testing
 
@@ -973,7 +954,7 @@ from domainchecker import domaincheck
 from suspiciousurl import assessing_risk_scores
 
 # Load test email
-with open('dataset/kaggle/spam_2/0001.txt', 'r') as f:
+with open('dataset/testing/spam/spam_1.txt', 'r') as f:
     email_content = f.read()
 
 # Parse email
@@ -999,7 +980,7 @@ print(f"Classification: {'Safe' if total_score <= 8 else 'Phishing'}")
 
 1. Start the application: `python website.py`
 2. Navigate to `http://127.0.0.1:5000`
-3. Upload test files from `dataset/kaggle/`
+3. Upload test files from `dataset/testing/`
 4. Verify risk scores and classifications
 5. Test email reporting functionality (optional)
 6. Test admin dashboard:
@@ -1010,6 +991,3 @@ print(f"Classification: {'Safe' if total_score <= 8 else 'Phishing'}")
    - Logout and verify session cleared
 7. Verify data storage in `dataset/safe_keep/`
 8. Check logs in `log/phishing_detector.log`
-
-
-**Last Updated:** October 10, 2025

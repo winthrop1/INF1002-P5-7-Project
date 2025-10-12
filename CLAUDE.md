@@ -143,7 +143,7 @@ Keywords are consolidated from multiple CSV sources:
 ### Safe Domain Database
 
 `datas.py` extracts safe domains from ham emails:
-- Loads all files from `HAM_DATASET_DIR` (default: `dataset/kaggle/hamEmails/`)
+- Loads all files from `HAM_DATASET_DIR` (default: `dataset/kaggle/ham/`)
 - Searches for "From:" lines and extracts domains
 - Exports `unique_from_emails` set used by `domainchecker.py`
 
@@ -238,7 +238,8 @@ The function strips all common punctuation and extracts the email address.
 
 **Data:**
 - `dataset/kaggle/hamEmails/`: Legitimate emails (for safe domain extraction)
-- `dataset/kaggle/spam_2/`: Spam emails (for testing)
+- `dataset/testing/spam/`: Spam emails (for testing)
+- `dataset/testing/ham/`: Spam emails (for testing)
 - `dataset/safe_keep/`: Stored analysis results (timestamped .txt files)
 - `keywords/lemmatized_keywords.csv`: Primary keyword database
 - `keywords/raw_data/`: Raw keyword sources

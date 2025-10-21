@@ -19,8 +19,13 @@ import time  #for runtime measurement
 #load environment variables from .env file
 load_dotenv()
 
-#configure logging
-setup_logging()
+#configure logging (with error handling for Railway's read-only filesystem)
+try:
+    setup_logging()
+    print("✅ Logging configured successfully")
+except Exception as e:
+    print(f"⚠️ Logging setup failed (continuing anyway): {e}")
+    pass  # Continue without logging if it fails
 
 #initialize flask app
 app = Flask(__name__,
@@ -34,6 +39,8 @@ app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here')  #add to your .
 #admin credentials loaded from environment variables for security
 ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', '1')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '1')
+
+print("✅ Flask app initialized successfully")
 
 def organize_keywords_by_category(keywords_list):
     #organize keywords into categories based on tuples (location, keyword)
@@ -301,6 +308,12 @@ def parse_stored_emails():
         'top_keywords': top_keywords,
         'total_emails': safe_count + phishing_count
     }
+
+@app.route('/health')
+def health():
+    #health check endpoint for Railway deployment monitoring
+    #returns 200 OK to confirm app is running
+    return jsonify({"status": "ok", "message": "Phishing detector is running"}), 200
 
 @app.route('/admin-login-json', methods=['POST'])
 def admin_login_json():

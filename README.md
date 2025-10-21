@@ -27,6 +27,7 @@ A comprehensive Python-based phishing email detection application developed for 
 - [API Endpoints](#api-endpoints)
 - [Dependencies](#dependencies)
 - [Testing](#testing)
+- [License](#license)
 
 ---
 
@@ -991,3 +992,15 @@ print(f"Classification: {'Safe' if total_score <= 8 else 'Phishing'}")
    - Logout and verify session cleared
 7. Verify data storage in `dataset/safe_keep/`
 8. Check logs in `log/phishing_detector.log`
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Copyright
+
+Copyright (c) 2025 Ho Winthrop, Ho Shang Jay, Mohamed Raihan Bin Ismail, Matthew Dyason, Leticia Linus Jeraled
+
+Permission is granted to use, modify, and distribute this software under the terms of the MIT License.

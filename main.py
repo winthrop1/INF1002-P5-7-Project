@@ -372,4 +372,5 @@ def dashboard_data():
     return jsonify(response_data) #return JSON response
 
 if __name__ == "__main__": #run website
-    app.run(debug=True) #enable debug mode for development (auto-reload on code changes)
+    port = int(os.environ.get("PORT", 5000))  #get Railway's assigned port, default to 5000 for local development
+    app.run(host='0.0.0.0', port=port, debug=False) #bind to all network interfaces, use dynamic port, disable debug in production

@@ -7,3 +7,4 @@ validators
 python-whois
 free-email-domains
 nltk
+gunicorn==21.2.0

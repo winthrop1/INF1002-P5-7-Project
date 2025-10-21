@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-from datas import unique_from_emails
+# from datas import unique_from_emails  # Original slow import (commented out for Railway deployment)
+from safe_domains_loader import unique_from_emails  # Use cached safe domains for fast startup
 load_dotenv()  # Load environment variables from .env file
 from free_email_domains import whitelist as free_domains # Import free email domains
 
